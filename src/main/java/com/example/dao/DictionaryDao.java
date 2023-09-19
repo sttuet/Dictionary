@@ -22,6 +22,6 @@ public class DictionaryDao {
         return "";
     }
     public static void addWord(Word word){
-
+        //add comment
     }
 }
