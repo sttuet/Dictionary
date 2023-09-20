@@ -2,15 +2,22 @@ package com.example.dao;
 
 import com.example.ourdictionary.Word;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 //DAO: Data Access Object, cap nhat du lieu tren database
 
 public class DictionaryDao {
+//    public static void main(String[] args) {
+//        DictionaryDao dictionaryDao=new DictionaryDao();
+//        List<String> lis=dictionaryDao.getAllWord();
+//    }
     Connection con;
     Statement statement;
-    DictionaryDao() {
+    public DictionaryDao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Dictionary","root","a4k23cvp");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","a4k23cvp");
+            statement= con.createStatement();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
@@ -18,10 +25,49 @@ public class DictionaryDao {
         }
 
     }
-    public static String getDefinitionOf(String word){
-        return "";
+    public String getDefinitionOf(String word){
+        String ans;
+        try {
+            ResultSet resultSet=statement.executeQuery("select meaning from dictionary where word='"+word+"'");
+            resultSet.next();
+            ans=resultSet.getString(1);
+            if(ans!=null)return ans;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
-    public static void addWord(Word word){
+    public List<String> getAllWord(){
+        List<String> list=new ArrayList<>();
+        try {
+            ResultSet resultSet=statement.executeQuery("select word from dictionary ");
+            while(resultSet.next()){
+                list.add(resultSet.getString(1));
+                System.out.println(resultSet.getString(1));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+    }
+    public void addWord(Word word)  {
+        if(getDefinitionOf(word.getWord())!=null){
+            try {
+                int i = statement.executeUpdate("update dictionary set meaning='"+word.getMeaning()+"' where word='"+word.getWord()+"'");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }else
         //add comment
+        try {
+            PreparedStatement preparedStatement= con.prepareStatement("insert into dictionary values(?,?)");
+            preparedStatement.setString(1,word.getWord());
+            preparedStatement.setString(2,word.getMeaning());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
