@@ -6,7 +6,13 @@ import java.util.List;
 // dùng array thì tìm từ t nghĩ sẽ lâu hơn nên dùng cây trie
 public class Dictionary {
     private Node root;
-    Dictionary() {}
+    Dictionary() {
+        root=new Node();
+        List<String> list=Main.dictionaryDao.getAllWord();
+        for(String s:list){
+            root.add(s);
+        }
+    }
     public List<String> allWordsHas(String prefix){
         List<String> list=new ArrayList<>();
         //code here
