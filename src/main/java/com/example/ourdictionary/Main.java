@@ -16,7 +16,7 @@ public class Main extends Application {
         dictionaryDao=new DictionaryDao();
         dictionary=new Dictionary();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),400,300);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Dictionary");
         stage.setScene(scene);
         stage.show();
