@@ -26,12 +26,15 @@ public class DictionaryDao {
 
     }
     public String getDefinitionOf(String word){
-        String ans;
+        String ans = null;
         try {
             ResultSet resultSet=statement.executeQuery("select meaning from dictionary where word='"+word+"'");
-            resultSet.next();
-            ans=resultSet.getString(1);
-            if(ans!=null)return ans;
+
+
+            if(resultSet.next()){
+                ans=resultSet.getString(1);
+                return ans;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +63,6 @@ public class DictionaryDao {
                 throw new RuntimeException(e);
             }
         }else
-        //add comment
         try {
             PreparedStatement preparedStatement= con.prepareStatement("insert into dictionary values(?,?)");
             preparedStatement.setString(1,word.getWord());
