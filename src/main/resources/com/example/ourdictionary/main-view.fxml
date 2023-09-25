@@ -9,7 +9,9 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
    <TextField fx:id="textField" layoutY="76.0" onKeyTyped="#onTypeWord" prefHeight="25.0" prefWidth="105.0" />
    <Button layoutX="149.0" layoutY="76.0" mnemonicParsing="false" onAction="#onTranslate" text="translate" />
-   <WebView fx:id="webView" layoutX="213.0" layoutY="75.0" prefHeight="324.0" prefWidth="386.0" />
+   <WebView fx:id="webView" layoutX="213.0" layoutY="78.0" prefHeight="321.0" prefWidth="221.0" />
    <ListView fx:id="listView" layoutY="100.0" onMouseClicked="#onChooseWord" prefHeight="301.0" prefWidth="149.0" />
-   <Button layoutX="106.0" layoutY="76.0" mnemonicParsing="false" onAction="#onOpenAddWordWindow" prefHeight="25.0" prefWidth="43.0" text="add" />
+   <Button layoutX="106.0" layoutY="76.0" mnemonicParsing="false" onAction="#onAddButtonClick" prefHeight="25.0" prefWidth="43.0" text="add" />
+   <TextField fx:id="addWordTextField" layoutX="106.0" layoutY="1.0" />
+   <TextField fx:id="addMeaningTextField" layoutX="106.0" layoutY="34.0" />
 </AnchorPane>

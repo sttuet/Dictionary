@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.dao.DictionaryDao;
 import com.example.ourdictionary.Main;
+import com.example.ourdictionary.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +27,10 @@ public class MainController {
     @FXML
     private WebView webView;
     @FXML
+    private TextField addWordTextField;
+    @FXML
+    private TextField addMeaningTextField;
+    @FXML
     protected void onTypeWord(KeyEvent event){
         List<String> list= Main.dictionary.allWordsHas(textField.getText());
         ObservableList<String> observableList= FXCollections.observableArrayList(list);
@@ -42,7 +47,8 @@ public class MainController {
         webView.getEngine().loadContent(mean);
     }
     @FXML
-    protected void onOpenAddWordWindow(ActionEvent event){
-
+    protected void onAddButtonClick(){
+        Word word=new Word(addWordTextField.getText(),addMeaningTextField.getText());
+        Main.dictionaryDao.addWord(word);
     }
 }
