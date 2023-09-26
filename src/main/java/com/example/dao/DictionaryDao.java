@@ -7,10 +7,6 @@ import java.util.List;
 //DAO: Data Access Object, cap nhat du lieu tren database
 
 public class DictionaryDao {
-//    public static void main(String[] args) {
-//        DictionaryDao dictionaryDao=new DictionaryDao();
-//        List<String> lis=dictionaryDao.getAllWord();
-//    }
     Connection con;
     Statement statement;
     public DictionaryDao() {
@@ -46,7 +42,6 @@ public class DictionaryDao {
             ResultSet resultSet=statement.executeQuery("select word from dictionary ");
             while(resultSet.next()){
                 list.add(resultSet.getString(1));
-                System.out.println(resultSet.getString(1));
             }
 
         } catch (SQLException e) {
@@ -56,6 +51,7 @@ public class DictionaryDao {
         return list;
     }
     public void addWord(Word word)  {
+        if(word.getWord().equals(""))return;
         if(getDefinitionOf(word.getWord())!=null){
             try {
                 int i = statement.executeUpdate("update dictionary set meaning='"+word.getMeaning()+"' where word='"+word.getWord()+"'");
