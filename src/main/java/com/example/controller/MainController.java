@@ -9,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 enum Current_view{
@@ -34,7 +37,13 @@ public class MainController {
     private Button addWordButton;
     @FXML
     private Button closeAddWordContainerButton;
-
+    @FXML
+    private Button historyButton;
+    private LinkedList<String> historyList=new LinkedList<>();
+    @FXML
+    protected void onHistoryButtonClick(){
+        listView.setItems(FXCollections.observableList(historyList));
+    }
     @FXML
     protected void onShowAddWordContainerButtonClick(){
         textField.setDisable(true);
@@ -69,7 +78,12 @@ public class MainController {
     protected void onTranslate(){
         if(currentView==Current_view.MAINVIEW){
             String mean= Main.dictionaryDao.getDefinitionOf(textField.getText());
-            webView.getEngine().loadContent(mean);
+            if(mean!=null){
+                webView.getEngine().loadContent(mean);
+                if(historyList.size()<20){
+                    historyList.addFirst(textField.getText());
+                }
+            }
         }
     }
     @FXML
