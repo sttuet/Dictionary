@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-enum Current_view{
-    MAINVIEW,ADD_WORD
-}
+
 public class MainController {
-    private Current_view currentView=Current_view.MAINVIEW;
+    enum Current_view{
+        MAIN_VIEW,ADD_WORD
+    }
+    private Current_view currentView=Current_view.MAIN_VIEW;
     @FXML
     private ListView<String> listView=new ListView<>();
     @FXML
@@ -56,11 +57,11 @@ public class MainController {
         textField.setDisable(false);
         listView.setDisable(false);
         addWordContainer.setVisible(false);
-        currentView=Current_view.MAINVIEW;
+        currentView=Current_view.MAIN_VIEW;
     }
     @FXML
     protected void onTypeWord(){
-        if(currentView==Current_view.MAINVIEW){
+        if(currentView==Current_view.MAIN_VIEW){
             List<String> list= Main.dictionary.allWordsHas(textField.getText());
             ObservableList<String> observableList= FXCollections.observableArrayList(list);
             listView.setItems(observableList);
@@ -69,14 +70,14 @@ public class MainController {
     }
     @FXML
     protected void onChooseWord(){
-        if(currentView==Current_view.MAINVIEW) {
+        if(currentView==Current_view.MAIN_VIEW) {
             String s = listView.getSelectionModel().getSelectedItem();
             textField.setText(s);
         }
     }
     @FXML
     protected void onTranslate(){
-        if(currentView==Current_view.MAINVIEW){
+        if(currentView==Current_view.MAIN_VIEW){
             String mean= Main.dictionaryDao.getDefinitionOf(textField.getText());
             if(mean!=null){
                 webView.getEngine().loadContent(mean);
