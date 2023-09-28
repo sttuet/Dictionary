@@ -5,14 +5,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 //DAO: Data Access Object, cap nhat du lieu tren database
-
+//commet....
 public class DictionaryDao {
     Connection con;
     Statement statement;
     public DictionaryDao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/OOPS","root","thinh2004");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","a4k23cvp");
             statement= con.createStatement();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
