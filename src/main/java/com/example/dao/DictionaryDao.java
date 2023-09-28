@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 //DAO: Data Access Object, cap nhat du lieu tren database
 //commet....
+//wefwefa
 public class DictionaryDao {
     Connection con;
     Statement statement;
