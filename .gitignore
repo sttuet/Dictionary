@@ -13,7 +13,7 @@ target/
 *.ipr
 .idea/
 .mvn/
-src/java/com/example/dao/DictionaryDao.java
+DictionaryDao.java
 ### Eclipse ###
 .apt_generated
 .classpath
