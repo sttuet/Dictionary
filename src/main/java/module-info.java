@@ -6,8 +6,9 @@ module com.example.ourdictionary {
 
     requires org.controlsfx.controls;
     requires java.sql;
-    requires org.kordamp.bootstrapfx.core;
+//    requires org.kordamp.bootstrapfx.core;
     requires mysql.connector.j;
+    requires com.fasterxml.jackson.databind;
 
     opens com.example.controller to javafx.fxml;
     opens com.example.ourdictionary to javafx.fxml;
