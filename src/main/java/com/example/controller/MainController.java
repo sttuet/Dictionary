@@ -1,6 +1,7 @@
 package com.example.controller;
 import com.example.ourdictionary.Main;
 import com.example.ourdictionary.Word;
+import com.example.service.ConvertToHTML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,9 +78,10 @@ public class MainController {
         }
     }
     @FXML
-    protected void onTranslate(){
+    protected void onTranslate() throws IOException {
         if(currentView==Current_view.MAIN_VIEW){
-            String mean= Main.dictionaryDao.getDefinitionOf(textField.getText());
+//            String mean= Main.dictionaryDao.getDefinitionOf(textField.getText());
+            String mean= ConvertToHTML.getInfo(textField.getText(),Main.objectMapper);
             if(mean!=null){
                 webView.getEngine().loadContent(mean);
                 if(historyList.size()<20){
