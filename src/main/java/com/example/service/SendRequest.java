@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.fasterxml.jackson.databind.*;
 public class SendRequest {
     private static final String URL_PATH="https://api.dictionaryapi.dev/api/v2/entries/en/";
     public static String sendRequest(String word) throws IOException {

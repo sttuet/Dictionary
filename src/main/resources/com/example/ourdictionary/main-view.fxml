@@ -6,17 +6,60 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
-   <WebView fx:id="webView" layoutX="194.0" layoutY="42.0" prefHeight="357.0" prefWidth="405.0" />
-   <ListView fx:id="listView" focusTraversable="false" layoutX="37.0" layoutY="68.0" onMouseClicked="#onChooseWord" prefHeight="331.0" prefWidth="160.0" />
+   <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="400.0" prefWidth="37.0" style="-fx-background-color: #34abeb;">
+      <children>
+         <Button fx:id="showAddWordContainerButton" mnemonicParsing="false" onAction="#onShowAddWordContainerButtonClick" prefHeight="37.0" prefWidth="59.0" style="-fx-background-color: #34abeb;">
+            <graphic>
+               <FontAwesomeIconView glyphName="EDIT" size="20" />
+            </graphic>
+         </Button>
+         <Button fx:id="historyButton" mnemonicParsing="false" onAction="#onHistoryButtonClick" prefHeight="37.0" prefWidth="52.0" style="-fx-background-color: #34abeb;">
+            <graphic>
+               <FontAwesomeIconView glyphName="HISTORY" size="20" />
+            </graphic>
+         </Button>
+         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="57.0" style="-fx-background-color: #34abeb;">
+            <graphic>
+               <FontAwesomeIconView glyphName="HEART" size="20" />
+            </graphic>
+         </Button>
+         <Button layoutX="10.0" layoutY="85.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="55.0" style="-fx-background-color: #34abeb;">
+            <graphic>
+               <FontAwesomeIconView glyphName="GEAR" size="20" />
+            </graphic>
+         </Button>
+      </children>
+   </VBox>
+   <VBox layoutX="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400" prefWidth="220.0">
+      <children>
+         <TextField fx:id="textField" onKeyTyped="#onTypeWord" prefHeight="37.0" prefWidth="160.0" style="-fx-border-style: solid; -fx-border-color: red;" VBox.vgrow="ALWAYS">
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+         </TextField>
+         <ListView fx:id="listView" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onChooseWord" VBox.vgrow="ALWAYS" />
+      </children>
+   </VBox>
+   <VBox layoutX="257.0" maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0">
+      <children>
+         <Button contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity" mnemonicParsing="false" onAction="#onTranslate" prefHeight="30.0" prefWidth="37.0" style="-fx-background-color: lightblue;">
+            <graphic>
+               <FontAwesomeIconView fill="#190aa1" glyphName="SEARCH" size="15" text="" wrappingWidth="13.928571701049805" />
+            </graphic>
+         </Button>
+         <WebView fx:id="webView" minHeight="100.0" minWidth="95.0" prefHeight="-1.0" prefWidth="343.0" VBox.vgrow="ALWAYS">
+            <VBox.margin>
+               <Insets />
+            </VBox.margin>
+         </WebView>
+      </children>
+   </VBox>
    <AnchorPane fx:id="addWordContainer" layoutX="91.0" layoutY="81.0" prefHeight="172.0" prefWidth="390.0" style="-fx-border-color: black; -fx-border-radius: 5px; -fx-border-width: 5px; -fx-background-color: #34abeb; -fx-border-insets: -5;" visible="false">
       <children>
          <TextField fx:id="addMeaningTextField" layoutX="64.0" layoutY="85.0" />
@@ -36,49 +79,6 @@
          <Button fx:id="addWordButton" layoutX="64.0" layoutY="120.0" mnemonicParsing="false" onAction="#onAddWordButtonClick" prefHeight="25.0" prefWidth="105.0" text="Add to database" />
       </children>
    </AnchorPane>
-   <VBox layoutY="42.0" prefHeight="357.0" prefWidth="37.0" style="-fx-background-color: #34abeb;">
-      <children>
-         <Button fx:id="showAddWordContainerButton" mnemonicParsing="false" onAction="#onShowAddWordContainerButtonClick" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: #34abeb;">
-            <graphic>
-               <FontAwesomeIconView glyphName="EDIT" size="20" />
-            </graphic>
-         </Button>
-         <Button fx:id="historyButton" mnemonicParsing="false" onAction="#onHistoryButtonClick" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: #34abeb;">
-            <graphic>
-               <FontAwesomeIconView glyphName="HISTORY" size="20" />
-            </graphic>
-         </Button>
-         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: #34abeb;">
-            <graphic>
-               <FontAwesomeIconView glyphName="HEART" size="20" />
-            </graphic>
-         </Button>
-         <Button layoutX="10.0" layoutY="85.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" style="-fx-background-color: #34abeb;">
-            <graphic>
-               <FontAwesomeIconView glyphName="GEAR" size="20" />
-            </graphic>
-         </Button>
-      </children>
-   </VBox>
-   <TextField fx:id="textField" layoutX="37.0" layoutY="42.0" onKeyTyped="#onTypeWord" prefHeight="25.0" prefWidth="160.0" style="-fx-border-style: solid; -fx-border-color: red;">
-      <opaqueInsets>
-         <Insets />
-      </opaqueInsets>
-   </TextField>
-   <Button contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" layoutX="167.0" layoutY="44.0" maxHeight="13.0" mnemonicParsing="false" onAction="#onTranslate" prefHeight="10.0" prefWidth="25.0" style="-fx-background-color: white;">
-      <graphic>
-         <FontAwesomeIconView fill="#190aa1" glyphName="SEARCH" size="11" text="" />
-      </graphic>
-   </Button>
-   <Pane prefHeight="37.0" prefWidth="600.0">
-      <children>
-         <ImageView fitHeight="45.0" fitWidth="600.0" layoutY="-5.0" pickOnBounds="true">
-            <image>
-               <Image url="@../../../image/Screenshot%20(73).png" />
-            </image>
-         </ImageView>
-      </children>
-   </Pane>
    <opaqueInsets>
       <Insets />
    </opaqueInsets>
