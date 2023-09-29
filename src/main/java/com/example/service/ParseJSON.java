@@ -16,7 +16,18 @@ public class ParseJSON {
         JsonNode root=objectMapper.readTree(json).get(0);
         Word result=new Word();
         result.setWord(root.get("word").asText());
-        result.setText(root.get("phonetic")==null?"":root.get("phonetic").asText());
+
+
+        if(root.get("phonetic")!=null){
+            result.setText(root.get("phonetic").asText());
+        }else{
+            for(JsonNode jsonNode:root.get("phonetics")){
+                if(jsonNode.get("text")!=null){
+                    result.setText(jsonNode.get("text").asText());
+                    break;
+                }
+            }
+        }
         ((ArrayNode) root.get("meanings")).forEach(t->{
             Meaning meaning=new Meaning();
             meaning.setPartOfSpeech(t.get("partOfSpeech").asText());

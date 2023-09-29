@@ -17,20 +17,22 @@ public class ConvertToHTML {
     }
     public static String toHTML(Word word){
         if(word==null){
-            return "<html>type correct word or check internet conection</html>";
+            return "<html>type correct word or check internet connection</html>";
         }
         StringBuilder stringBuilder=new StringBuilder();
-        stringBuilder.append("<html>");
-        stringBuilder.append("<p>"+word.getWord()+"</p>");
-        stringBuilder.append("<p>"+word.getText()+"</p>");
+        stringBuilder.append("<html><ul>");
+        stringBuilder.append("<li style=\"font-size:larger\">"+word.getWord()+"</li>");
+        stringBuilder.append("<li style=\"font-style: italic;\">"+word.getText()+"</li>");
         for(Meaning meaning:word.getMeanings()){
-            stringBuilder.append("<p>Type :"+meaning.partOfSpeech+"</p>");
+
+            stringBuilder.append("<li><dl><dt style=\"font-weight: bold;\">Type :"+meaning.partOfSpeech+"</dt>");
             for(Definition definition:meaning.definitions){
-                stringBuilder.append("<p>-definition : "+definition.definition+"</p>");
-                stringBuilder.append("<p>example :"+definition.example+"</p>");
+                stringBuilder.append("<dt style=\"color: red;\">-definition : "+definition.definition+"</dt>");
+                if(!definition.example.equals("")) stringBuilder.append("<dd><i style=\"text-decoration: underline;\">Ex: </i>"+definition.example+"</dd>");
             }
+            stringBuilder.append("</dl></li>");
         }
-        stringBuilder.append("</html>");
+        stringBuilder.append("</ul></html>");
         return stringBuilder.toString();
     }
 }
