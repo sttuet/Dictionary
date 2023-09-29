@@ -13,7 +13,7 @@ public class DictionaryDao {
     public DictionaryDao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/oops","root","thinh2004");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/thinhnguyen","root","thinh2004");
             statement= con.createStatement();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
