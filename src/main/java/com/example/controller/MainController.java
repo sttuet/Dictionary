@@ -1,101 +1,107 @@
 package com.example.controller;
+
 import com.example.ourdictionary.Main;
-import com.example.ourdictionary.Word;
-import com.example.service.ConvertToHTML;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.web.WebView;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.example.ourdictionary.Main.getInfoInEnglish;
+import static com.example.ourdictionary.Main.getInfoInVietnamese;
+
 
 public class MainController {
-    enum Current_view{
-        MAIN_VIEW,ADD_WORD
-    }
-    private Current_view currentView=Current_view.MAIN_VIEW;
+
     @FXML
-    private ListView<String> listView=new ListView<>();
+    private ListView<String> listView = new ListView<>();
     @FXML
     private TextField textField;
     @FXML
     private WebView webView;
+
+    private LinkedList<String> historyList = new LinkedList<>();
+
+    /**
+     * trả về các từ vừa tra vào ListView.
+     */
     @FXML
-    private TextField addWordTextField;
-    @FXML
-    private TextField addMeaningTextField;
-    @FXML
-    private Parent addWordContainer;
-    @FXML
-    private Button showAddWordContainerButton;
-    @FXML
-    private Button addWordButton;
-    @FXML
-    private Button closeAddWordContainerButton;
-    @FXML
-    private Button historyButton;
-    private LinkedList<String> historyList=new LinkedList<>();
-    @FXML
-    protected void onHistoryButtonClick(){
+    protected void onHistoryButtonClick() {
         listView.setItems(FXCollections.observableList(historyList));
     }
+
+    /**
+     * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
+     */
     @FXML
-    protected void onShowAddWordContainerButtonClick(){
-        textField.setDisable(true);
-        listView.setDisable(true);
-        addWordContainer.setVisible(true);
-        currentView=Current_view.ADD_WORD;
-    }
-    @FXML
-    protected void onCloseAddWordContainerButtonClick(){
-        textField.setDisable(false);
-        listView.setDisable(false);
-        addWordContainer.setVisible(false);
-        currentView=Current_view.MAIN_VIEW;
-    }
-    @FXML
-    protected void onTypeWord(){
-        if(currentView==Current_view.MAIN_VIEW){
-            List<String> list= Main.dictionary.allWordsHas(textField.getText());
-            ObservableList<String> observableList= FXCollections.observableArrayList(list);
-            listView.setItems(observableList);
-        }
+    protected void onTypeWord() {
+        List<String> list = Main.dictionary.allWordsHas(textField.getText());
+        ObservableList<String> observableList = FXCollections.observableArrayList(list);
+        listView.setItems(observableList);
 
     }
+
+    /**
+     * bấm vào tù nào thì từ đó hiện lên thanh tìm kiếm
+     */
     @FXML
-    protected void onChooseWord(){
-        if(currentView==Current_view.MAIN_VIEW) {
-            String s = listView.getSelectionModel().getSelectedItem();
-            textField.setText(s);
-        }
+    protected void onChooseWord() {
+        String s = listView.getSelectionModel().getSelectedItem();
+        textField.setText(s);
+
     }
+
+    private String vietMeaning = "";
+    private String engMeaning = "";
+
+    /**
+     * dịch từ. 2 nghĩa tiếng viêtj và tiếng anh.
+     * @throws IOException
+     */
     @FXML
     protected void onTranslate() throws IOException {
-        if(currentView==Current_view.MAIN_VIEW){
-//            String mean= Main.dictionaryDao.getDefinitionOf(textField.getText());
-            String mean= ConvertToHTML.getInfo(textField.getText(),Main.objectMapper);
-            if(mean!=null){
-                webView.getEngine().loadContent(mean);
-                if(historyList.size()<20){
-                    historyList.addFirst(textField.getText());
-                }
-            }
+        vietMeaning = getInfoInVietnamese(textField.getText());
+        if (vietMeaning != null) {
+            webView.getEngine().loadContent(vietMeaning);
+            historyList.addFirst(textField.getText());
+            media =new Media(new File("src\\main\\resources\\audio.mp3").toURI().toString());
+            mediaPlayer= new MediaPlayer(media);
+        } else {
+            vietMeaning = "";
+            webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
         }
+        engMeaning = getInfoInEnglish(textField.getText());
+    }
+
+    /**
+     * chuyển sang nghĩa tiêngs anh
+     */
+    @FXML
+    protected void onEngLabelClick() {
+        webView.getEngine().loadContent(engMeaning);
+    }
+
+    /**
+     * chuyển sang nghĩa tiếng việt.
+     */
+    @FXML
+    protected void onVietLabelClick() {
+        webView.getEngine().loadContent(vietMeaning);
     }
     @FXML
-    protected void onAddWordButtonClick(){
-        if(currentView==Current_view.ADD_WORD){
-            Word word=new Word(addWordTextField.getText(),addMeaningTextField.getText());
-            Main.dictionaryDao.addWord(word);
-            Main.dictionary.addWord(word.getWord());
-        }
+    private Media media;
+    private MediaPlayer mediaPlayer;
+    @FXML
+    protected void onSpeakerClick(){
+        mediaPlayer.play();
+        mediaPlayer.seek(mediaPlayer.getStartTime());
     }
 }

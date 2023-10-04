@@ -6,9 +6,15 @@ import com.example.ourdictionary.Word;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 
 public class ParseJSON {
+    /**
+     * Phân tích Json trả về từ sendRequest
+     * @param json json (string)
+     * @param objectMapper công cụ để phân tích json
+     * @return {@link Word}
+     * @throws JsonProcessingException
+     */
     public static Word fromJson(String json, ObjectMapper objectMapper) throws JsonProcessingException {
         if(json==null){
             return null;
@@ -28,11 +34,11 @@ public class ParseJSON {
                 }
             }
         }
-        ((ArrayNode) root.get("meanings")).forEach(t->{
+        root.get("meanings").forEach(t->{
             Meaning meaning=new Meaning();
             meaning.setPartOfSpeech(t.get("partOfSpeech").asText());
 
-            for(JsonNode jn:(ArrayNode)(t.get("definitions"))){
+            for(JsonNode jn: t.get("definitions")){
 
                 Definition definition=new Definition(jn.get("definition").asText(),jn.get("example")==null?null:jn.get("example").asText());
                 meaning.definitions.add(definition);

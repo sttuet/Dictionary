@@ -4,15 +4,14 @@ package com.example.ourdictionary;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *1 Word thì gồm 1 String word là từ đó, text là phát âm, 1 list meanings bao gồm các {@link Meaning} .
+ */
 public class Word {
-    public Word(String meaning, String word) {
-        this.meaning = meaning;
-        this.word = word;
-    }
 
-    public String meaning;
     public String word;
     public String text;
+    public String audio;
     public ArrayList<Meaning> meanings=new ArrayList<>();
 
     public Word() {
@@ -28,13 +27,6 @@ public class Word {
                 '}';
     }
 
-    public String getMeaning() {
-        return meaning;
-    }
-
-    public void setMeaning(String meaning) {
-        this.meaning = meaning;
-    }
 
     public String getWord() {
         return word;
@@ -58,5 +50,13 @@ public class Word {
 
     public void setMeanings(ArrayList<Meaning> meanings) {
         this.meanings = meanings;
+    }
+
+    public String getAudio() {
+        return audio;
+    }
+
+    public void setAudio(String audio) {
+        this.audio = audio;
     }
 }

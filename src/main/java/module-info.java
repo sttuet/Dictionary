@@ -3,10 +3,9 @@ module com.example.ourdictionary {
     requires javafx.fxml;
     requires javafx.graphics;
     requires javafx.web;
-
+    requires javafx.media;
     requires org.controlsfx.controls;
     requires java.sql;
-//    requires org.kordamp.bootstrapfx.core;
     requires mysql.connector.j;
     requires com.fasterxml.jackson.databind;
 
