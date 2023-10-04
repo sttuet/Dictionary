@@ -3,7 +3,14 @@ package com.example.ourdictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-// dùng array thì tìm từ t nghĩ sẽ lâu hơn nên dùng cây trie
+/**
+ * Use: khi nhập từ vào ô tìm kiếm sã liệt kê ra các từ có phần tiền tố giống nhau ra ListView.
+ *      lưu toàn bộ các từ dưới 1 cái cây Trie
+ * @see Dictionary#Dictionary()
+ * @see Dictionary#addWord(String)
+ * @see Dictionary#has(String)
+ * @see Dictionary#allWordsHas(String)
+ */
 public class Dictionary {
     class Node {
         Node[] next;
@@ -68,22 +75,37 @@ public class Dictionary {
         }
     }
     private Node root;
-    Dictionary() {
+
+    /**
+     *khởi tạo 1 cái cây rỗng với root.
+     */
+    Dictionary(){
         root=new Node();
-        List<String> list=Main.dictionaryDao.getAllWord();
-        for(String s:list){
-            root.add(s);
-        }
     }
+
+    /**
+     * Tìm các từ có tiền tố giống nhau
+     * @param prefix tiền tố cần tìm, là phần nhập trong ô tìm kiếm.
+     * @return 1 List<String> các từ với tiền tố giống nhau
+     */
     public List<String> allWordsHas(String prefix){
         List<String> list=new ArrayList<>();
-        //code here
         return root.find(prefix);
     }
+
+    /**
+     * kiểm tra xem từ này có trong Dictionary hay k
+     * @param word từ cần kiểm tra
+     * @return boolean
+     */
     public boolean has(String word){
         return root.check(word);
     }
 
+    /**
+     * thêm 1 từ mới vào từ điển.
+     * @param word từ cần thêm
+     */
     public void addWord(String word){
         root.add(word);
     }

@@ -1,5 +1,7 @@
 package com.example.ourdictionary;
-
+/**
+ * 1 Definition object bao gồm 1 câu định nghĩa và 1 câu ví dụ nếu có
+ * */
 public class Definition {
     public String definition;
     public String example;
