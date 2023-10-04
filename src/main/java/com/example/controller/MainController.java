@@ -1,9 +1,11 @@
 package com.example.controller;
 
 import com.example.ourdictionary.Main;
+import com.example.ourdictionary.Word;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
@@ -19,6 +21,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import static com.example.ourdictionary.Main.*;
+import static com.example.service.ParseJSON.fromJson;
+import static com.example.service.SendRequest.downloadAudio;
+import static com.example.service.SendRequest.sendRequest;
 
 
 public class MainController {
@@ -29,6 +34,7 @@ public class MainController {
     private TextField textField;
     @FXML
     private WebView webView;
+    private String currentWord="";
     private String vietMeaning = "";
     private String engMeaning = "";
     @FXML
@@ -68,6 +74,7 @@ public class MainController {
     protected void onChooseWord() {
         String s = listView.getSelectionModel().getSelectedItem();
         textField.setText(s);
+        currentWord=s;
         webView.getEngine().loadContent(meanings.get(s));
 
     }
@@ -80,23 +87,31 @@ public class MainController {
     @FXML
     protected void onTranslate() throws IOException {
         vietMeaning = getInfoInVietnamese(textField.getText());
+        currentWord=textField.getText();
         if (vietMeaning != null) {
+
             webView.getEngine().loadContent(vietMeaning);
             addToRecent(textField.getText());
-            media = new Media(new File("src\\main\\resources\\audio.mp3").toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
         } else {
             vietMeaning = "";
             webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
         }
-        engMeaning = getInfoInEnglish(textField.getText());
     }
-
+    @FXML
+    private Label engLabel;
+    @FXML
+    private Label vietLabel;
+    private boolean gotMeanEnglish=false;
     /**
      * chuyển sang nghĩa tiêngs anh
      */
     @FXML
-    protected void onEngLabelClick() {
+    protected void onEngLabelClick() throws IOException {
+        engLabel.setStyle("-fx-background-color:white");
+        vietLabel.setStyle("-fx-background-color:#dddddd");
+        if (!gotMeanEnglish) {
+            engMeaning = getInfoInEnglish(textField.getText());
+        }
         webView.getEngine().loadContent(engMeaning);
     }
 
@@ -105,12 +120,31 @@ public class MainController {
      */
     @FXML
     protected void onVietLabelClick() {
+        engLabel.setStyle("-fx-background-color:#dddddd");
+        vietLabel.setStyle("-fx-background-color:white");
         webView.getEngine().loadContent(vietMeaning);
     }
 
+    /**
+     * just speak .
+     * @throws IOException
+     */
     @FXML
-    protected void onSpeakerClick() {
-        mediaPlayer.play();
-        mediaPlayer.seek(mediaPlayer.getStartTime());
+    protected void onSpeakerClick() throws IOException {
+        File file_audio= new File("src\\main\\resources\\audio\\"+currentWord+".mp3");
+        if(!file_audio.exists()){
+            try{
+                downloadAudio(currentWord);
+            }catch (Exception e){
+                System.out.println("cant download");
+            }
+        }try {
+            media = new Media(file_audio.toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
+            mediaPlayer.seek(mediaPlayer.getStartTime());
+        }catch (Exception e){
+            System.out.println("cant create media");
+        }
     }
 }

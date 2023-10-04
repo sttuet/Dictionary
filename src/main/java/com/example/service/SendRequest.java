@@ -1,10 +1,15 @@
 package com.example.service;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import com.example.ourdictionary.Main;
+import com.example.ourdictionary.Word;
+
+import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+
+import static com.example.service.ParseJSON.fromJson;
+
 public class SendRequest {
     private static final String URL_PATH="https://api.dictionaryapi.dev/api/v2/entries/en/";
 
@@ -37,6 +42,28 @@ public class SendRequest {
                 }
             }
             return jsonString.toString();
+        }
+    }
+
+    /**
+     * download mp3 file of a word if possible
+     * @param word word need to download
+     * @throws IOException
+     */
+    public static void downloadAudio(String word) throws IOException {
+        Word my_word= fromJson(sendRequest(word), Main.objectMapper);
+        String url=my_word.getAudio();
+        if(url==null)return;
+        else if(url.equals(""))return;
+        else {
+            System.out.println(url);
+             String path= "src\\main\\resources\\audio\\"+word+".mp3";
+             URL audio_url=new URL(url);
+            FileOutputStream fout=new FileOutputStream(path);
+            InputStream in=new BufferedInputStream(audio_url.openStream());
+            fout.write(in.readAllBytes());
+            fout.flush();
+            fout.close();
         }
     }
 }
