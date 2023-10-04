@@ -14,10 +14,10 @@ import static com.example.service.ConvertToHTML.getInfoEng;
 
 public class Main extends Application {
     public static Dictionary dictionary;
-    public static Map<String, String> data;
+    public static Map<String, String> meanings;
     public static ObjectMapper objectMapper;
     public static String fileRecent = "src\\main\\resources\\data\\Recent.txt";
-    public static FileWriter fw;
+    public static FileWriter fW;
     public static BufferedWriter bW;
 
     /**
@@ -27,7 +27,7 @@ public class Main extends Application {
      * @return String (html)
      */
     public static String getInfoInVietnamese(String word) {
-        return data.get(word);
+        return meanings.get(word);
     }
 
     /**
@@ -74,9 +74,9 @@ public class Main extends Application {
     public void loadData() throws IOException {
         objectMapper = new ObjectMapper();
         dictionary = new Dictionary();
-        data = new HashMap<>();
-        fw = new FileWriter(fileRecent, true);
-        bW = new BufferedWriter(fw);
+        meanings = new HashMap<>();
+        fW = new FileWriter(fileRecent, true);
+        bW = new BufferedWriter(fW);
         FileReader fis = new FileReader("src\\main\\resources\\data\\E_V.txt");
         BufferedReader br = new BufferedReader(fis);
         String line;
@@ -84,7 +84,7 @@ public class Main extends Application {
             String[] parts = line.split("<html>");
             String word = parts[0];
             String definition = "<html>" + parts[1];
-            data.put(word, definition);
+            meanings.put(word, definition);
 
             if (isSingleEnglishWord(word)) {
                 dictionary.addWord(word);
