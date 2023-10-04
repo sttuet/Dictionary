@@ -17,6 +17,7 @@ public class Main extends Application {
     public static Map<String, String> meanings;
     public static ObjectMapper objectMapper;
     public static String fileRecent = "src\\main\\resources\\data\\Recent.txt";
+    public static String fileFavourite = "src\\main\\resources\\data\\Favourite.txt";
     public static FileWriter fW;
     public static BufferedWriter bW;
 
