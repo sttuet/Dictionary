@@ -26,10 +26,13 @@ public class ParseJSON {
 
         if(root.get("phonetic")!=null){
             result.setText(root.get("phonetic").asText());
-        }else{
+        }if(root.get("phonetics")!=null)
+        {
             for(JsonNode jsonNode:root.get("phonetics")){
-                if(jsonNode.get("text")!=null){
+                System.out.println(jsonNode);
+                if(jsonNode.get("text")!=null&&jsonNode.get("audio")!=null&&!jsonNode.get("audio").asText().equals("")){
                     result.setText(jsonNode.get("text").asText());
+                    result.setAudio(jsonNode.get("audio").asText());
                     break;
                 }
             }
