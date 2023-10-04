@@ -12,10 +12,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.web.WebView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -82,7 +79,7 @@ public class MainController {
     /**
      * dịch từ. 2 nghĩa tiếng viêtj và tiếng anh.
      *
-     * @throws IOException
+     * @throws IOException ném ngoại lệ.
      */
     @FXML
     protected void onTranslate() throws IOException {
@@ -147,4 +144,32 @@ public class MainController {
             System.out.println("cant create media");
         }
     }
+
+    /**
+     * thêm từ yêu thích vào file Favourite.txt.
+     *
+     * @throws IOException ném ngoại lệ
+     */
+    @FXML
+    protected void addToFavourite() throws IOException {
+        fW = new FileWriter(fileFavourite, true);
+        bW = new BufferedWriter(fW);
+        addToRecent(textField.getText());
+    }
+
+    /**
+     * hiển thị từ trong favourite.
+     * @throws IOException
+     */
+    @FXML
+    protected void showFavouriteWord() throws IOException {
+        FileInputStream fIn = new FileInputStream("src\\main\\resources\\data\\Favourite.txt");
+        LinkedList<String> favouriteList = new LinkedList<>();
+        Scanner sc = new Scanner(fIn);
+        while (sc.hasNext()) {
+            favouriteList.addFirst(sc.nextLine());
+        }
+        listView.setItems(FXCollections.observableList(favouriteList));
+    }
+
 }
