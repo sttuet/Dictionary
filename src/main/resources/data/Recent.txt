@@ -3,3 +3,5 @@ yacht
 iamb
 ubiquitous
 ubiquitous
+thin
+ubiquitous

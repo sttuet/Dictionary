@@ -68,7 +68,7 @@ public class MainController {
     protected void onChooseWord() {
         String s = listView.getSelectionModel().getSelectedItem();
         textField.setText(s);
-        webView.getEngine().loadContent(data.get(s));
+        webView.getEngine().loadContent(meanings.get(s));
 
     }
 
