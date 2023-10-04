@@ -11,12 +11,14 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.web.WebView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
-import static com.example.ourdictionary.Main.getInfoInEnglish;
-import static com.example.ourdictionary.Main.getInfoInVietnamese;
+import static com.example.ourdictionary.Main.*;
 
 
 public class MainController {
@@ -27,14 +29,24 @@ public class MainController {
     private TextField textField;
     @FXML
     private WebView webView;
-
-    private LinkedList<String> historyList = new LinkedList<>();
+    private String vietMeaning = "";
+    private String engMeaning = "";
+    @FXML
+    private Media media;
+    private MediaPlayer mediaPlayer;
 
     /**
      * trả về các từ vừa tra vào ListView.
      */
     @FXML
-    protected void onHistoryButtonClick() {
+
+    protected void onHistoryButtonClick() throws FileNotFoundException {
+        FileInputStream fIn = new FileInputStream("src\\main\\resources\\data\\Recent.txt");
+        LinkedList<String> historyList = new LinkedList<>();
+        Scanner sc = new Scanner(fIn);
+        while (sc.hasNext()) {
+            historyList.addFirst(sc.nextLine());
+        }
         listView.setItems(FXCollections.observableList(historyList));
     }
 
@@ -56,14 +68,13 @@ public class MainController {
     protected void onChooseWord() {
         String s = listView.getSelectionModel().getSelectedItem();
         textField.setText(s);
+        webView.getEngine().loadContent(data.get(s));
 
     }
 
-    private String vietMeaning = "";
-    private String engMeaning = "";
-
     /**
      * dịch từ. 2 nghĩa tiếng viêtj và tiếng anh.
+     *
      * @throws IOException
      */
     @FXML
@@ -71,9 +82,9 @@ public class MainController {
         vietMeaning = getInfoInVietnamese(textField.getText());
         if (vietMeaning != null) {
             webView.getEngine().loadContent(vietMeaning);
-            historyList.addFirst(textField.getText());
-            media =new Media(new File("src\\main\\resources\\audio.mp3").toURI().toString());
-            mediaPlayer= new MediaPlayer(media);
+            addToRecent(textField.getText());
+            media = new Media(new File("src\\main\\resources\\audio.mp3").toURI().toString());
+            mediaPlayer = new MediaPlayer(media);
         } else {
             vietMeaning = "";
             webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
@@ -96,11 +107,9 @@ public class MainController {
     protected void onVietLabelClick() {
         webView.getEngine().loadContent(vietMeaning);
     }
+
     @FXML
-    private Media media;
-    private MediaPlayer mediaPlayer;
-    @FXML
-    protected void onSpeakerClick(){
+    protected void onSpeakerClick() {
         mediaPlayer.play();
         mediaPlayer.seek(mediaPlayer.getStartTime());
     }

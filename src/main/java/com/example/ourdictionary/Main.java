@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,11 +14,15 @@ import static com.example.service.ConvertToHTML.getInfoEng;
 
 public class Main extends Application {
     public static Dictionary dictionary;
-    public static Map<String,String> data;
+    public static Map<String, String> data;
     public static ObjectMapper objectMapper;
+    public static String fileRecent = "src\\main\\resources\\data\\Recent.txt";
+    public static FileWriter fw;
+    public static BufferedWriter bW;
 
     /**
      * lấy nghĩa tiếng việt của từ.
+     *
      * @param word tù cần tìm
      * @return String (html)
      */
@@ -31,12 +32,37 @@ public class Main extends Application {
 
     /**
      * lấy nghĩa tiếng anh của từ.
+     *
      * @param word từ cần lấy
      * @return String (html)
      * @throws IOException
      */
     public static String getInfoInEnglish(String word) throws IOException {
-        return getInfoEng(word,objectMapper);
+        return getInfoEng(word, objectMapper);
+    }
+
+    public static void addToRecent(String word) throws IOException {
+        bW.write(word + '\n');
+        bW.flush();
+    }
+
+    /**
+     * kiểm tra xem từ này có phải từ đơn hay k( chỉ chứa kí tự từ a-z) để add vào dictionary.
+     *
+     * @param s từ cần kiểm tra
+     * @return
+     */
+    public static boolean isSingleEnglishWord(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) < 'a' || s.charAt(i) > 'z') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     /**
@@ -46,10 +72,12 @@ public class Main extends Application {
      * @throws IOException
      */
     public void loadData() throws IOException {
-        objectMapper=new ObjectMapper();
-        dictionary=new Dictionary();
-        data=new HashMap<>();
-        FileReader fis = new FileReader("D:\\Projects\\OurDictionary\\src\\main\\resources\\data\\E_V.txt");
+        objectMapper = new ObjectMapper();
+        dictionary = new Dictionary();
+        data = new HashMap<>();
+        fw = new FileWriter(fileRecent, true);
+        bW = new BufferedWriter(fw);
+        FileReader fis = new FileReader("src\\main\\resources\\data\\E_V.txt");
         BufferedReader br = new BufferedReader(fis);
         String line;
         while ((line = br.readLine()) != null) {
@@ -58,14 +86,20 @@ public class Main extends Application {
             String definition = "<html>" + parts[1];
             data.put(word, definition);
 
-            if(isSingleEnglishWord(word)) {
+            if (isSingleEnglishWord(word)) {
                 dictionary.addWord(word);
             }
         }
     }
 
+    @Override
+    public void stop() throws IOException {
+        bW.close();
+    }
+
     /**
      * chạy chương trình
+     *
      * @param stage
      * @throws IOException
      */
@@ -77,22 +111,5 @@ public class Main extends Application {
         stage.setTitle("Dictionary");
         stage.setScene(scene);
         stage.show();
-    }
-
-    /**
-     * kiểm tra xem từ này có phải từ đơn hay k( chỉ chứa kí tự từ a-z) để add vào dictionary.
-     * @param s từ cần kiểm tra
-     * @return
-     */
-    public static boolean isSingleEnglishWord(String s){
-        for(int i=0;i<s.length();i++){
-            if(s.charAt(i)<'a'||s.charAt(i)>'z'){
-                return false;
-            }
-        }
-        return true;
-    }
-    public static void main(String[] args) {
-        launch(args);
     }
 }
