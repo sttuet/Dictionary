@@ -1,119 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.WebView?>
-<HBox maxHeight="1.7976931348623157E308" prefHeight="315.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/20.0.1"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
-    <children>
-        <VBox prefHeight="400.0" prefWidth="37.0" style="-fx-background-color: #34abeb;" HBox.hgrow="NEVER">
-            <children>
-                <Button fx:id="showAddWordContainerButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0"
-                        style="-fx-background-color: #34abeb;">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="EDIT" size="20"/>
-                    </graphic>
-                </Button>
-                <Button fx:id="historyButton" mnemonicParsing="false" onAction="#onHistoryButtonClick" prefHeight="37.0"
-                        prefWidth="52.0" style="-fx-background-color: #34abeb;">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="HISTORY" size="20"/>
-                    </graphic>
-                </Button>
-                <Button fx:id="addFavWord" mnemonicParsing="false" onAction="#showFavouriteWord" prefHeight="37.0"
-                        prefWidth="57.0" style="-fx-background-color: #34abeb;">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="HEART" size="20"/>
-                    </graphic>
-                </Button>
-                <Button layoutX="10.0" layoutY="85.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="55.0"
-                        style="-fx-background-color: #34abeb;">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="GEAR" size="20"/>
-                    </graphic>
-                </Button>
-            </children>
-        </VBox>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefHeight="400" prefWidth="220.0"
-              HBox.hgrow="ALWAYS">
-            <children>
-                <HBox prefHeight="100.0" prefWidth="200.0">
-                    <children>
-                        <TextField fx:id="textField" maxHeight="-Infinity" onKeyTyped="#onTypeWord" prefHeight="30.0"
-                                   prefWidth="160.0" style="-fx-border-style: solid; -fx-border-color: red;">
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                        </TextField>
-                        <Button contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity"
-                                mnemonicParsing="false" onAction="#onTranslate" prefHeight="30.0" prefWidth="37.0"
-                                style="-fx-background-color: lightblue;">
-                            <graphic>
-                                <FontAwesomeIconView fill="#190aa1" glyphName="SEARCH" size="15" text=""
-                                                     wrappingWidth="13.928571701049805"/>
-                            </graphic>
-                        </Button>
-                    </children>
-                </HBox>
-                <ListView fx:id="listView" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308"
-                          maxWidth="1.7976931348623157E308" onMouseClicked="#onChooseWord" VBox.vgrow="ALWAYS"/>
-            </children>
-        </VBox>
-        <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
-            <children>
-                <HBox prefHeight="30.0" prefWidth="329.0">
-                    <children>
-                        <Label fx:id="speaker" contentDisplay="CENTER" onMouseClicked="#onSpeakerClick"
-                               prefHeight="30.0" prefWidth="25.0" textAlignment="CENTER">
-                            <graphic>
-                                <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../../../image/volume.png"/>
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                            <padding>
-                                <Insets left="5.0"/>
-                            </padding>
-                        </Label>
-                        <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER"
-                               onMouseClicked="#onVietLabelClick" prefHeight="29.0" prefWidth="57.0"
-                               style="-fx-background-color: white;" text="Viet" textAlignment="CENTER"/>
-                        <Label fx:id="engLabel" alignment="CENTER" contentDisplay="CENTER"
-                               onMouseClicked="#onEngLabelClick" prefHeight="29.0" prefWidth="55.0"
-                               style="-fx-background-color: #dddddd;" text="Eng" textAlignment="CENTER"/>
-                    </children>
-                </HBox>
-                <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0"
-                                           prefWidth="287.20001220703125"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.79998779296875" minWidth="10.0"
-                                           prefWidth="40.79998779296875"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Button fx:id="addFav" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="37.0"
-                                prefWidth="40.0" GridPane.columnIndex="1">
-                            <graphic>
-                                <FontAwesomeIconView glyphName="HEART" selectionFill="#d12929"/>
-                            </graphic>
-                        </Button>
-                    </children>
-                </GridPane>
-                <WebView fx:id="webView" minHeight="100.0" minWidth="95.0" prefHeight="-1.0" prefWidth="343.0"
-                         VBox.vgrow="ALWAYS">
-                    <VBox.margin>
-                        <Insets/>
-                    </VBox.margin>
-                </WebView>
-            </children>
-        </VBox>
-    </children>
+
+<HBox maxHeight="1.7976931348623157E308" prefHeight="315.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="37.0" style="-fx-background-color: #34abeb;" HBox.hgrow="NEVER">
+         <children>
+            <Button fx:id="showAddWordContainerButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="59.0" style="-fx-background-color: #34abeb;">
+               <graphic>
+                  <FontAwesomeIconView glyphName="EDIT" size="20" />
+               </graphic>
+            </Button>
+            <Button fx:id="historyButton" mnemonicParsing="false" onAction="#onHistoryButtonClick" prefHeight="37.0" prefWidth="52.0" style="-fx-background-color: #34abeb;">
+               <graphic>
+                  <FontAwesomeIconView glyphName="HISTORY" size="20" />
+               </graphic>
+            </Button>
+            <Button fx:id="addFavWord" mnemonicParsing="false" onAction="#showFavouriteWord" prefHeight="37.0" prefWidth="57.0" style="-fx-background-color: #34abeb;">
+               <graphic>
+                  <FontAwesomeIconView glyphName="HEART" size="20" />
+               </graphic>
+            </Button>
+            <Button layoutX="10.0" layoutY="85.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="55.0" style="-fx-background-color: #34abeb;">
+               <graphic>
+                  <FontAwesomeIconView glyphName="GEAR" size="20" />
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefHeight="400" prefWidth="220.0" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="textField" maxHeight="-Infinity" onKeyTyped="#onTypeWord" prefHeight="30.0" prefWidth="160.0" style="-fx-border-style: solid; -fx-border-color: red;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextField>
+                  <Button contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity" mnemonicParsing="false" onAction="#onTranslate" prefHeight="30.0" prefWidth="37.0" style="-fx-background-color: lightblue;">
+                     <graphic>
+                        <FontAwesomeIconView fill="#190aa1" glyphName="SEARCH" size="15" text="" wrappingWidth="13.928571701049805" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <ListView fx:id="listView" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#onChooseWord" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox prefHeight="30.0" prefWidth="329.0">
+               <children>
+                  <Label fx:id="speaker" contentDisplay="CENTER" onMouseClicked="#onSpeakerClick" prefHeight="30.0" prefWidth="25.0" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../image/volume.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onVietLabelClick" prefHeight="29.0" prefWidth="57.0" style="-fx-background-color: white;" text="Viet" textAlignment="CENTER" />
+                  <Label fx:id="engLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onEngLabelClick" prefHeight="29.0" prefWidth="55.0" style="-fx-background-color: #dddddd;" text="Eng" textAlignment="CENTER" />
+               </children>
+            </HBox>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="287.20001220703125" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="156.79998779296875" minWidth="10.0" prefWidth="40.79998779296875" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="addFav" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="37.0" prefWidth="40.0" GridPane.columnIndex="1">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="HEART" selectionFill="#d12929" />
+                     </graphic>
+                  </Button>
+               </children>
+            </GridPane>
+            <WebView fx:id="webView" minHeight="100.0" minWidth="95.0" prefHeight="-1.0" prefWidth="389.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </WebView>
+         </children>
+      </VBox>
+   </children>
 </HBox>

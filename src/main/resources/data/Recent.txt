@@ -20,3 +20,5 @@ study
 study
 high
 
+say
+hi
