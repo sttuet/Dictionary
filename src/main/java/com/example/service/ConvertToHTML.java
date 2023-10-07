@@ -20,7 +20,7 @@ public class ConvertToHTML {
      * @see SendRequest#sendRequest(String)
      */
     public static String getInfoEng(String word, ObjectMapper objectMapper) throws IOException {
-        String json = sendRequest(word);
+        String json = sendRequest(SendRequest.URL_PATH+word);
         Word word1 = ParseJSON.fromJson(json, objectMapper);
         return toHTML(word1);
     }
@@ -50,5 +50,19 @@ public class ConvertToHTML {
         }
         stringBuilder.append("</ul></html>");
         return stringBuilder.toString();
+    }
+    public static String deleteWordInHTML(String word,String mean){
+        if(word==null||mean==null){
+            return "";
+        }
+        int pos=0;
+        for(int i=0;i<mean.length();i++){
+            if(mean.charAt(i)=='<'&&mean.charAt(i+1)=='i'&&mean.charAt(i+2)=='>'){
+                pos=i;
+                break;
+            }
+        }
+        mean=mean.substring(0,pos+3)+mean.substring(pos+word.length()+3,mean.length());
+        return mean;
     }
 }

@@ -3,6 +3,8 @@ package com.example.ourdictionary;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.ourdictionary.Main.isSingleEnglishWord;
+
 /**
  * Use: khi nhập từ vào ô tìm kiếm sã liệt kê ra các từ có phần tiền tố giống nhau ra ListView.
  * lưu toàn bộ các từ dưới 1 cái cây Trie
@@ -30,6 +32,9 @@ public class Dictionary {
      */
     public List<String> allWordsHas(String prefix) {
         List<String> list = new ArrayList<>();
+        if(!isSingleEnglishWord(prefix)){
+            return list;
+        }
         return root.find(prefix);
     }
 
