@@ -7,21 +7,25 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static com.example.service.ParseJSON.fromJson;
 
 public class SendRequest {
-    private static final String URL_PATH="https://api.dictionaryapi.dev/api/v2/entries/en/";
+    public static final String URL_PATH="https://api.dictionaryapi.dev/api/v2/entries/en/";
+    private static final String URL_TRANSLATE_TEXT="https://translate.google.com/translate_a/single";
 
     /**
      * gửi 1 http get request để lấy về thông tin từ cần tìm,( từ đơn thôi)
-     * @param word từ cần tìm
+     * @param targetUrl url
      * @return JSON
      * @throws IOException
      */
-    public static String sendRequest(String word) throws IOException {
-        URL url=new URL(URL_PATH+word);
+    public static String sendRequest(String targetUrl) throws IOException {
+        URL url=new URL(targetUrl);
         HttpURLConnection con=(HttpURLConnection) url.openConnection();
+        con.setRequestProperty("User-Agent","Mozilla/5.0");
         con.setRequestProperty("content-type","application/json");
         con.setRequestMethod("GET");
         con.setConnectTimeout(5000);
@@ -51,7 +55,7 @@ public class SendRequest {
      * @throws IOException
      */
     public static void downloadAudio(String word) throws IOException {
-        Word my_word= fromJson(sendRequest(word), Main.objectMapper);
+        Word my_word= fromJson(sendRequest(URL_PATH+word), Main.objectMapper);
         String url=my_word.getAudio();
         if(url==null)return;
         else if(url.equals(""))return;
@@ -65,5 +69,21 @@ public class SendRequest {
             fout.flush();
             fout.close();
         }
+    }
+    private static String format(String q){
+        String[] list=q.split(" ");
+        StringBuilder res=new StringBuilder();
+        for(String s:list){
+            res.append(s);
+            res.append("+");
+        }
+        return res.toString();
+    }
+    private static String buildUrl(String from,String to,String q){
+        return URL_TRANSLATE_TEXT+"?client=a&dt=t&dt=rm&dj=1&sl="+from+"&tl="+to+"&q="+format(q);
+    }
+    public static String getJsonTranslate(String from,String to,String text) throws IOException {
+        String s=buildUrl(from,to,text);
+        return sendRequest(s);
     }
 }

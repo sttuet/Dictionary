@@ -108,7 +108,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         loadData();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(),600,400);
         stage.setTitle("Dictionary");
         stage.setScene(scene);
         stage.show();

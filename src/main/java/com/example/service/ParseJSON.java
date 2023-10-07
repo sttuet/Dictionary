@@ -1,11 +1,14 @@
 package com.example.service;
 
 import com.example.ourdictionary.Definition;
+import com.example.ourdictionary.Main;
 import com.example.ourdictionary.Meaning;
 import com.example.ourdictionary.Word;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 public class ParseJSON {
     /**
@@ -49,5 +52,16 @@ public class ParseJSON {
             result.getMeanings().add(meaning);
         });
         return result;
+    }
+    public static String getTranslateText(String from,String to,String text) throws IOException {
+        String translateResult=SendRequest.getJsonTranslate(from,to,text);
+        JsonNode root= Main.objectMapper.readTree(translateResult);
+        return  root.get("sentences").get(0).get("trans").asText();
+    }
+    public static String transToViet(String text) throws IOException {
+        return getTranslateText("en","vi",text);
+    }
+    public static String transToEng(String text) throws IOException {
+        return getTranslateText("vi","en",text);
     }
 }
