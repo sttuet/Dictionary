@@ -1,5 +1,6 @@
 package com.example.ourdictionary;
 
+import com.example.service.IOFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,19 +8,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import static com.example.service.ConvertToHTML.getInfoEng;
 
 public class Main extends Application {
     public static Dictionary dictionary;
-    public static Map<String, String> meanings;
+
     public static ObjectMapper objectMapper;
-    public static String fileRecent = "src\\main\\resources\\data\\Recent.txt";
-    public static String fileFavourite = "src\\main\\resources\\data\\Favourite.txt";
-    public static FileWriter fW;
-    public static BufferedWriter bW;
+    public static Map<String,Boolean> favouriteList;
+    public static LinkedList<String> recentList;
+    public static Map<String, String> meanings;
 
     /**
      * lấy nghĩa tiếng việt của từ.
@@ -42,25 +42,6 @@ public class Main extends Application {
         return getInfoEng(word, objectMapper);
     }
 
-    public static void addToRecent(String word) throws IOException {
-        bW.write(word + '\n');
-        bW.flush();
-    }
-
-    /**
-     * kiểm tra xem từ này có phải từ đơn hay k( chỉ chứa kí tự từ a-z) để add vào dictionary.
-     *
-     * @param s từ cần kiểm tra
-     * @return
-     */
-    public static boolean isSingleEnglishWord(String s) {
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) < 'a' || s.charAt(i) > 'z') {
-                return false;
-            }
-        }
-        return true;
-    }
 
     public static void main(String[] args) {
         launch(args);
@@ -69,33 +50,27 @@ public class Main extends Application {
     /**
      * tải data từ file E_V.txt vào 1 HashMap<Từ,Nghĩa> data để tra từ với nghĩa tiếng việt.
      * thêm các từ vào công cụ search(tạm thời mới chỉ thêm các từ đơn) {@link Dictionary}.
+     * read data from Favourite.txt and Recent.txt to favlist and recentlist.
      *
      * @throws IOException
      */
     public void loadData() throws IOException {
         objectMapper = new ObjectMapper();
         dictionary = new Dictionary();
-        meanings = new HashMap<>();
-        fW = new FileWriter(fileRecent, true);
-        bW = new BufferedWriter(fW);
-        FileReader fis = new FileReader("src\\main\\resources\\data\\E_V.txt");
-        BufferedReader br = new BufferedReader(fis);
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split("<html>");
-            String word = parts[0];
-            String definition = "<html>" + parts[1];
-            meanings.put(word, definition);
-
-            if (isSingleEnglishWord(word)) {
-                dictionary.addWord(word);
-            }
-        }
+        meanings= IOFile.readFromE_VFile(dictionary);
+        recentList=IOFile.readFromRecentFile();
+        favouriteList=IOFile.readFromFavouriteFile();
     }
 
+    /**
+     * write data in favouritelist and recentlist to file txt.
+     * @throws IOException
+     */
     @Override
     public void stop() throws IOException {
-        bW.close();
+        System.out.println("app ended!");
+        IOFile.writeToFavouriteFile(favouriteList);
+        IOFile.writeToRecentFile(recentList);
     }
 
     /**
