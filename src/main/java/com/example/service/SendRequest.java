@@ -14,7 +14,7 @@ import static com.example.service.ParseJSON.fromJson;
 
 public class SendRequest {
     public static final String URL_PATH="https://api.dictionaryapi.dev/api/v2/entries/en/";
-    private static final String URL_TRANSLATE_TEXT="https://translate.google.com/translate_a/single";
+    private static final String URL_TRANSLATE_TEXT="https://translate.google.com/m";
 
     /**
      * gửi 1 http get request để lấy về thông tin từ cần tìm,( từ đơn thôi)
@@ -80,7 +80,7 @@ public class SendRequest {
         return res.toString();
     }
     private static String buildUrl(String from,String to,String q){
-        return URL_TRANSLATE_TEXT+"?client=a&dt=t&dt=rm&dj=1&sl="+from+"&tl="+to+"&q="+format(q);
+        return URL_TRANSLATE_TEXT+"?sl="+from+"&tl="+to+"&q="+format(q);
     }
     public static String getJsonTranslate(String from,String to,String text) throws IOException {
         String s=buildUrl(from,to,text);

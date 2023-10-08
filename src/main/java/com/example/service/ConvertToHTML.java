@@ -51,7 +51,8 @@ public class ConvertToHTML {
         stringBuilder.append("</ul></html>");
         return stringBuilder.toString();
     }
-    public static String deleteWordInHTML(String word,String mean){
+    public static String deleteWordInHTML(String word,String mean)
+    {
         if(word==null||mean==null){
             return "";
         }

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class ParseJSON {
     /**
@@ -55,8 +56,17 @@ public class ParseJSON {
     }
     public static String getTranslateText(String from,String to,String text) throws IOException {
         String translateResult=SendRequest.getJsonTranslate(from,to,text);
-        JsonNode root= Main.objectMapper.readTree(translateResult);
-        return  root.get("sentences").get(0).get("trans").asText();
+        Scanner scanner=new Scanner(translateResult);
+        scanner.useDelimiter("<div class=\"result-container\">");
+        scanner.next();
+        StringBuilder stringBuilder=new StringBuilder();
+        String s=scanner.next();
+        for(int i=0;i<s.length();i++){
+            if(s.charAt(i)!='<'){
+                stringBuilder.append(s.charAt(i));
+            }else break;
+        }
+        return stringBuilder.toString();
     }
     public static String transToViet(String text) throws IOException {
         return getTranslateText("en","vi",text);
