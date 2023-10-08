@@ -60,7 +60,6 @@ public class SendRequest {
         if(url==null)return;
         else if(url.equals(""))return;
         else {
-            System.out.println(url);
              String path= "src\\main\\resources\\audio\\"+word+".mp3";
              URL audio_url=new URL(url);
             FileOutputStream fout=new FileOutputStream(path);

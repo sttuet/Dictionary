@@ -3,7 +3,8 @@ package com.example.ourdictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.ourdictionary.Main.isSingleEnglishWord;
+import static com.example.service.IOFile.isSingleEnglishWord;
+
 
 /**
  * Use: khi nhập từ vào ô tìm kiếm sã liệt kê ra các từ có phần tiền tố giống nhau ra ListView.
