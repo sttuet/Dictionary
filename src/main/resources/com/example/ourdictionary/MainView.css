@@ -1,0 +1,61 @@
+#vietLabel {
+    -fx-font-family: Open Sans;
+    -fx-font-size: 14;
+    -fx-text-fill: "white";
+    -fx-font-weight: bold;
+    -fx-background-color: #003366;
+}
+
+#engLabel {
+    -fx-background-color: #003366;
+    -fx-font-family: Open Sans;
+    -fx-font-size: 14;
+    -fx-text-fill: "white";
+
+    -fx-font-weight: bold;
+}
+
+#engLabel:hover {
+    -fx-background-color: #2980b9;
+}
+
+#vietLabel:hover {
+    -fx-background-color: #2980b9;
+}
+
+#MainWindow {
+    -fx-background-color: #003366;
+}
+
+.button {
+    -fx-background-color: #003366;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+#inputWord {
+    -fx-text-fill: #B5B5B5;
+}
+
+#addFavIcon {
+    -fx-fill: "white";
+    -fx-stroke: #0F1C3F;
+    -fx-stroke-width: 1;
+}
+
+#addFavIcon:hover {
+    -fx-fill: #003366;
+}
+
+#volumeIcon:hover {
+    -fx-fill: #003366;
+}
+
+#currentWord {
+    -fx-font-size: 20;
+    -fx-font-family: Arial;
+    -fx-underline: true;
+    -fx-font-weight: bold;
+}
