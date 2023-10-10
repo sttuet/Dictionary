@@ -36,7 +36,7 @@ public class ConvertToHTML {
         }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("<html><ul>");
-        stringBuilder.append("<li style=\"font-size:larger\">" + word.getWord() + "</li>");
+        stringBuilder.append("<li style=\"font-size:larger\">"  + word.getWord() + "</li>");
         stringBuilder.append("<li style=\"font-style: italic;\">" + word.getText() + "</li>");
         for (Meaning meaning : word.getMeanings()) {
 

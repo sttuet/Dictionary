@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class Main extends Application {
     public static Dictionary dictionary;
 
     public static ObjectMapper objectMapper;
-    public static Map<String,Boolean> favouriteList;
+    public static Map<String, Boolean> favouriteList;
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
 
@@ -57,13 +57,14 @@ public class Main extends Application {
     public void loadData() throws IOException {
         objectMapper = new ObjectMapper();
         dictionary = new Dictionary();
-        meanings= IOFile.readFromE_VFile(dictionary);
-        recentList=IOFile.readFromRecentFile();
-        favouriteList=IOFile.readFromFavouriteFile();
+        meanings = IOFile.readFromE_VFile(dictionary);
+        recentList = IOFile.readFromRecentFile();
+        favouriteList = IOFile.readFromFavouriteFile();
     }
 
     /**
      * write data in favouritelist and recentlist to file txt.
+     *
      * @throws IOException
      */
     @Override
@@ -83,7 +84,8 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         loadData();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(),600,400);
+        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        scene.getStylesheets().add(getClass().getResource("MainView.css").toExternalForm());
         stage.setTitle("Dictionary");
         stage.setScene(scene);
         stage.show();
