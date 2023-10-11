@@ -56,6 +56,7 @@ public class IOFile {
         bufferedReader=new BufferedReader(new FileReader(E_V_PATH));
         Map<String,String> meanings=new HashMap<>();
         String line="";
+
         while ((line = bufferedReader.readLine()) != null) {
             String[] parts = line.split("<html>");
             String word = parts[0];

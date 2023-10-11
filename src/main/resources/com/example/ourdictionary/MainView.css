@@ -59,3 +59,10 @@
     -fx-underline: true;
     -fx-font-weight: bold;
 }
+.listView:selected:filled:hover {
+    -fx-background-color: #2980b9;
+}
+#listView {
+    -fx-font-family: Arial;
+    -fx-font-size: 14;
+}
