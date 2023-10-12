@@ -43,20 +43,7 @@ public class MainController {
     private String engMeaning = "";
     private Media media;
     private MediaPlayer mediaPlayer;
-    @FXML
-    private Label engLabel;
-    @FXML
-    private Label vietLabel;
-    private boolean gotMeanEnglish = false;
-    @FXML
-    private Label speaker;
-    /**
-     * thêm từ yêu thích vào file Favourite.txt.
-     *
-     * @throws IOException ném ngoại lệ
-     */
-    @FXML
-    private Button addFav;
+
 
     /**
      * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
@@ -74,10 +61,16 @@ public class MainController {
     @FXML
     protected void onChooseWord() {
         String s = listView.getSelectionModel().getSelectedItem();
-        inputWord.setText(s);
-        currentWord.setText(s);
-        showSpeakerAndHeart(true);
-        webView.getEngine().loadContent(ConvertToHTML.deleteWordInHTML(s, meanings.get(s)));
+
+        if (s == null || s.equals("")) {
+            return;
+        } else {
+            inputWord.setText(s);
+            currentWord.setText(s);
+            showSpeakerAndHeart(true);
+            webView.getEngine().loadContent(ConvertToHTML.deleteWordInHTML(s, meanings.get(s)));
+        }
+
     }
 
     /**
@@ -92,7 +85,7 @@ public class MainController {
         if (vietMeaning != null) {
             showSpeakerAndHeart(true);
             webView.getEngine().loadContent(vietMeaning);
-
+            recentList.add(currentWord.getText());
         } else {
             vietMeaning = "";
             showSpeakerAndHeart(false);
@@ -107,14 +100,18 @@ public class MainController {
         addFav.setDisable(!b);
     }
 
+    @FXML
+    private Label engLabel;
+    @FXML
+    private Label vietLabel;
+
+
     /**
      * chuyển sang nghĩa tiêngs anh
      */
     @FXML
     protected void onEngLabelClick() throws IOException {
-        engLabel.setStyle("-fx-background-color:white");
-        vietLabel.setStyle("-fx-background-color:#dddddd");
-        if (!gotMeanEnglish) {
+        if (!currentWord.getText().equals("")&&!(currentWord.getText()==null)) {
             engMeaning = getInfoInEnglish(inputWord.getText());
         }
         webView.getEngine().loadContent(engMeaning);
@@ -125,10 +122,12 @@ public class MainController {
      */
     @FXML
     protected void onVietLabelClick() {
-        engLabel.setStyle("-fx-background-color:#dddddd");
-        vietLabel.setStyle("-fx-background-color:white");
         webView.getEngine().loadContent(vietMeaning);
     }
+
+    @FXML
+    private Label speaker;
+
 
     /**
      * just speak .
@@ -162,6 +161,15 @@ public class MainController {
     protected void onRecentButtonClick() throws FileNotFoundException {
         listView.setItems(FXCollections.observableList(recentList));
     }
+
+    /**
+     * thêm từ yêu thích vào file Favourite.txt.
+     *
+     * @throws IOException ném ngoại lệ
+     */
+    @FXML
+    private Button addFav;
+
 
     @FXML
     protected void addToFavourite() throws IOException {

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import static com.example.service.ParseJSON.fromJson;
 
 public class SendRequest {
+    public static final String NO_INTERNET="No internet connection !";
     public static final String URL_PATH="https://api.dictionaryapi.dev/api/v2/entries/en/";
     private static final String URL_TRANSLATE_TEXT="https://translate.google.com/m";
 
@@ -30,8 +31,12 @@ public class SendRequest {
         con.setRequestMethod("GET");
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
-        int status=con.getResponseCode();
-
+        int status;
+        try{
+            status=con.getResponseCode();
+        }catch (Exception e){
+            return NO_INTERNET;
+        }
         if(status>299){
             return null;
         }else{
