@@ -18,11 +18,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 import static com.example.ourdictionary.Main.*;
 import static com.example.service.SendRequest.downloadAudio;
@@ -44,6 +44,7 @@ public class MainController {
     private Media media;
     private MediaPlayer mediaPlayer;
 
+
     /**
      * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
      */
@@ -52,7 +53,6 @@ public class MainController {
         List<String> list = Main.dictionary.allWordsHas(inputWord.getText());
         ObservableList<String> observableList = FXCollections.observableArrayList(list);
         listView.setItems(observableList);
-
     }
 
     /**
@@ -70,6 +70,7 @@ public class MainController {
             showSpeakerAndHeart(true);
             webView.getEngine().loadContent(ConvertToHTML.deleteWordInHTML(s, meanings.get(s)));
         }
+
     }
 
     /**
@@ -104,6 +105,7 @@ public class MainController {
     @FXML
     private Label vietLabel;
 
+
     /**
      * chuyển sang nghĩa tiêngs anh
      */
@@ -125,6 +127,7 @@ public class MainController {
 
     @FXML
     private Label speaker;
+
 
     /**
      * just speak .
@@ -166,6 +169,7 @@ public class MainController {
      */
     @FXML
     private Button addFav;
+
 
     @FXML
     protected void addToFavourite() throws IOException {

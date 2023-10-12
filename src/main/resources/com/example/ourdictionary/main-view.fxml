@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<HBox maxHeight="1.7976931348623157E308" prefHeight="315.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
+<HBox prefHeight="315.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
     <children>
         <VBox fx:id="MainWindow" minWidth="-Infinity" prefHeight="400.0" prefWidth="29.0" HBox.hgrow="NEVER">
             <children>
@@ -40,9 +40,10 @@
         </VBox>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefHeight="400" prefWidth="220.0" HBox.hgrow="ALWAYS">
             <children>
-                <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <children>
                         <TextField fx:id="inputWord" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onSearchButtonClick" onKeyTyped="#onTypeWord" prefHeight="27.0" promptText="Enter a word">
+
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
@@ -56,7 +57,7 @@
                 </HBox>
                 <AnchorPane maxHeight="1.7976931348623157E308" minWidth="0.0" prefHeight="800.0" prefWidth="99.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <ListView fx:id="listView" editable="true" focusTraversable="false" maxHeight="-Infinity" onMouseClicked="#onChooseWord" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" />
+                        <ListView fx:id="listView" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308" onMouseClicked="#onChooseWord" prefWidth="150.0" styleClass="listView" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
             </children>
@@ -64,12 +65,14 @@
         <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
             <children>
                 <HBox prefHeight="27.0" style="-fx-background-color: #430bd2;">
+
                     <children>
                         <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onVietLabelClick" prefHeight="29.0" prefWidth="57.0" text="VIE" textAlignment="CENTER" />
                         <Label fx:id="engLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onEngLabelClick" prefHeight="29.0" prefWidth="55.0" text="EN" textAlignment="CENTER" />
                     </children>
                 </HBox>
                 <HBox prefHeight="25.0" prefWidth="329.0" style="-fx-background-color: white;">
+
                     <children>
                         <Label fx:id="currentWord" prefHeight="25.0" prefWidth="113.0">
                             <font>
@@ -86,9 +89,9 @@
                             <HBox.margin>
                                 <Insets />
                             </HBox.margin>
-                     <graphic>
-                        <FontAwesomeIconView fx:id="volumeIcon" glyphName="VOLUME_UP" wrappingWidth="18.342869758605957" />
-                     </graphic>
+                            <graphic>
+                                <FontAwesomeIconView fx:id="volumeIcon" glyphName="VOLUME_UP" wrappingWidth="18.342869758605957" />
+                            </graphic>
                         </Label>
                         <Button fx:id="addFav" disable="true" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: white;" visible="false">
                             <graphic>
