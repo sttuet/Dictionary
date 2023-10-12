@@ -8,6 +8,7 @@ module com.example.ourdictionary {
     requires java.sql;
     requires mysql.connector.j;
     requires com.fasterxml.jackson.databind;
+    requires de.jensd.fx.glyphs.fontawesome;
 
     opens com.example.controller to javafx.fxml;
     opens com.example.ourdictionary to javafx.fxml;

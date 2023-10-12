@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 import static com.example.service.ConvertToHTML.getInfoEng;
 
@@ -17,7 +18,7 @@ public class Main extends Application {
     public static Dictionary dictionary;
 
     public static ObjectMapper objectMapper;
-    public static Map<String, Boolean> favouriteList;
+    public static Set<String> favouriteList;
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
 
