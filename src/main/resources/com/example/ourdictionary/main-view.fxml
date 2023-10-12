@@ -11,14 +11,16 @@
     <children>
         <VBox fx:id="MainWindow" minWidth="-Infinity" prefHeight="400.0" prefWidth="29.0" HBox.hgrow="NEVER">
             <children>
-                <Button fx:id="translateTextButton" styleClass="button" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                <Button fx:id="translateTextButton" styleClass="button" maxHeight="-Infinity" maxWidth="-Infinity"
+                        minHeight="-Infinity"
                         minWidth="-Infinity" mnemonicParsing="false" onAction="#onGoToTranslateViewButtonClick"
                         prefHeight="27.0" prefWidth="29.0">
                     <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="BOOK" selectionFill="#faf7f7" size="20"/>
                     </graphic>
                 </Button>
-                <Button fx:id="recentButton" styleClass="button" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                <Button fx:id="recentButton" styleClass="button" minHeight="-Infinity" minWidth="-Infinity"
+                        mnemonicParsing="false"
                         onAction="#onRecentButtonClick" prefHeight="27.0" prefWidth="29.0">
                     <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="HISTORY" size="20"/>
