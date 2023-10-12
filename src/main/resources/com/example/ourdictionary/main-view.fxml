@@ -42,14 +42,15 @@
             <children>
                 <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <TextField fx:id="inputWord" maxWidth="-Infinity" onKeyTyped="#onTypeWord" prefHeight="27.0" promptText="Enter a word">
+                        <TextField fx:id="inputWord" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#onSearchButtonClick" onKeyTyped="#onTypeWord" prefHeight="27.0" promptText="Enter a word">
+
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>
                         </TextField>
                         <Button contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="27.0" prefWidth="29.0">
                             <graphic>
-                                <FontAwesomeIconView fx:id="searchEngine" fill="#dbdaea" glyphName="SEARCH" size="15" text="" wrappingWidth="13.928571701049805" />
+                                <FontAwesomeIconView fx:id="searchEngine" fill="WHITE" glyphName="SEARCH" size="15" text="" wrappingWidth="13.928571701049805" />
                             </graphic>
                         </Button>
                     </children>
@@ -63,13 +64,15 @@
         </VBox>
         <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
             <children>
-                <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="335.0" style="-fx-background-color: #003366;">
+                <HBox prefHeight="27.0" style="-fx-background-color: #430bd2;">
+
                     <children>
                         <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onVietLabelClick" prefHeight="29.0" prefWidth="57.0" text="VIE" textAlignment="CENTER" />
                         <Label fx:id="engLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onEngLabelClick" prefHeight="29.0" prefWidth="55.0" text="EN" textAlignment="CENTER" />
                     </children>
                 </HBox>
-                <HBox prefHeight="25.0" prefWidth="329.0" style="-fx-background-color: #FFFFFF;">
+                <HBox prefHeight="25.0" prefWidth="329.0" style="-fx-background-color: white;">
+
                     <children>
                         <Label fx:id="currentWord" prefHeight="25.0" prefWidth="113.0">
                             <font>

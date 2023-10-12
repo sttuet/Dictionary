@@ -22,6 +22,8 @@ public class ParseJSON {
     public static Word fromJson(String json, ObjectMapper objectMapper) throws JsonProcessingException {
         if (json == null) {
             return null;
+        }else if(json.equals(SendRequest.NO_INTERNET)){
+            return null;
         }
         JsonNode root = objectMapper.readTree(json).get(0);
         Word result = new Word();

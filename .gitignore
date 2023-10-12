@@ -22,6 +22,9 @@ target/
 .settings
 .springBeans
 .sts4-cache
+Recent.txt
+Favourite.txt
+*.mp3
 
 ### NetBeans ###
 /nbproject/private/
