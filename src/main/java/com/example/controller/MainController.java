@@ -3,7 +3,6 @@ package com.example.controller;
 import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,14 +14,16 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import de.jensd.fx.glyphs.fontawesome.*;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.ourdictionary.Main.*;
 import static com.example.service.SendRequest.downloadAudio;
@@ -43,16 +44,16 @@ public class MainController {
     private String engMeaning = "";
     private Media media;
     private MediaPlayer mediaPlayer;
-
+    private boolean isShowingFavWord = false;
 
     /**
      * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
      */
     @FXML
     protected void onTypeWord() {
+        isShowingFavWord = false;
         List<String> list = Main.dictionary.allWordsHas(inputWord.getText());
-        ObservableList<String> observableList = FXCollections.observableArrayList(list);
-        listView.setItems(observableList);
+        listView.setItems(FXCollections.observableList(list));
     }
 
     /**
@@ -93,9 +94,17 @@ public class MainController {
         }
     }
 
+    @FXML
+    FontAwesomeIconView heartIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
+
     private void showSpeakerAndHeart(boolean b) {
         speaker.setVisible(b);
         speaker.setDisable(!b);
+        if (favouriteList.contains(currentWord.getText())) {
+            heartIcon.setFill(Paint.valueOf("#003366"));
+        } else {
+            heartIcon.setFill(Paint.valueOf("#ffffff"));
+        }
         addFav.setVisible(b);
         addFav.setDisable(!b);
     }
@@ -111,7 +120,7 @@ public class MainController {
      */
     @FXML
     protected void onEngLabelClick() throws IOException {
-        if (!currentWord.getText().equals("")&&!(currentWord.getText()==null)) {
+        if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
             engMeaning = getInfoInEnglish(inputWord.getText());
         }
         webView.getEngine().loadContent(engMeaning);
@@ -127,7 +136,6 @@ public class MainController {
 
     @FXML
     private Label speaker;
-
 
     /**
      * just speak .
@@ -158,7 +166,7 @@ public class MainController {
      * trả về các từ vừa tra vào ListView.
      */
     @FXML
-    protected void onRecentButtonClick() throws FileNotFoundException {
+    protected void onRecentButtonClick() {
         listView.setItems(FXCollections.observableList(recentList));
     }
 
@@ -170,10 +178,24 @@ public class MainController {
     @FXML
     private Button addFav;
 
-
+    /**
+     * add word to favourite file when click on heart icon.
+     *
+     * @throws IOException
+     */
     @FXML
     protected void addToFavourite() throws IOException {
-        favouriteList.put(currentWord.getText(), true);
+        String s = currentWord.getText();
+        if (favouriteList.contains(s)) {
+            favouriteList.remove(s);
+            heartIcon.setFill(Paint.valueOf("#FFFFFF"));
+        } else {
+            favouriteList.add(s);
+            heartIcon.setFill(Paint.valueOf("#003366"));
+        }
+        if (isShowingFavWord) {
+            listView.setItems(FXCollections.observableList((List<String>) favouriteList.stream().collect(Collectors.toList())));
+        }
     }
 
     /**
@@ -183,11 +205,10 @@ public class MainController {
      */
     @FXML
     protected void showFavouriteWord() throws IOException {
+        isShowingFavWord = true;
         List<String> list = new ArrayList<>();
-        for (String s : favouriteList.keySet()) {
-            if (favouriteList.get(s)) {
-                list.add(s);
-            }
+        for (String s : favouriteList) {
+            list.add(s);
         }
         listView.setItems(FXCollections.observableList(list));
     }

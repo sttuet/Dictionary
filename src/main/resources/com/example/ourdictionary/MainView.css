@@ -38,15 +38,12 @@
     -fx-text-fill: "black";
 }
 
-#addFavIcon {
-    -fx-fill: "white";
-    -fx-stroke: #0F1C3F;
+#heartIcon {
+
+    -fx-stroke: #000000;
     -fx-stroke-width: 1;
 }
 
-#addFavIcon:hover {
-    -fx-fill: #003366;
-}
 
 #volumeIcon:hover {
     -fx-fill: #003366;

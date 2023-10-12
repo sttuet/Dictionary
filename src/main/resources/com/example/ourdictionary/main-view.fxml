@@ -95,7 +95,7 @@
                         </Label>
                         <Button fx:id="addFav" disable="true" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: white;" visible="false">
                             <graphic>
-                                <FontAwesomeIconView fx:id="addFavIcon" fill="#003366" glyphName="HEART" />
+                                <FontAwesomeIconView fx:id="heartIcon" fill="#003366" glyphName="HEART" />
                             </graphic>
                             <HBox.margin>
                                 <Insets />
