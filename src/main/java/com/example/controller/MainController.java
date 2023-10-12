@@ -95,15 +95,15 @@ public class MainController {
     }
 
     @FXML
-    FontAwesomeIconView heartIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
+    FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
 
     private void showSpeakerAndHeart(boolean b) {
         speaker.setVisible(b);
         speaker.setDisable(!b);
         if (favouriteList.contains(currentWord.getText())) {
-            heartIcon.setFill(Paint.valueOf("#003366"));
+            addFavIcon.setFill(Paint.valueOf("#003366"));
         } else {
-            heartIcon.setFill(Paint.valueOf("#ffffff"));
+            addFavIcon.setFill(Paint.valueOf("#ffffff"));
         }
         addFav.setVisible(b);
         addFav.setDisable(!b);
@@ -188,10 +188,10 @@ public class MainController {
         String s = currentWord.getText();
         if (favouriteList.contains(s)) {
             favouriteList.remove(s);
-            heartIcon.setFill(Paint.valueOf("#FFFFFF"));
+            addFavIcon.setFill(Paint.valueOf("#FFFFFF"));
         } else {
             favouriteList.add(s);
-            heartIcon.setFill(Paint.valueOf("#003366"));
+            addFavIcon.setFill(Paint.valueOf("#003366"));
         }
         if (isShowingFavWord) {
             listView.setItems(FXCollections.observableList((List<String>) favouriteList.stream().collect(Collectors.toList())));
