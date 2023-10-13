@@ -26,6 +26,7 @@ public class TranslateController   {
         FXMLLoader fxmlLoader=new FXMLLoader(Main.class.getResource("main-view.fxml"));
         stage=(Stage) ((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(Main.class.getResource("MainView.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
