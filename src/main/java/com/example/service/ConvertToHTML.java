@@ -60,42 +60,66 @@ public class ConvertToHTML {
             return "";
         }
         int pos = 0;
-        for (int i = 0; i < mean.length(); i++) {
-            if (mean.charAt(i) == '<' && mean.charAt(i + 1) == 'i' && mean.charAt(i + 2) == '>') {
-                pos = i;
-                break;
+        Scanner scanner = new Scanner(mean);
+        scanner.useDelimiter("[\\n]");
+        StringBuilder result = new StringBuilder();
+        result.append("<html><div>");
+        String tmp;
+        boolean find_idiom = false;
+        int numTag = 0;
+        char old = '@';
+        char cur;
+        while (scanner.hasNext()) {
+            tmp = scanner.next();
+            cur = tmp.charAt(0);
+            tmp = tmp.substring(1);
+            tmp=tmp.replaceAll("[+]",":");
+            if (cur == '@' || cur == '*') {
+                for (int i = 0; i < numTag; i++) {
+                    result.append("</li></ul>");
+                }
+                result.append("<h3>" + tmp + "</h3>");
+            } else {
+                if (cur == '!' && !find_idiom) {
+                    for (int i = 0; i < numTag; i++) {
+                        result.append("</li></ul>");
+                    }
+                    numTag = 0;
+                    result.append("<h3>Idioms</h3>");
+                    find_idiom = true;
+                }
+                switch (numTag) {
+                    case 0:
+                        result.append("<ul><li>" + tmp);
+                        numTag++;
+                        old = cur;
+                        break;
+                    case 1:
+                        if (cur == old) {
+                            result.append("</li><li>" + tmp);
+                        } else {
+                            result.append("<ul><li>" + tmp);
+                            numTag++;
+                        }
+                        old = cur;
+                        break;
+                    case 2:
+                        if (cur == old) {
+                            result.append("</li><li>" + tmp);
+                        } else {
+                            result.append("</li></ul></li><li>" + tmp);
+                            numTag--;
+                        }
+                        old = cur;
+                        break;
+                }
             }
+
         }
-        mean = mean.substring(0, pos + 3) + mean.substring(pos + word.length() + 3, mean.length());
-        String[] temp = mean.split("'#cc0000'");
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < temp.length; i++) {
-            str.append(temp[i]);
-            if (i != temp.length - 1) {
-                str.append("'#003366' style =\"font-family: Arial; font-size: 14;\"");
-            }
+        for (int i = 0; i < numTag; i++) {
+            result.append("</li></ul>");
         }
-        Scanner sc = new Scanner(str.toString());
-        sc.useDelimiter("<i>|</i>");
-        String res = "";
-        while (sc.hasNext()) {
-            res += sc.next();
-        }
-        String[] rg = {
-                "<b> ngoại động từ</b>", "<b> nội động từ</b>", "<b> danh từ</b>", "<b> tính từ</b>", "<b> phó từ</b>",
-                "<b> trạng từ</b>", "<b> mạo từ</b>", "<b> giới từ</b>", "<b> danh từ, số nhiều as, a's</b>",
-                "<b> tính từ sở hữu</b>", "<b> đại từ sở hữu</b>", "<b> liên từ</b>", "<b> đại từ phản thân</b>",
-                "<b> thán từ</b>", "<b> từ cảm thán</b>", "<b> đại từ nghi vấn</b>", "<b> đại từ quan hệ</b>"
-        };
-        for (int i = 0; i < rg.length; i++) {
-            res = res.replaceAll(rg[i], "<font color='#000000' " +
-                    "style =\"font-family: Arial; font-size: 14;text-decoration: underline;\">" + rg[i] + "</font>");
-        }
-        String rg1 = "((<b>){1}([a-z ]+)[^\\-](</b>){1}:{1} (.[^\\-]+)(</li>){1})+";
-        String rg2 = "<li><b>";
-        String rg3 = "</li";
-        res = res.replaceAll(rg2, "<li><font color='#000000' style =\"font-family: Arial; font-size: 14;\">");
-        res = res.replaceAll(rg3, "</font></li");
-        return res;
+        result.append("</div></html>");
+        return result.toString();
     }
 }
