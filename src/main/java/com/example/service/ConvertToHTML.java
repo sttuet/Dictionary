@@ -63,7 +63,7 @@ public class ConvertToHTML {
         Scanner scanner = new Scanner(mean);
         scanner.useDelimiter("[\\n]");
         StringBuilder result = new StringBuilder();
-        result.append("<html><div>");
+        result.append("<html><div style=\"font-family: Arial, Helvetica, sans-serif;font-size:14;\">");
         String tmp;
         boolean find_idiom = false;
         int numTag = 0;
@@ -73,24 +73,24 @@ public class ConvertToHTML {
             tmp = scanner.next();
             cur = tmp.charAt(0);
             tmp = tmp.substring(1);
-            tmp=tmp.replaceAll("[+]",":");
+            tmp = tmp.replaceAll("[+]", ":");
             if (cur == '@' || cur == '*') {
                 for (int i = 0; i < numTag; i++) {
                     result.append("</li></ul>");
                 }
-                result.append("<h3>" + tmp + "</h3>");
+                result.append("<h3 style=\"\">" + tmp + "</h3>");
             } else {
                 if (cur == '!' && !find_idiom) {
                     for (int i = 0; i < numTag; i++) {
                         result.append("</li></ul>");
                     }
                     numTag = 0;
-                    result.append("<h3>Idioms</h3>");
+                    result.append("<h3 style=\"\">Idioms</h3>");
                     find_idiom = true;
                 }
                 switch (numTag) {
                     case 0:
-                        result.append("<ul><li>" + tmp);
+                        result.append("<ul style=\"\"><li>" + tmp);
                         numTag++;
                         old = cur;
                         break;
@@ -98,7 +98,7 @@ public class ConvertToHTML {
                         if (cur == old) {
                             result.append("</li><li>" + tmp);
                         } else {
-                            result.append("<ul><li>" + tmp);
+                            result.append("<ul style=\"\"><li>" + tmp);
                             numTag++;
                         }
                         old = cur;
