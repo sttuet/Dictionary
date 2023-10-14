@@ -52,7 +52,6 @@
 #currentWord {
     -fx-font-size: 20;
     -fx-font-family: Arial;
-    -fx-underline: true;
     -fx-font-weight: bold;
 }
 
