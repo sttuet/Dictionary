@@ -55,7 +55,7 @@ public class ConvertToHTML {
         return stringBuilder.toString();
     }
 
-    public static String deleteWordInHTML(String word, String mean) {
+    public static String vietMeaningToHTML(String word, String mean) {
         if (word == null || mean == null) {
             return "";
         }

@@ -50,7 +50,7 @@ public class Main extends Application {
 
     /**
      * tải data từ file E_V.txt vào 1 HashMap<Từ,Nghĩa> data để tra từ với nghĩa tiếng việt.
-     * thêm các từ vào công cụ search(tạm thời mới chỉ thêm các từ đơn) {@link Dictionary}.
+     * thêm các từ vào công cụ search {@link Dictionary}.
      * read data from Favourite.txt and Recent.txt to favlist and recentlist.
      *
      * @throws IOException

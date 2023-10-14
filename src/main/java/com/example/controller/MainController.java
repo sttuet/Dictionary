@@ -66,10 +66,12 @@ public class MainController {
         if (s == null || s.equals("")) {
             return;
         } else {
+            recentList.addFirst(s);
             inputWord.setText(s);
             currentWord.setText(s);
             showSpeakerAndHeart(true);
-            webView.getEngine().loadContent(ConvertToHTML.deleteWordInHTML(s, meanings.get(s)));
+            vietMeaning=ConvertToHTML.vietMeaningToHTML(s, meanings.get(s));
+            webView.getEngine().loadContent(vietMeaning);
         }
 
     }
@@ -81,7 +83,7 @@ public class MainController {
      */
     @FXML
     protected void onSearchButtonClick() throws IOException {
-        vietMeaning = ConvertToHTML.deleteWordInHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
+        vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
         currentWord.setText(inputWord.getText());
         if (vietMeaning != null) {
             showSpeakerAndHeart(true);

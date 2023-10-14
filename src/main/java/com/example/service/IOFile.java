@@ -1,9 +1,9 @@
 package com.example.service;
 
 import com.example.ourdictionary.Dictionary;
-
 import java.io.*;
 import java.util.*;
+
 
 
 public class IOFile {
@@ -28,7 +28,7 @@ public class IOFile {
     public static Set<String> readFromFavouriteFile() throws IOException {
         Set<String> list = new HashSet<>();
         bufferedReader = new BufferedReader(new FileReader(FAVOURITE_PATH));
-        String word = "";
+        String word ;
         while ((word = bufferedReader.readLine()) != null) {
             list.add(word);
         }
@@ -46,7 +46,7 @@ public class IOFile {
     public static LinkedList<String> readFromRecentFile() throws IOException {
         bufferedReader = new BufferedReader(new FileReader(RECENT_PATH));
         LinkedList<String> list = new LinkedList<>();
-        String word = "";
+        String word ;
         while ((word = bufferedReader.readLine()) != null) {
             list.addLast(word);
         }
@@ -56,14 +56,14 @@ public class IOFile {
     public static Map<String, String> readFromE_VFile(Dictionary dictionary) throws IOException {
         bufferedReader = new BufferedReader(new FileReader(E_V_PATH));
         Map<String, String> meanings = new HashMap<>();
-        String line = "";
+        String line ;
 
         while ((line = bufferedReader.readLine()) != null) {
             String[] parts = line.split("<html>");
             String word = parts[0];
             String definition = "<html>" + parts[1];
             meanings.put(word, definition);
-            if (isSingleEnglishWord(word)) {
+            if (isValidWord(word)) {
                 dictionary.addWord(word);
             }
         }
@@ -73,12 +73,13 @@ public class IOFile {
     /**
      * kiểm tra xem từ này có phải từ đơn hay k( chỉ chứa kí tự từ a-z) để add vào dictionary.
      *
-     * @param s từ cần kiểm tra
-     * @return
+     * @param s từ cần kiểm tra (chỉ được chứa a-z và ' ' và '-')
+     * @return true false;
      */
-    public static boolean isSingleEnglishWord(String s) {
+    public static boolean isValidWord(String s) {
         for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) < 'a' || s.charAt(i) > 'z') {
+            char c=s.charAt(i);
+            if ((c<'a'||c>'z')&&c!=' '&&c!='-') {
                 return false;
             }
         }
