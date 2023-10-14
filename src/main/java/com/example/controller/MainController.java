@@ -224,6 +224,7 @@ public class MainController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("translate-view.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(Main.class.getResource("translateView.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }

@@ -1,0 +1,27 @@
+.button {
+    -fx-background-color: #003366;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.label {
+    -fx-font-family: Arial;
+    -fx-font-weight: bold;
+    -fx-text-fill: #003366;
+}
+
+.text-field {
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 14;
+}
+
+.text-area {
+    -fx-text-fill: black;
+    -fx-font-family: Arial;
+    -fx-font-size: 14;
+}
