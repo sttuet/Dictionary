@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.example.ourdictionary.Main.*;
@@ -30,14 +31,13 @@ import static com.example.service.SendRequest.downloadAudio;
 
 
 public class MainController {
-    private Stage stage;
     private Scene scene;
     @FXML
     private ListView<String> listView = new ListView<>();
     @FXML
     private TextField inputWord;
     @FXML
-    private WebView webView;
+    private WebView webView=new WebView();
     @FXML
     private Label currentWord = new Label("");
     private String vietMeaning = "";
@@ -63,9 +63,7 @@ public class MainController {
     protected void onChooseWord() {
         String s = listView.getSelectionModel().getSelectedItem();
 
-        if (s == null || s.equals("")) {
-            return;
-        } else {
+        if (s != null && !s.equals("")) {
             recentList.addFirst(s);
             inputWord.setText(s);
             currentWord.setText(s);
@@ -79,10 +77,9 @@ public class MainController {
     /**
      * dịch từ. 2 nghĩa tiếng viêtj và tiếng anh.
      *
-     * @throws IOException ném ngoại lệ.
      */
     @FXML
-    protected void onSearchButtonClick() throws IOException {
+    protected void onSearchButtonClick()  {
         vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
         currentWord.setText(inputWord.getText());
         if (vietMeaning != null) {
@@ -111,12 +108,6 @@ public class MainController {
         addFav.setDisable(!b);
     }
 
-    @FXML
-    private Label engLabel;
-    @FXML
-    private Label vietLabel;
-
-
     /**
      * chuyển sang nghĩa tiêngs anh
      */
@@ -142,10 +133,9 @@ public class MainController {
     /**
      * just speak .
      *
-     * @throws IOException
      */
     @FXML
-    protected void onSpeakerClick() throws IOException {
+    protected void onSpeakerClick()  {
         File file_audio = new File("src\\main\\resources\\audio\\" + currentWord.getText() + ".mp3");
         if (!file_audio.exists()) {
             try {
@@ -171,22 +161,15 @@ public class MainController {
     protected void onRecentButtonClick() {
         listView.setItems(FXCollections.observableList(recentList));
     }
-
-    /**
-     * thêm từ yêu thích vào file Favourite.txt.
-     *
-     * @throws IOException ném ngoại lệ
-     */
     @FXML
     private Button addFav;
 
     /**
      * add word to favourite file when click on heart icon.
      *
-     * @throws IOException
      */
     @FXML
-    protected void addToFavourite() throws IOException {
+    protected void addToFavourite() {
         String s = currentWord.getText();
         if (favouriteList.contains(s)) {
             favouriteList.remove(s);
@@ -196,22 +179,18 @@ public class MainController {
             addFavIcon.setFill(Paint.valueOf("#003366"));
         }
         if (isShowingFavWord) {
-            listView.setItems(FXCollections.observableList((List<String>) favouriteList.stream().collect(Collectors.toList())));
+            listView.setItems(FXCollections.observableList(new ArrayList<>(favouriteList)));
         }
     }
 
     /**
      * hiển thị từ trong favourite.
      *
-     * @throws IOException
      */
     @FXML
-    protected void showFavouriteWord() throws IOException {
+    protected void showFavouriteWord() {
         isShowingFavWord = true;
-        List<String> list = new ArrayList<>();
-        for (String s : favouriteList) {
-            list.add(s);
-        }
+        List<String> list = new ArrayList<>(favouriteList);
         listView.setItems(FXCollections.observableList(list));
     }
 
@@ -224,9 +203,9 @@ public class MainController {
     @FXML
     protected void onGoToTranslateViewButtonClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("translate-view.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(Main.class.getResource("translateView.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("translateView.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
