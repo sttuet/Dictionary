@@ -3,7 +3,8 @@ package com.example.ourdictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.service.IOFile.isSingleEnglishWord;
+
+import static com.example.service.IOFile.isValidWord;
 
 
 /**
@@ -16,13 +17,26 @@ import static com.example.service.IOFile.isSingleEnglishWord;
  * @see Dictionary#allWordsHas(String)
  */
 public class Dictionary {
-    private Node root;
+    public Node root;
 
     /**
      * khởi tạo 1 cái cây rỗng với root.
      */
     Dictionary() {
         root = new Node();
+    }
+    public int toIndex(char c){
+        if(c<='z'&&c>='a'){
+            return c-'a';
+        }else if(c==' ')return 26;
+        else return 27;
+    }
+    public char toChar(int i){
+        if(i<26){
+            return (char) (i+'a');
+        }else if(i==26){
+            return ' ';
+        }return '-';
     }
 
     /**
@@ -33,7 +47,7 @@ public class Dictionary {
      */
     public List<String> allWordsHas(String prefix) {
         List<String> list = new ArrayList<>();
-        if(!isSingleEnglishWord(prefix)){
+        if(!isValidWord(prefix)){
             return list;
         }
         return root.find(prefix);
@@ -63,17 +77,16 @@ public class Dictionary {
         char character;
         int pre;
         boolean end;
-
         Node() {
             end = false;
             pre = 0;
-            next = new Node[26];
+            next = new Node[28];
         }
 
         public boolean check(String s) {
             Node root = this;
             for (int i = 0; i < s.length(); i++) {
-                if (root.next[s.charAt(i) - 'a'] == null) return false;
+                if (root.next[toIndex(s.charAt(i))] == null) return false;
             }
             return true;
         }
@@ -81,12 +94,12 @@ public class Dictionary {
         public void add(String s) {
             Node root = this;
             for (int i = 0; i < s.length(); i++) {
-                if (root.next[s.charAt(i) - 'a'] != null) {
-                    root = root.next[s.charAt(i) - 'a'];
+                if (root.next[toIndex(s.charAt(i))] != null) {
+                    root = root.next[toIndex(s.charAt(i))];
                     root.pre++;
                 } else {
-                    root.next[s.charAt(i) - 'a'] = new Node();
-                    root = root.next[s.charAt(i) - 'a'];
+                    root.next[toIndex(s.charAt(i))] = new Node();
+                    root = root.next[toIndex(s.charAt(i))];
                     root.pre++;
                 }
                 if (i == s.length() - 1) {
@@ -101,9 +114,9 @@ public class Dictionary {
                 list.add(cur);
             }
 
-            for (int i = 0; i < 26; i++) {
+            for (int i = 0; i < 28; i++) {
                 if (root.next[i] == null) continue;
-                String newString = cur + (char) ('a' + i);
+                String newString = cur + toChar(i);
                 Try(list, root.next[i], newString, need);
             }
 
@@ -115,8 +128,8 @@ public class Dictionary {
             List<String> list = new ArrayList<>();
             if (s.equals("")) return list;
             for (int i = 0; i < s.length(); i++) {
-                if (root.next[s.charAt(i) - 'a'] == null) return list;
-                root = root.next[s.charAt(i) - 'a'];
+                if (root.next[toIndex(s.charAt(i))] == null) return list;
+                root = root.next[toIndex(s.charAt(i))];
             }
             int numWord = Math.min(root.pre, 20);
             Try(list, root, s, numWord);
