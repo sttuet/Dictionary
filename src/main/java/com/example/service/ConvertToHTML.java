@@ -47,7 +47,7 @@ public class ConvertToHTML {
             for (Definition definition : meaning.definitions) {
                 stringBuilder.append("<dt >-definition : " + definition.definition + "</dt>");
                 if (!definition.example.equals(""))
-                    stringBuilder.append("<dd> style=\"text-decoration: underline;\">Ex: " + definition.example + "</dd>");
+                    stringBuilder.append("<dd style=\"text-decoration: underline;\">Ex: " + definition.example + "</dd>");
             }
             stringBuilder.append("</dl></li>");
         }

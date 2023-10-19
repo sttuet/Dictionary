@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,6 +22,7 @@ public class TranslateController   {
     private TextField inputText;
     @FXML
     private TextArea translateResult;
+    private boolean engToViet=true;
     @FXML
     protected void onCloseButtonClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader=new FXMLLoader(Main.class.getResource("main-view.fxml"));
@@ -31,10 +33,31 @@ public class TranslateController   {
         stage.show();
     }
     @FXML
-    protected void onTranslateToViet() throws IOException {
+    protected void onTranslate() throws IOException {
         String s=inputText.getText();
-        String res= ParseJSON.transToViet(s);
-        translateResult.setText(res);
+        if(engToViet){
+            String res= ParseJSON.transToViet(s);
+            translateResult.setText(res);
+        }else {
+            String res= ParseJSON.transToEng(s);
+            translateResult.setText(res);
+        }
+
+    }
+    @FXML
+    Label sourceLanguageLabel;
+    @FXML
+    Label targetLanguageLabel;
+    @FXML
+    protected void exchangeLanguage(){
+        engToViet=!engToViet;
+        if(engToViet){
+            sourceLanguageLabel.setText("ANH");
+            targetLanguageLabel.setText("VIET");
+        }else {
+            sourceLanguageLabel.setText("VIET");
+            targetLanguageLabel.setText("ANH");
+        }
     }
 
 

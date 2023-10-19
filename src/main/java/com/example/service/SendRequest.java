@@ -5,10 +5,8 @@ import com.example.ourdictionary.Word;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.net.URLEncoder;
 
 import static com.example.service.ParseJSON.fromJson;
 
@@ -74,17 +72,8 @@ public class SendRequest {
             fout.close();
         }
     }
-    private static String format(String q){
-        String[] list=q.split(" ");
-        StringBuilder res=new StringBuilder();
-        for(String s:list){
-            res.append(s);
-            res.append("+");
-        }
-        return res.toString();
-    }
-    private static String buildUrl(String from,String to,String q){
-        return URL_TRANSLATE_TEXT+"?sl="+from+"&tl="+to+"&q="+format(q);
+    private static String buildUrl(String from,String to,String q) throws UnsupportedEncodingException {
+        return URL_TRANSLATE_TEXT+"?sl="+from+"&tl="+to+"&q="+URLEncoder.encode(q,"UTF-8");
     }
     public static String getJsonTranslate(String from,String to,String text) throws IOException {
         String s=buildUrl(from,to,text);
