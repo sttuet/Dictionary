@@ -6,6 +6,7 @@
 
 .button:hover {
     -fx-background-color: #2980b9;
+    -fx-cursor: hand;
 }
 
 .label {
@@ -25,3 +26,18 @@
     -fx-font-family: Arial;
     -fx-font-size: 14;
 }
+
+#sourceLanguageLabel {
+    -fx-border-color: #696969;
+    -fx-border-radius: 5;
+    -fx-text-alignment: CENTER;
+    -fx-font-weight: normal;
+}
+
+#targetLanguageLabel {
+    -fx-border-radius: 5;
+    -fx-border-color: #696969;
+    -fx-text-alignment: CENTER;
+    -fx-font-weight: normal;
+}
+

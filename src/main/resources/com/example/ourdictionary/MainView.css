@@ -16,9 +16,11 @@
 
 #engLabel:hover {
     -fx-background-color: #2980b9;
+    -fx-cursor: hand;
 }
 
 #vietLabel:hover {
+    -fx-cursor: hand;
     -fx-background-color: #2980b9;
 }
 
@@ -32,6 +34,7 @@
 
 .button:hover {
     -fx-background-color: #2980b9;
+    -fx-cursor: hand;
 }
 
 #inputWord {
@@ -58,18 +61,32 @@
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: #CC3333;
     -fx-text-fill: white;
-    -fx-background-radius: 20;
-    -fx-border-radius: 20;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
 }
 
 .list-cell:filled:hover {
     -fx-background-color: #003366;
     -fx-text-fill: white;
-    -fx-border-radius: 20;
-    -fx-background-radius: 20;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
 }
 
 #inputWord {
     -fx-border-color: #003366;
     -fx-text-fill: "black";
+}
+
+.tooltip {
+    -fx-background: rgba(30, 30, 30);
+    -fx-text-fill: white;
+    -fx-background-color: rgba(30, 30, 30, 0.8);
+    -fx-background-radius: 6px;
+    -fx-background-insets: 0;
+    -fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 3);
+    -fx-font-size: 0.85em;
+    -fx-font-weight: normal;
 }

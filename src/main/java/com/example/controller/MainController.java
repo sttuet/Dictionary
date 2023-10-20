@@ -2,42 +2,55 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import de.jensd.fx.glyphs.fontawesome.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.ResourceBundle;
 
 import static com.example.ourdictionary.Main.*;
 import static com.example.service.SendRequest.downloadAudio;
 
 
-public class MainController {
+public class MainController implements Initializable {
+    public Label vietLabel;
+    public Label engLabel;
+    public Button searchButton;
+    @FXML
+    FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
+    @FXML
+    private Button recentButton;
+    @FXML
+    private Button addFavWord;
+    @FXML
+    private Button settings;
+    @FXML
+    private Button translateTextButton;
     private Scene scene;
     @FXML
     private ListView<String> listView = new ListView<>();
     @FXML
     private TextField inputWord;
     @FXML
-    private WebView webView=new WebView();
+    private WebView webView = new WebView();
     @FXML
     private Label currentWord = new Label("");
     private String vietMeaning = "";
@@ -45,6 +58,10 @@ public class MainController {
     private Media media;
     private MediaPlayer mediaPlayer;
     private boolean isShowingFavWord = false;
+    @FXML
+    private Label speaker;
+    @FXML
+    private Button addFav;
 
     /**
      * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
@@ -68,7 +85,7 @@ public class MainController {
             inputWord.setText(s);
             currentWord.setText(s);
             showSpeakerAndHeart(true);
-            vietMeaning=ConvertToHTML.vietMeaningToHTML(s, meanings.get(s));
+            vietMeaning = ConvertToHTML.vietMeaningToHTML(s, meanings.get(s));
             webView.getEngine().loadContent(vietMeaning);
         }
 
@@ -76,10 +93,9 @@ public class MainController {
 
     /**
      * dịch từ. 2 nghĩa tiếng viêtj và tiếng anh.
-     *
      */
     @FXML
-    protected void onSearchButtonClick()  {
+    protected void onSearchButtonClick() {
         vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
         currentWord.setText(inputWord.getText());
         if (vietMeaning != null) {
@@ -92,9 +108,6 @@ public class MainController {
             webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
         }
     }
-
-    @FXML
-    FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
 
     private void showSpeakerAndHeart(boolean b) {
         speaker.setVisible(b);
@@ -127,15 +140,11 @@ public class MainController {
         webView.getEngine().loadContent(vietMeaning);
     }
 
-    @FXML
-    private Label speaker;
-
     /**
      * just speak .
-     *
      */
     @FXML
-    protected void onSpeakerClick()  {
+    protected void onSpeakerClick() {
         File file_audio = new File("src\\main\\resources\\audio\\" + currentWord.getText() + ".mp3");
         if (!file_audio.exists()) {
             try {
@@ -161,12 +170,9 @@ public class MainController {
     protected void onRecentButtonClick() {
         listView.setItems(FXCollections.observableList(recentList));
     }
-    @FXML
-    private Button addFav;
 
     /**
      * add word to favourite file when click on heart icon.
-     *
      */
     @FXML
     protected void addToFavourite() {
@@ -185,7 +191,6 @@ public class MainController {
 
     /**
      * hiển thị từ trong favourite.
-     *
      */
     @FXML
     protected void showFavouriteWord() {
@@ -208,5 +213,22 @@ public class MainController {
         scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("translateView.css")).toExternalForm());
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * them tooltip
+     *
+     * @param url
+     * @param resourceBundle
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        recentButton.setTooltip(new Tooltip("Recent words"));
+        addFavWord.setTooltip(new Tooltip("Favourite words"));
+        translateTextButton.setTooltip(new Tooltip("Translate sentences"));
+        settings.setTooltip(new Tooltip("Settings"));
+        searchButton.setTooltip(new Tooltip("Search"));
+        engLabel.setTooltip(new Tooltip("English"));
+        vietLabel.setTooltip(new Tooltip("Vietnamese"));
     }
 }
