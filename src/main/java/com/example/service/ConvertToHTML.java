@@ -78,19 +78,20 @@ public class ConvertToHTML {
                 for (int i = 0; i < numTag; i++) {
                     result.append("</li></ul>");
                 }
-                result.append("<h3 style=\"\">" + tmp + "</h3>");
+                numTag = 0;
+                result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14\">" + tmp + "</h3>"); // loại từ
             } else {
                 if (cur == '!' && !find_idiom) {
                     for (int i = 0; i < numTag; i++) {
                         result.append("</li></ul>");
                     }
                     numTag = 0;
-                    result.append("<h3 style=\"\">Idioms</h3>");
+                    result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14\">Idioms</h3>"); // loại từ
                     find_idiom = true;
                 }
                 switch (numTag) {
                     case 0:
-                        result.append("<ul style=\"\"><li>" + tmp);
+                        result.append("<ul style=\"color:#003366;font-family: Arial; font-size:14\"><li>" + tmp); // định nghĩa
                         numTag++;
                         old = cur;
                         break;
@@ -98,7 +99,7 @@ public class ConvertToHTML {
                         if (cur == old) {
                             result.append("</li><li>" + tmp);
                         } else {
-                            result.append("<ul style=\"\"><li>" + tmp);
+                            result.append("<ul style=\"color:black;font-family: Arial; font-size:14\"><li>" + tmp); // ví dụ
                             numTag++;
                         }
                         old = cur;
