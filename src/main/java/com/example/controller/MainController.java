@@ -33,9 +33,10 @@ import static com.example.service.SendRequest.downloadAudio;
 public class MainController implements Initializable {
     public Label vietLabel;
     public Label engLabel;
-    public Button searchButton;
     @FXML
     FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
+    @FXML
+    private Button searchButton;
     @FXML
     private Button recentButton;
     @FXML
@@ -96,17 +97,24 @@ public class MainController implements Initializable {
      */
     @FXML
     protected void onSearchButtonClick() {
-        vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
-        currentWord.setText(inputWord.getText());
-        if (vietMeaning != null) {
-            showSpeakerAndHeart(true);
-            webView.getEngine().loadContent(vietMeaning);
-            recentList.add(currentWord.getText());
-        } else {
+        if (inputWord.getText().isEmpty()) {
             vietMeaning = "";
-            showSpeakerAndHeart(false);
-            webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
+            webView.getEngine().loadContent(vietMeaning);
+        } else {
+            vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
+
+            currentWord.setText(inputWord.getText());
+            if (vietMeaning != null) {
+                showSpeakerAndHeart(true);
+                webView.getEngine().loadContent(vietMeaning);
+                recentList.add(currentWord.getText());
+            } else {
+                vietMeaning = "";
+                showSpeakerAndHeart(false);
+                webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
+            }
         }
+
     }
 
     private void showSpeakerAndHeart(boolean b) {

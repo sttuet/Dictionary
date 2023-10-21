@@ -4,75 +4,60 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.web.WebView?>
-<HBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.controller.MainController">
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
+
+<HBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
     <children>
         <VBox fx:id="MainWindow" minWidth="-Infinity" prefHeight="400.0" prefWidth="29.0" HBox.hgrow="NEVER">
             <children>
-                <Button fx:id="translateTextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-                        minWidth="-Infinity" mnemonicParsing="false" onAction="#onGoToTranslateViewButtonClick"
-                        prefHeight="27.0" prefWidth="29.0">
+                <Button fx:id="translateTextButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGoToTranslateViewButtonClick" prefHeight="27.0" prefWidth="29.0">
                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="BOOK" selectionFill="#faf7f7" size="20"/>
+                        <FontAwesomeIconView fill="WHITE" glyphName="BOOK" selectionFill="#faf7f7" size="20" />
                     </graphic>
 
                 </Button>
-                <Button fx:id="recentButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                        onAction="#onRecentButtonClick" prefHeight="27.0" prefWidth="29.0">
+                <Button fx:id="recentButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onRecentButtonClick" prefHeight="27.0" prefWidth="29.0">
                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="HISTORY" size="20"/>
+                        <FontAwesomeIconView fill="WHITE" glyphName="HISTORY" size="20" />
                     </graphic>
                     <tooltip>
-                        <Tooltip text="Recent Words"/>
+                        <Tooltip text="Recent Words" />
                     </tooltip>
                 </Button>
-                <Button fx:id="addFavWord" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                        onAction="#showFavouriteWord" prefHeight="27.0" prefWidth="29.0">
+                <Button fx:id="addFavWord" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#showFavouriteWord" prefHeight="27.0" prefWidth="29.0">
                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="HEART" size="20"/>
+                        <FontAwesomeIconView fill="WHITE" glyphName="HEART" size="20" />
                     </graphic>
                 </Button>
-                <Button fx:id="settings" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity"
-                        minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0"
-                        prefWidth="29.0">
+                <Button fx:id="settings" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0" prefWidth="29.0">
                     <graphic>
-                        <FontAwesomeIconView fill="WHITE" glyphName="GEAR" size="20"/>
+                        <FontAwesomeIconView fill="WHITE" glyphName="GEAR" size="20" />
                     </graphic>
                 </Button>
             </children>
         </VBox>
-        <VBox maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefHeight="400" prefWidth="220.0"
-              HBox.hgrow="ALWAYS">
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefHeight="400" prefWidth="220.0" HBox.hgrow="ALWAYS">
             <children>
                 <HBox maxHeight="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <TextField fx:id="inputWord" maxWidth="-Infinity" onKeyTyped="#onTypeWord" prefHeight="27.0"
-                                   promptText="Enter a word">
+                        <TextField fx:id="inputWord" maxWidth="-Infinity" onKeyTyped="#onTypeWord" prefHeight="27.0" promptText="Enter a word">
 
                             <opaqueInsets>
-                                <Insets/>
+                                <Insets />
                             </opaqueInsets>
                         </TextField>
-                        <Button fx:id="searchButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0"
-                                maxHeight="-Infinity"
-                                maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                                onAction="#onSearchButtonClick" prefHeight="27.0" prefWidth="29.0">
+                        <Button fx:id="searchButton" contentDisplay="GRAPHIC_ONLY" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="27.0" prefWidth="29.0">
                             <graphic>
-                                <FontAwesomeIconView fx:id="searchEngine" fill="#dbdaea" glyphName="SEARCH" size="15"
-                                                     text="" wrappingWidth="13.928571701049805"/>
+                                <FontAwesomeIconView fx:id="searchEngine" fill="#dbdaea" glyphName="SEARCH" size="15" text="" wrappingWidth="13.928571701049805" />
 
                             </graphic>
                         </Button>
                     </children>
                 </HBox>
-                <AnchorPane maxHeight="1.7976931348623157E308" minWidth="0.0" prefHeight="800.0" prefWidth="99.0"
-                            VBox.vgrow="ALWAYS">
+                <AnchorPane maxHeight="1.7976931348623157E308" minWidth="0.0" prefHeight="800.0" prefWidth="99.0" VBox.vgrow="ALWAYS">
                     <children>
-                        <ListView fx:id="listView" editable="true" focusTraversable="false"
-                                  maxHeight="1.7976931348623157E308" onMouseClicked="#onChooseWord" prefWidth="150.0"
-                                  styleClass="list-cell" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <ListView fx:id="listView" editable="true" focusTraversable="false" maxHeight="1.7976931348623157E308" onMouseClicked="#onChooseWord" prefWidth="150.0" styleClass="list-cell" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
 
                     </children>
@@ -81,57 +66,48 @@
         </VBox>
         <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
             <children>
-                <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0"
-                      prefWidth="335.0" style="-fx-background-color: #003366;">
+                <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0" prefWidth="335.0" style="-fx-background-color: #003366;">
 
                     <children>
-                        <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER"
-                               onMouseClicked="#onVietLabelClick" prefHeight="29.0" prefWidth="57.0" text="VIE"
-                               textAlignment="CENTER"/>
-                        <Label fx:id="engLabel" alignment="CENTER" contentDisplay="CENTER"
-                               onMouseClicked="#onEngLabelClick" prefHeight="29.0" prefWidth="55.0" text="EN"
-                               textAlignment="CENTER"/>
+                        <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onVietLabelClick" prefHeight="29.0" prefWidth="57.0" text="VIE" textAlignment="CENTER" />
+                        <Label fx:id="engLabel" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#onEngLabelClick" prefHeight="29.0" prefWidth="55.0" text="EN" textAlignment="CENTER" />
                     </children>
                 </HBox>
                 <HBox prefHeight="25.0" prefWidth="329.0" style="-fx-background-color: white;">
 
                     <children>
-                        <Label fx:id="currentWord" prefHeight="25.0" prefWidth="113.0">
+                        <Label fx:id="currentWord" prefHeight="26.0" prefWidth="189.0">
                             <font>
-                                <Font name="Times New Roman Bold" size="20.0"/>
+                                <Font name="Times New Roman Bold" size="20.0" />
                             </font>
                             <HBox.margin>
-                                <Insets left="10.0"/>
+                                <Insets left="10.0" />
                             </HBox.margin>
                         </Label>
-                        <Label fx:id="speaker" contentDisplay="CENTER" disable="true" onMouseClicked="#onSpeakerClick"
-                               prefHeight="30.0" prefWidth="25.0" textAlignment="CENTER" visible="false">
+                        <Label fx:id="speaker" contentDisplay="CENTER" disable="true" onMouseClicked="#onSpeakerClick" prefHeight="30.0" prefWidth="25.0" textAlignment="CENTER" visible="false">
                             <padding>
-                                <Insets left="5.0"/>
+                                <Insets left="5.0" />
                             </padding>
                             <HBox.margin>
-                                <Insets/>
+                                <Insets />
                             </HBox.margin>
                             <graphic>
-                                <FontAwesomeIconView fx:id="volumeIcon" glyphName="VOLUME_UP"
-                                                     wrappingWidth="18.342869758605957"/>
+                                <FontAwesomeIconView fx:id="volumeIcon" glyphName="VOLUME_UP" wrappingWidth="18.342869758605957" />
                             </graphic>
                         </Label>
-                        <Button fx:id="addFav" disable="true" mnemonicParsing="false" onAction="#addToFavourite"
-                                prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: white;" visible="false">
+                        <Button fx:id="addFav" disable="true" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: white;" visible="false">
                             <graphic>
-                                <FontAwesomeIconView fx:id="addFavIcon" fill="#003366" glyphName="HEART"/>
+                                <FontAwesomeIconView fx:id="addFavIcon" fill="#003366" glyphName="HEART" />
                             </graphic>
                             <HBox.margin>
-                                <Insets/>
+                                <Insets />
                             </HBox.margin>
                         </Button>
                     </children>
                 </HBox>
-                <WebView fx:id="webView" minHeight="100.0" minWidth="95.0" prefHeight="-1.0" prefWidth="389.0"
-                         VBox.vgrow="ALWAYS">
+                <WebView fx:id="webView" minHeight="100.0" minWidth="95.0" prefHeight="-1.0" prefWidth="389.0" VBox.vgrow="ALWAYS">
                     <VBox.margin>
-                        <Insets/>
+                        <Insets />
                     </VBox.margin>
                 </WebView>
             </children>
