@@ -4,6 +4,8 @@ import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,11 +14,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +39,8 @@ public class MainController implements Initializable {
     public Label engLabel;
     @FXML
     FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
+    @FXML
+    private HBox hBox;
     @FXML
     private Button searchButton;
     @FXML
@@ -215,16 +221,26 @@ public class MainController implements Initializable {
      */
     @FXML
     protected void onGoToTranslateViewButtonClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("translate-view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(fxmlLoader.load());
-        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("translateView.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), hBox);
+        translateTransition.setFromX(0);
+        translateTransition.setToX(600);
+        translateTransition.setOnFinished((ActionEvent event1) -> {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("translate-view.fxml"));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("translateView.css")).toExternalForm());
+            stage.setScene(scene);
+            stage.show();
+        });
+        translateTransition.play();
     }
 
     /**
-     * them tooltip
+     * thêm tooltip
      *
      * @param url
      * @param resourceBundle

@@ -14,12 +14,16 @@
     -fx-font-weight: bold;
 }
 
-#engLabel:hover {
+#engLabel:hover, #engLabel:selected, #engLabel:focused {
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
     -fx-background-color: #2980b9;
     -fx-cursor: hand;
 }
 
-#vietLabel:hover {
+#vietLabel:hover, #vietLabel:selected, #vietLabel:focused {
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
     -fx-background-color: #2980b9;
 }
@@ -32,8 +36,38 @@
     -fx-background-color: #003366;
 }
 
-.button:hover {
+#searchButton:hover {
     -fx-background-color: #2980b9;
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-cursor: hand;
+}
+
+#translateTextButton:hover {
+    -fx-background-color: #2980b9;
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-cursor: hand;
+}
+
+#addFavWord:hover, #addFavWord:selected {
+    -fx-background-color: #2980b9;
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-cursor: hand;
+}
+
+#recentButton:hover, #recentButton:focused {
+    -fx-background-color: #2980b9;
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
+    -fx-cursor: hand;
+}
+
+#settings:hover, #settings:focused {
+    -fx-background-color: #2980b9;
+    -fx-border-color: white;
+    -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
 }
 
@@ -74,9 +108,54 @@
     -fx-cursor: hand;
 }
 
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-border-radius: 2.0em;
+}
+
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0.0em;
+    -fx-padding: 0.0 10.0 0.0 0.0;
+
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.15em 0.0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0.0 0.15em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black, 90.0%);
+    -fx-background-insets: 2.0, 0.0, 0.0;
+    -fx-background-radius: 2.0em;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: derive(#4D4C4F, 10.0%);
+    -fx-background-insets: 2.0, 0.0, 0.0;
+    -fx-background-radius: 2.0em;
+}
+
 #inputWord {
     -fx-border-color: #003366;
     -fx-text-fill: "black";
+}
+
+.list-cell {
+    -fx-background-color: white;
 }
 
 .tooltip {
