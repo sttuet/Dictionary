@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,7 +23,6 @@ public class Main extends Application {
     public static Set<String> favouriteList;
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
-
     /**
      * lấy nghĩa tiếng việt của từ.
      *

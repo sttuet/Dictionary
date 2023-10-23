@@ -35,8 +35,8 @@
                     </graphic>
                 </Button>
                 <Button fx:id="settings" layoutX="10.0" layoutY="85.0" maxHeight="-Infinity" maxWidth="-Infinity"
-                        minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="27.0"
-                        prefWidth="29.0">
+                        minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                        onAction="#onSettingsButtonClick" prefHeight="27.0" prefWidth="29.0">
                     <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="GEAR" size="20"/>
                     </graphic>
@@ -79,10 +79,11 @@
                 </AnchorPane>
             </children>
         </VBox>
-        <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
+        <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0"
+              style="-fx-background-color: linear-gradient(to right, #ffefba, #ffffff);" HBox.hgrow="ALWAYS">
             <children>
                 <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0"
-                      prefWidth="335.0" style="-fx-background-color: #003366;">
+                      prefWidth="335.0" style="-fx-background-color: linear-gradient(to right, #000428, #004e92);">
 
                     <children>
                         <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER"
@@ -93,7 +94,7 @@
                                textAlignment="CENTER"/>
                     </children>
                 </HBox>
-                <HBox prefHeight="25.0" prefWidth="329.0" style="-fx-background-color: white;">
+                <HBox prefHeight="25.0" prefWidth="329.0">
 
                     <children>
                         <Label fx:id="currentWord" prefHeight="26.0" prefWidth="189.0">
@@ -118,7 +119,8 @@
                             </graphic>
                         </Label>
                         <Button fx:id="addFav" disable="true" mnemonicParsing="false" onAction="#addToFavourite"
-                                prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: white;" visible="false">
+                                prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: transparent;"
+                                visible="false">
                             <graphic>
                                 <FontAwesomeIconView fx:id="addFavIcon" fill="#003366" glyphName="HEART"/>
                             </graphic>

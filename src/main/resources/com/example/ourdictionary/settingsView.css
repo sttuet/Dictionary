@@ -1,0 +1,43 @@
+#topLabel {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-text-fill: white;
+    -fx-font-weight: BOLD;
+    -fx-font-family: Arial;
+    -fx-font-size: 16;
+}
+.button {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+}
+.menu-button {
+    -fx-font-family: Arial;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-cursor: hand;
+}
+.menu-button:hover {
+    -fx-font-family: Arial;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
+    -fx-cursor: hand;
+}
