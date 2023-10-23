@@ -3,11 +3,11 @@
     -fx-font-size: 14;
     -fx-text-fill: "white";
     -fx-font-weight: bold;
-    -fx-background-color: #003366;
+    -fx-background-color: transparent;
 }
 
 #engLabel {
-    -fx-background-color: #003366;
+    -fx-background-color: transparent;
     -fx-font-family: Open Sans;
     -fx-font-size: 14;
     -fx-text-fill: "white";
@@ -17,7 +17,7 @@
 #engLabel:hover, #engLabel:selected, #engLabel:focused {
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-cursor: hand;
 }
 
@@ -25,47 +25,51 @@
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
 }
 
 #MainWindow {
-    -fx-background-color: #003366;
+    -fx-background-color: linear-gradient(to bottom, #000428, #004e92);
 }
 
 .button {
-    -fx-background-color: #003366;
+    -fx-background-color: transparent;
+}
+
+#searchButton {
+    -fx-background-color: #000428;
 }
 
 #searchButton:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
 }
 
 #translateTextButton:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
 }
 
 #addFavWord:hover, #addFavWord:selected {
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
 }
 
 #recentButton:hover, #recentButton:focused {
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
 }
 
 #settings:hover, #settings:focused {
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
@@ -75,15 +79,16 @@
     -fx-text-fill: "black";
 }
 
-#addFavIcon {
-
+#addFavIcon, #addFavIcon:hover {
+    -fx-cursor: hand;
     -fx-stroke: #000000;
     -fx-stroke-width: 1;
+    -fx-background-color: transparent;
 }
 
-
 #volumeIcon:hover {
-    -fx-fill: #003366;
+    -fx-fill: linear-gradient(to bottom, #a73737, #7a2828);
+    -fx-cursor: hand;
 }
 
 #currentWord {
@@ -93,7 +98,7 @@
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: #CC3333;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-text-fill: white;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
@@ -101,7 +106,7 @@
 }
 
 .list-cell:filled:hover {
-    -fx-background-color: #003366;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-text-fill: white;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -110,8 +115,8 @@
 
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+    -fx-background-color: #ffefba;
+    -fx-border-color: #ffefba;
     -fx-background-radius: 0.0em;
     -fx-border-radius: 2.0em;
 }
@@ -150,13 +155,18 @@
 }
 
 #inputWord {
-    -fx-border-color: #003366;
+    -fx-border-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-text-fill: "black";
 }
 
 .list-cell {
-    -fx-background-color: white;
+    -fx-background-color: #ffefba;
 }
+
+#topBar {
+    -fx-background-color: linear-gradient(to right, #ffefba, #ffffff);
+}
+
 
 .tooltip {
     -fx-background: rgba(30, 30, 30);

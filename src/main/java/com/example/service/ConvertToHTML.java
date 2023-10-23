@@ -63,7 +63,11 @@ public class ConvertToHTML {
         Scanner scanner = new Scanner(mean);
         scanner.useDelimiter("[\\n]");
         StringBuilder result = new StringBuilder();
-        result.append("<html><div style=\"font-family: Arial, Helvetica, sans-serif;font-size:14;\">");
+        result.append("<html><style>\n" +
+                "        body {\n" +
+                "          background-image: linear-gradient(to right, #ffefba, #ffffff);\n" +
+                "        }\n" +
+                "    </style><div style=\"font-family: Arial, Helvetica, sans-serif;font-size:14;\">");
         String tmp;
         boolean find_idiom = false;
         int numTag = 0;

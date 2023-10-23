@@ -108,7 +108,6 @@ public class MainController implements Initializable {
             webView.getEngine().loadContent(vietMeaning);
         } else {
             vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
-
             currentWord.setText(inputWord.getText());
             if (vietMeaning != null) {
                 showSpeakerAndHeart(true);
@@ -254,5 +253,19 @@ public class MainController implements Initializable {
         searchButton.setTooltip(new Tooltip("Search"));
         engLabel.setTooltip(new Tooltip("English"));
         vietLabel.setTooltip(new Tooltip("Vietnamese"));
+    }
+
+    @FXML
+    public void onSettingsButtonClick(ActionEvent actionEvent) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("settings-view.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            try {
+                scene = new Scene(fxmlLoader.load());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("settingsView.css")).toExternalForm());
+            stage.setScene(scene);
+            stage.show();
     }
 }
