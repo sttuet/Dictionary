@@ -4,7 +4,6 @@ import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,7 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
@@ -38,6 +40,9 @@ public class MainController implements Initializable {
     public Label vietLabel;
     public Label engLabel;
     @FXML
+    public WebView webView = new WebView();
+    public VBox MainWindow;
+    @FXML
     FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
     @FXML
     private HBox hBox;
@@ -57,8 +62,6 @@ public class MainController implements Initializable {
     @FXML
     private TextField inputWord;
     @FXML
-    private WebView webView = new WebView();
-    @FXML
     private Label currentWord = new Label("");
     private String vietMeaning = "";
     private String engMeaning = "";
@@ -69,6 +72,19 @@ public class MainController implements Initializable {
     private Label speaker;
     @FXML
     private Button addFav;
+
+    protected void setWebView() {
+
+    }
+    public void setDarkMode() {
+        if(Main.DARK_MODE){
+            listView.setBackground(Background.fill(Paint.valueOf("black")));
+            webView.setBlendMode(BlendMode.LIGHTEN);
+        }
+        else{
+            listView.setBackground(Background.fill(Paint.valueOf("linear-gradient(to bottom, #efefbb, #d4d3dd)")));
+        }
+    }
 
     /**
      * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
@@ -253,19 +269,21 @@ public class MainController implements Initializable {
         searchButton.setTooltip(new Tooltip("Search"));
         engLabel.setTooltip(new Tooltip("English"));
         vietLabel.setTooltip(new Tooltip("Vietnamese"));
+
+        setDarkMode();
     }
 
     @FXML
     public void onSettingsButtonClick(ActionEvent actionEvent) {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("settings-view.fxml"));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            try {
-                scene = new Scene(fxmlLoader.load());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("settingsView.css")).toExternalForm());
-            stage.setScene(scene);
-            stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("settings-view.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("settingsView.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.show();
     }
 }

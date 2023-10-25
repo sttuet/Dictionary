@@ -5,18 +5,23 @@ import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SettingController {
+public class SettingController implements Initializable {
     public Button backSettingButton;
     public MenuButton autoPlayButton;
     public MenuButton setDarkModeButton;
@@ -28,10 +33,6 @@ public class SettingController {
 
     @FXML
     protected void onBackClick(ActionEvent event) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), vBoxSetting);
-        translateTransition.setFromX(0);
-        translateTransition.setToX(300);
-        translateTransition.setOnFinished((ActionEvent event1) -> {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             try {
@@ -42,21 +43,32 @@ public class SettingController {
             scene.getStylesheets().add(Main.class.getResource("MainView.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
-        });
-        translateTransition.play();
     }
 
-    @FXML
-    protected void onSetFontSizeClick() {
-
-    }
-
-    @FXML
-    protected void onAutoPlayClick() {
+    public void onDarkModeSelect(ActionEvent event) {
+        Main.DARK_MODE = true;
+        this.vBoxSetting.setBackground(Background.fill(Paint.valueOf("black")));
 
     }
 
-    public void onDarkModeButtonClick(ActionEvent event) {
+    public void onLightModeSelect(ActionEvent event) {
+        Main.DARK_MODE = false;
+        this.vBoxSetting.setBackground(Background.fill(Paint.valueOf("linear-gradient(to bottom, #efefbb, #d4d3dd)")));
+    }
 
+    public void onYesSelect(ActionEvent event) {
+    }
+
+    public void onNoSelect(ActionEvent event) {
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(Main.DARK_MODE) {
+            this.vBoxSetting.setBackground(Background.fill(Paint.valueOf("black")));
+        }
+        else {
+            this.vBoxSetting.setBackground(Background.fill(Paint.valueOf("linear-gradient(to bottom, #efefbb, #d4d3dd)")));
+        }
     }
 }
