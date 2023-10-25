@@ -98,25 +98,27 @@
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
+    -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);
     -fx-text-fill: white;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
     -fx-cursor: hand;
+    -fx-text-alignment: LEFT;
 }
 
 .list-cell:filled:hover {
-    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
+    -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);
     -fx-text-fill: white;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
     -fx-cursor: hand;
+    -fx-text-alignment: LEFT;
 }
 
 .scroll-bar:horizontal .track,
 .scroll-bar:vertical .track {
-    -fx-background-color: #ffefba;
-    -fx-border-color: #ffefba;
+    -fx-background-color: white;
+    -fx-border-color: white;
     -fx-background-radius: 0.0em;
     -fx-border-radius: 2.0em;
 }
@@ -160,11 +162,12 @@
 }
 
 .list-cell {
-    -fx-background-color: #ffefba;
+    -fx-background-color: white;
+    -fx-text-alignment: LEFT;
 }
 
 #topBar {
-    -fx-background-color: linear-gradient(to right, #ffefba, #ffffff);
+    -fx-background-color: white;
 }
 
 
@@ -178,4 +181,13 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 3);
     -fx-font-size: 0.85em;
     -fx-font-weight: normal;
+}
+.button-hover:hover {
+    -fx-background-color: transparent;
+}
+.label-anChor {
+    -fx-text-fill: black;
+}
+.label-anChor:hover {
+    -fx-text-fill: white;
 }
