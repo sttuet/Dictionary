@@ -131,7 +131,7 @@
                     </children>
                 </HBox>
                 <WebView fx:id="webView" minHeight="100.0" minWidth="95.0" prefHeight="-1.0" prefWidth="389.0"
-                         VBox.vgrow="ALWAYS">
+                         style="-fx-blend-mode: darken;" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets/>
                     </VBox.margin>

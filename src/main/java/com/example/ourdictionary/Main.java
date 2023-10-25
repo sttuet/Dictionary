@@ -23,6 +23,7 @@ public class Main extends Application {
     public static Set<String> favouriteList;
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
+    public static boolean DARK_MODE = false;
     /**
      * lấy nghĩa tiếng việt của từ.
      *
