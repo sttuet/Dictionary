@@ -7,14 +7,15 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.layout.Background;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -73,18 +74,15 @@ public class MainController implements Initializable {
     @FXML
     private Button addFav;
 
-    protected void setWebView() {
-
-    }
-    public void setDarkMode() {
-        if(Main.DARK_MODE){
-            listView.setBackground(Background.fill(Paint.valueOf("black")));
-            webView.setBlendMode(BlendMode.LIGHTEN);
-        }
-        else{
-            listView.setBackground(Background.fill(Paint.valueOf("linear-gradient(to bottom, #efefbb, #d4d3dd)")));
-        }
-    }
+//    public void setDarkMode() {
+//        if (Main.DARK_MODE) {
+//            System.out.println("aaaaa");
+//            listView.setBackground(Background.fill(Paint.valueOf("black")));
+//            webView.getEngine().loadContent("<html><body style=\"background-image: black;\"></body></html");
+//        } else {
+//            listView.setBackground(Background.fill(Paint.valueOf("linear-gradient(to bottom, #efefbb, #d4d3dd)")));
+//        }
+//    }
 
     /**
      * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
@@ -94,6 +92,85 @@ public class MainController implements Initializable {
         isShowingFavWord = false;
         List<String> list = Main.dictionary.allWordsHas(inputWord.getText());
         listView.setItems(FXCollections.observableList(list));
+    }
+
+    protected void deleteWord(boolean FavOrRecent) {
+        listView.setCellFactory(cell -> {
+            return new ListCell<>() {
+                final AnchorPane rootLayout = new AnchorPane() {{
+                }};
+                final Label title = new Label();
+                FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.TIMES);
+                // The Button we'll include to order the book
+                final Button deleteButton = new Button("", iconView);
+
+                {
+                    title.getStyleClass().add("label-anChor");
+                }
+
+                {
+                    iconView.setFill(Paint.valueOf("black"));
+                }
+
+                {
+                    //deleteButton.setAlignment(Pos.TOP_RIGHT);
+                    deleteButton.setMinWidth(20);
+                    deleteButton.setMinHeight(20);
+                    deleteButton.setPrefSize(20, 20);
+                    deleteButton.setAlignment(Pos.BOTTOM_CENTER);
+                    deleteButton.getStyleClass().add("button-hover");
+                    if (deleteButton.isHover()) {
+                        iconView.setFill(Paint.valueOf("white"));
+                    }
+                }
+
+                {
+                    rootLayout.getChildren().addAll(title, deleteButton);
+                    AnchorPane.setRightAnchor(deleteButton, 0.0);
+                }
+
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (item != null) {
+
+                        title.setText(item);
+                        // Simple onAction() method to print out the book we're purchasing.
+                        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+                            public void handle(ActionEvent event) {
+                                if (!listView.getItems().isEmpty()) {
+                                    final int selectedIdx = listView.getSelectionModel().getSelectedIndex();
+                                    if (selectedIdx != -1) {
+                                        String itemToRemove = listView.getSelectionModel().getSelectedItem();
+
+                                        final int newSelectedIdx =
+                                                (selectedIdx == listView.getItems().size() - 1)
+                                                        ? selectedIdx - 1
+                                                        : selectedIdx;
+                                        listView.getItems().remove(selectedIdx);
+                                        if (FavOrRecent) {
+                                            recentList.remove(itemToRemove);
+                                        } else {
+                                            favouriteList.remove(itemToRemove);
+                                        }
+                                        listView.getSelectionModel().select(newSelectedIdx);
+                                    }
+                                }
+
+                            }
+                        });
+
+                        // Finally, set this cell's graphic to display the HBox
+                        setGraphic(rootLayout);
+                    } else {
+                        // Not book in this cell, set the graphic to null
+                        setGraphic(null);
+                    }
+                }
+
+            };
+        });
     }
 
     /**
@@ -198,6 +275,7 @@ public class MainController implements Initializable {
     @FXML
     protected void onRecentButtonClick() {
         listView.setItems(FXCollections.observableList(recentList));
+        deleteWord(true);
     }
 
     /**
@@ -226,6 +304,7 @@ public class MainController implements Initializable {
         isShowingFavWord = true;
         List<String> list = new ArrayList<>(favouriteList);
         listView.setItems(FXCollections.observableList(list));
+        deleteWord(false);
     }
 
     /**
@@ -270,7 +349,7 @@ public class MainController implements Initializable {
         engLabel.setTooltip(new Tooltip("English"));
         vietLabel.setTooltip(new Tooltip("Vietnamese"));
 
-        setDarkMode();
+        // setDarkMode();
     }
 
     @FXML

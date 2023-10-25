@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.ourdictionary.Definition;
+import com.example.ourdictionary.Main;
 import com.example.ourdictionary.Meaning;
 import com.example.ourdictionary.Word;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -56,6 +57,7 @@ public class ConvertToHTML {
     }
 
     public static String vietMeaningToHTML(String word, String mean) {
+        String backGroundColor = (Main.DARK_MODE?"black":"linear-gradient(to right, #ffefba, #ffffff)");
         if (word == null || mean == null) {
             return "";
         }
@@ -63,11 +65,8 @@ public class ConvertToHTML {
         Scanner scanner = new Scanner(mean);
         scanner.useDelimiter("[\\n]");
         StringBuilder result = new StringBuilder();
-        result.append("<html><style>\n" +
-                "        body {\n" +
-                "          background-image: linear-gradient(to right, #ffefba, #ffffff);\n" +
-                "        }\n" +
-                "    </style><div style=\"font-family: Arial, Helvetica, sans-serif;font-size:14;\">");
+        result.append("<html>"+
+                "<div style=\"font-family: Arial, Helvetica, sans-serif;font-size:14;\">");
         String tmp;
         boolean find_idiom = false;
         int numTag = 0;
