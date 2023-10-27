@@ -4,33 +4,29 @@ import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static com.example.ourdictionary.Main.*;
@@ -43,6 +39,8 @@ public class MainController implements Initializable {
     @FXML
     public WebView webView = new WebView();
     public VBox MainWindow;
+    public HBox topBar;
+    public FontAwesomeIconView volumeIcon;
     @FXML
     FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
     @FXML
@@ -57,7 +55,6 @@ public class MainController implements Initializable {
     private Button settings;
     @FXML
     private Button translateTextButton;
-    private Scene scene;
     @FXML
     private ListView<String> listView = new ListView<>();
     @FXML
@@ -74,15 +71,40 @@ public class MainController implements Initializable {
     @FXML
     private Button addFav;
 
-//    public void setDarkMode() {
-//        if (Main.DARK_MODE) {
-//            System.out.println("aaaaa");
-//            listView.setBackground(Background.fill(Paint.valueOf("black")));
-//            webView.getEngine().loadContent("<html><body style=\"background-image: black;\"></body></html");
-//        } else {
-//            listView.setBackground(Background.fill(Paint.valueOf("linear-gradient(to bottom, #efefbb, #d4d3dd)")));
-//        }
-//    }
+    public void setDarkMode() {
+        listView.setBackground(Background.fill(Paint.valueOf("#303030")));
+        listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            @Override
+            public ListCell<String> call(ListView<String> param) {
+                return new ListCell<String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(item);
+                        setTextFill(Paint.valueOf("white"));
+                        if (DARK_MODE) {
+                            setStyle("-fx-background-color: #303030");
+                        }
+
+                        if (isSelected()) {
+                            setStyle("-fx-background-color: linear-gradient(to right, #000428, #004e92);\n" +
+                                    "                                -fx-text-fill: white;\n" +
+                                    "                                -fx-background-radius: 5;\n" +
+                                    "                                -fx-border-radius: 5;\n" +
+                                    "                                -fx-cursor: hand;");
+                        }
+                    }
+
+                };
+            }
+        });
+        webView.getEngine().loadContent("<html><body>" +
+                " <style> body { background-color:#303030; } </style></body></html");
+        webView.setBlendMode(BlendMode.DARKEN);
+        topBar.setBackground(Background.fill(Paint.valueOf("#303030")));
+        currentWord.setTextFill(Paint.valueOf("white"));
+        volumeIcon.setFill(Paint.valueOf("white"));
+    }
 
     /**
      * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
@@ -95,16 +117,29 @@ public class MainController implements Initializable {
     }
 
     protected void deleteWord(boolean FavOrRecent) {
+        if (DARK_MODE) {
+            listView.setBackground(Background.fill(Paint.valueOf("#303030")));
+        }
         listView.setCellFactory(cell -> {
             return new ListCell<>() {
                 final AnchorPane rootLayout = new AnchorPane() {{
+                    setTextFill(Paint.valueOf("white"));
+                    if (DARK_MODE) {
+                        setStyle("-fx-background-color: #303030; -fx-text-fill: white");
+                    }
+
                 }};
                 final Label title = new Label();
-                FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.TIMES);
+                final FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.TIMES);
                 // The Button we'll include to order the book
                 final Button deleteButton = new Button("", iconView);
 
                 {
+                    if (DARK_MODE) {
+                        title.setBackground(Background.fill(Paint.valueOf("#303030")));
+                        title.setTextFill(Paint.valueOf("white"));
+                        title.setStyle("-fx-background-color: #303030; -fx-text-fill: white;");
+                    }
                     title.getStyleClass().add("label-anChor");
                 }
 
@@ -119,9 +154,7 @@ public class MainController implements Initializable {
                     deleteButton.setPrefSize(20, 20);
                     deleteButton.setAlignment(Pos.BOTTOM_CENTER);
                     deleteButton.getStyleClass().add("button-hover");
-                    if (deleteButton.isHover()) {
-                        iconView.setFill(Paint.valueOf("white"));
-                    }
+
                 }
 
                 {
@@ -132,11 +165,39 @@ public class MainController implements Initializable {
                 @Override
                 protected void updateItem(String item, boolean empty) {
                     super.updateItem(item, empty);
-
+                    if (DARK_MODE) {
+                        setStyle("-fx-background-color: #303030");
+                    }
                     if (item != null) {
+                        if (cell.isFocused()) {
+                            setTextFill(Paint.valueOf("white"));
+                        }
+                        if (DARK_MODE) {
+                            setOnMouseEntered(event -> {
+                                rootLayout.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
+                                title.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
+                                setStyle(
+                                        "    -fx-text-fill: white;\n" +
+                                                "    -fx-border-radius: 5;\n" +
+                                                "    -fx-background-radius: 5;\n" +
+                                                "    -fx-cursor: hand;\n" +
+                                                "    -fx-text-alignment: LEFT;");
+                            });
+
+                            setOnMouseExited(event -> {
+
+                                setStyle("-fx-background-color: #303030;-fx-text-fill: white;" +
+                                        " -fx-border-radius: 5;" +
+                                        " -fx-background-radius: 5;");
+                                rootLayout.setStyle("-fx-background-color: #303030;");
+                                title.setBackground(Background.fill(Paint.valueOf("#303030")));
+                                title.setTextFill(Paint.valueOf("white"));
+                                title.setStyle("-fx-background-color: #303030; -fx-text-fill: white;");
+
+                            });
+                        }
 
                         title.setText(item);
-                        // Simple onAction() method to print out the book we're purchasing.
                         deleteButton.setOnAction(new EventHandler<ActionEvent>() {
                             public void handle(ActionEvent event) {
                                 if (!listView.getItems().isEmpty()) {
@@ -148,7 +209,19 @@ public class MainController implements Initializable {
                                                 (selectedIdx == listView.getItems().size() - 1)
                                                         ? selectedIdx - 1
                                                         : selectedIdx;
+
                                         listView.getItems().remove(selectedIdx);
+                                        if (DARK_MODE) {
+                                            rootLayout.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
+                                            title.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
+                                            setStyle(
+                                                    " -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);"
+                                                            + " -fx-text-fill: white;\n"
+                                                            + " -fx-border-radius: 5;\n"
+                                                            + " -fx-background-radius: 5;\n"
+                                                            + " -fx-cursor: hand;\n"
+                                                            + " -fx-text-alignment: LEFT;");
+                                        }
                                         if (FavOrRecent) {
                                             recentList.remove(itemToRemove);
                                         } else {
@@ -160,11 +233,8 @@ public class MainController implements Initializable {
 
                             }
                         });
-
-                        // Finally, set this cell's graphic to display the HBox
                         setGraphic(rootLayout);
                     } else {
-                        // Not book in this cell, set the graphic to null
                         setGraphic(null);
                     }
                 }
@@ -315,22 +385,7 @@ public class MainController implements Initializable {
      */
     @FXML
     protected void onGoToTranslateViewButtonClick(ActionEvent event) throws IOException {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), hBox);
-        translateTransition.setFromX(0);
-        translateTransition.setToX(600);
-        translateTransition.setOnFinished((ActionEvent event1) -> {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("translate-view.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            try {
-                scene = new Scene(fxmlLoader.load());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("translateView.css")).toExternalForm());
-            stage.setScene(scene);
-            stage.show();
-        });
-        translateTransition.play();
+        Main.changeScreen("translate-view.fxml", "translateView.css");
     }
 
     /**
@@ -348,21 +403,16 @@ public class MainController implements Initializable {
         searchButton.setTooltip(new Tooltip("Search"));
         engLabel.setTooltip(new Tooltip("English"));
         vietLabel.setTooltip(new Tooltip("Vietnamese"));
-
-        // setDarkMode();
+        if (Main.DARK_MODE) {
+            setDarkMode();
+        } else {
+            listView.setBackground(Background.fill(Paint.valueOf("white")));
+        }
     }
 
     @FXML
-    public void onSettingsButtonClick(ActionEvent actionEvent) {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("settings-view.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        try {
-            scene = new Scene(fxmlLoader.load());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource("settingsView.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.show();
+    public void onSettingsButtonClick(ActionEvent actionEvent) throws IOException {
+        Main.changeScreen("settings-view.fxml", "settingsView.css");
     }
+
 }

@@ -71,20 +71,18 @@
                             VBox.vgrow="ALWAYS">
                     <children>
                         <ListView fx:id="listView" editable="true" focusTraversable="false"
-                                  maxHeight="1.7976931348623157E308" onMouseClicked="#onChooseWord"
-                                  prefWidth="150.0" styleClass="list-cell" AnchorPane.bottomAnchor="0.0"
-                                  AnchorPane.topAnchor="0.0"/>
+                                  maxHeight="1.7976931348623157E308" onMouseClicked="#onChooseWord" prefWidth="150.0"
+                                  AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0"/>
 
 
                     </children>
                 </AnchorPane>
             </children>
         </VBox>
-        <VBox maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0"
-              style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+        <VBox fx:id="vBox" maxHeight="1.7976931348623157E308" prefHeight="400.0" prefWidth="343.0" HBox.hgrow="ALWAYS">
             <children>
-                <HBox maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0"
-                      prefWidth="335.0" style="-fx-background-color: linear-gradient(to right, #000428, #004e92);">
+                <HBox fx:id="hBox1" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="27.0"
+                      prefWidth="335.0">
 
                     <children>
                         <Label fx:id="vietLabel" alignment="CENTER" contentDisplay="CENTER"
@@ -95,7 +93,7 @@
                                textAlignment="CENTER"/>
                     </children>
                 </HBox>
-                <HBox prefHeight="25.0" prefWidth="329.0">
+                <HBox fx:id="topBar" prefHeight="25.0" prefWidth="329.0">
 
                     <children>
                         <Label fx:id="currentWord" prefHeight="26.0" prefWidth="189.0">
@@ -120,8 +118,7 @@
                             </graphic>
                         </Label>
                         <Button fx:id="addFav" disable="true" mnemonicParsing="false" onAction="#addToFavourite"
-                                prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: transparent;"
-                                visible="false">
+                                prefHeight="25.0" prefWidth="26.0" visible="false">
                             <graphic>
                                 <FontAwesomeIconView fx:id="addFavIcon" fill="#003366" glyphName="HEART"/>
                             </graphic>
@@ -132,7 +129,7 @@
                     </children>
                 </HBox>
                 <WebView fx:id="webView" minHeight="100.0" minWidth="95.0" prefHeight="-1.0" prefWidth="389.0"
-                          VBox.vgrow="ALWAYS">
+                         VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets/>
                     </VBox.margin>
