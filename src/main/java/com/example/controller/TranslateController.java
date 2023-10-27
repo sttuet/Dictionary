@@ -2,18 +2,14 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.ParseJSON;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -35,22 +31,7 @@ public class TranslateController {
 
     @FXML
     protected void onCloseButtonClick(ActionEvent event) throws IOException {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(1000), anchorPane);
-        translateTransition.setFromX(0);
-        translateTransition.setToX(600);
-        translateTransition.setOnFinished((ActionEvent event1) -> {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            try {
-                scene = new Scene(fxmlLoader.load());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            scene.getStylesheets().add(Main.class.getResource("MainView.css").toExternalForm());
-            stage.setScene(scene);
-            stage.show();
-        });
-        translateTransition.play();
+        Main.changeScreen("main-view.fxml", "MainView.css");
 
     }
 

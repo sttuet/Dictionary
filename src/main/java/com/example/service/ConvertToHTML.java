@@ -57,7 +57,14 @@ public class ConvertToHTML {
     }
 
     public static String vietMeaningToHTML(String word, String mean) {
-        String backGroundColor = (Main.DARK_MODE?"black":"linear-gradient(to right, #ffefba, #ffffff)");
+        String backGroundColor = "white";
+        String textColor1 = "black";
+        String textColor2 = "#003366";
+        if (Main.DARK_MODE) {
+            backGroundColor = "#303030";
+            textColor1 = "white";
+            textColor2 = "#00BFFF";
+        }
         if (word == null || mean == null) {
             return "";
         }
@@ -65,7 +72,7 @@ public class ConvertToHTML {
         Scanner scanner = new Scanner(mean);
         scanner.useDelimiter("[\\n]");
         StringBuilder result = new StringBuilder();
-        result.append("<html>"+
+        result.append("<html>" + " <style> body { background-color:" + backGroundColor + "; } </style> " +
                 "<div style=\"font-family: Arial, Helvetica, sans-serif;font-size:14;\">");
         String tmp;
         boolean find_idiom = false;
@@ -82,19 +89,19 @@ public class ConvertToHTML {
                     result.append("</li></ul>");
                 }
                 numTag = 0;
-                result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14\">" + tmp + "</h3>"); // loại từ
+                result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14; color: " + textColor1 + "\">" + tmp + "</h3>"); // loại từ
             } else {
                 if (cur == '!' && !find_idiom) {
                     for (int i = 0; i < numTag; i++) {
                         result.append("</li></ul>");
                     }
                     numTag = 0;
-                    result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14\">Idioms</h3>"); // loại từ
+                    result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14;color: " + textColor1 + "\">Idioms</h3>"); // loại từ
                     find_idiom = true;
                 }
                 switch (numTag) {
                     case 0:
-                        result.append("<ul style=\"color:#003366;font-family: Arial; font-size:14\"><li>" + tmp); // định nghĩa
+                        result.append("<ul style=\"font-family: Arial; font-size:14;color: " + textColor2 + "\"><li>" + tmp); // định nghĩa
                         numTag++;
                         old = cur;
                         break;
@@ -102,7 +109,7 @@ public class ConvertToHTML {
                         if (cur == old) {
                             result.append("</li><li>" + tmp);
                         } else {
-                            result.append("<ul style=\"color:black;font-family: Arial; font-size:14\"><li>" + tmp); // ví dụ
+                            result.append("<ul style=\"font-family: Arial; font-size:14;color:" + textColor1 + "\"><li>" + tmp); // ví dụ
                             numTag++;
                         }
                         old = cur;

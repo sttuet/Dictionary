@@ -1,17 +1,17 @@
 package com.example.ourdictionary;
 
-import com.example.controller.MainController;
 import com.example.service.IOFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.example.service.ConvertToHTML.getInfoEng;
@@ -24,6 +24,8 @@ public class Main extends Application {
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
     public static boolean DARK_MODE = false;
+    private static Stage primaryStage;
+
     /**
      * lấy nghĩa tiếng việt của từ.
      *
@@ -48,6 +50,14 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static void changeScreen(String fxml, String cssFile) throws IOException {
+        Parent pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        Scene scene = new Scene(pane);
+        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource(cssFile)).toExternalForm());
+        primaryStage.setScene(scene);
+        primaryStage.getScene().setRoot(pane);
     }
 
     /**
@@ -85,12 +95,13 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
+        primaryStage = stage;
         loadData();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         scene.getStylesheets().add(getClass().getResource("MainView.css").toExternalForm());
-        stage.setTitle("Dictionary");
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setTitle("Dictionary");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
