@@ -251,6 +251,9 @@ public class MainController implements Initializable {
         String s = listView.getSelectionModel().getSelectedItem();
 
         if (s != null && !s.equals("")) {
+            if(recentList.contains(s)) {
+                recentList.remove(s);
+            }
             recentList.addFirst(s);
             inputWord.setText(s);
             currentWord.setText(s);
@@ -354,13 +357,13 @@ public class MainController implements Initializable {
     @FXML
     protected void addToFavourite() {
         String s = currentWord.getText();
-        if (favouriteList.contains(s)) {
-            favouriteList.remove(s);
-            addFavIcon.setFill(Paint.valueOf("#FFFFFF"));
-        } else {
+//        if (favouriteList.contains(s)) {
+//            favouriteList.remove(s);
+//            addFavIcon.setFill(Paint.valueOf("#FFFFFF"));
+//        } else {
             favouriteList.add(s);
             addFavIcon.setFill(Paint.valueOf("#003366"));
-        }
+        //}
         if (isShowingFavWord) {
             listView.setItems(FXCollections.observableList(new ArrayList<>(favouriteList)));
         }

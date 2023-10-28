@@ -9,10 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static com.example.service.ConvertToHTML.getInfoEng;
 
@@ -20,7 +17,7 @@ public class Main extends Application {
     public static Dictionary dictionary;
 
     public static ObjectMapper objectMapper;
-    public static Set<String> favouriteList;
+    public static HashSet<String> favouriteList;
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
     public static boolean DARK_MODE = false;
@@ -72,7 +69,7 @@ public class Main extends Application {
         dictionary = new Dictionary();
         meanings = IOFile.readFromE_VFile(dictionary);
         recentList = IOFile.readFromRecentFile();
-        favouriteList = IOFile.readFromFavouriteFile();
+        favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
     }
 
     /**

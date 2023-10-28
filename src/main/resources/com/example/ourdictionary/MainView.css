@@ -106,7 +106,7 @@
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-background-color: linear-gradient(to left, #ff512f, #f09819);;
     -fx-text-fill: white;
     -fx-background-radius: 5;
     -fx-border-radius: 5;
