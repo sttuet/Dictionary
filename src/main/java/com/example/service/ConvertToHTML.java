@@ -1,13 +1,10 @@
 package com.example.service;
 
-import com.example.ourdictionary.Definition;
 import com.example.ourdictionary.Main;
-import com.example.ourdictionary.Meaning;
 import com.example.ourdictionary.Word;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 import static com.example.service.SendRequest.sendRequest;
 
@@ -25,7 +22,7 @@ public class ConvertToHTML {
     public static String getInfoEng(String word, ObjectMapper objectMapper) throws IOException {
         String json = sendRequest(SendRequest.URL_PATH + word);
         Word word1 = ParseJSON.fromJson(json, objectMapper);
-        return toHTML(word1);
+        return engMeaningToHTML(word1);
     }
 
     /**
@@ -34,7 +31,7 @@ public class ConvertToHTML {
      * @param word từ cần hiể thị
      * @return String
      */
-    public static String toHTML(Word word) {
+    public static String engMeaningToHTML(Word word) {
         if (word == null) {
             return "can't find this word";
         }
@@ -42,10 +39,10 @@ public class ConvertToHTML {
         stringBuilder.append("<html><ul>");
         stringBuilder.append("<li >" + word.getWord() + "</li>");
         stringBuilder.append("<li >" + word.getText() + "</li>");
-        for (Meaning meaning : word.getMeanings()) {
+        for (Word.Meaning meaning : word.getMeanings()) {
 
             stringBuilder.append("<li><dl><dt >Type :" + meaning.partOfSpeech + "</dt>");
-            for (Definition definition : meaning.definitions) {
+            for (Word.Meaning.Definition definition : meaning.definitions) {
                 stringBuilder.append("<dt >-definition : " + definition.definition + "</dt>");
                 if (!definition.example.equals(""))
                     stringBuilder.append("<dd style=\"text-decoration: underline;\">Ex: " + definition.example + "</dd>");
@@ -60,6 +57,7 @@ public class ConvertToHTML {
         String backGroundColor = "white";
         String textColor1 = "black";
         String textColor2 = "#003366";
+        int fontSize=14;
         if (Main.DARK_MODE) {
             backGroundColor = "#303030";
             textColor1 = "white";
@@ -68,69 +66,13 @@ public class ConvertToHTML {
         if (word == null || mean == null) {
             return "";
         }
-        int pos = 0;
-        Scanner scanner = new Scanner(mean);
-        scanner.useDelimiter("[\\n]");
-        StringBuilder result = new StringBuilder();
-        result.append("<html>" + " <style> body { background-color:" + backGroundColor + "; } </style> " +
-                "<div style=\"font-family: Arial, Helvetica, sans-serif;font-size:14;\">");
-        String tmp;
-        boolean find_idiom = false;
-        int numTag = 0;
-        char old = '@';
-        char cur;
-        while (scanner.hasNext()) {
-            tmp = scanner.next();
-            cur = tmp.charAt(0);
-            tmp = tmp.substring(1);
-            tmp = tmp.replaceAll("[+]", ":");
-            if (cur == '@' || cur == '*') {
-                for (int i = 0; i < numTag; i++) {
-                    result.append("</li></ul>");
-                }
-                numTag = 0;
-                result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14; color: " + textColor1 + "\">" + tmp + "</h3>"); // loại từ
-            } else {
-                if (cur == '!' && !find_idiom) {
-                    for (int i = 0; i < numTag; i++) {
-                        result.append("</li></ul>");
-                    }
-                    numTag = 0;
-                    result.append("<h3 style=\"text-decoration:underline;font-family: Arial; font-size:14;color: " + textColor1 + "\">Idioms</h3>"); // loại từ
-                    find_idiom = true;
-                }
-                switch (numTag) {
-                    case 0:
-                        result.append("<ul style=\"font-family: Arial; font-size:14;color: " + textColor2 + "\"><li>" + tmp); // định nghĩa
-                        numTag++;
-                        old = cur;
-                        break;
-                    case 1:
-                        if (cur == old) {
-                            result.append("</li><li>" + tmp);
-                        } else {
-                            result.append("<ul style=\"font-family: Arial; font-size:14;color:" + textColor1 + "\"><li>" + tmp); // ví dụ
-                            numTag++;
-                        }
-                        old = cur;
-                        break;
-                    case 2:
-                        if (cur == old) {
-                            result.append("</li><li>" + tmp);
-                        } else {
-                            result.append("</li></ul></li><li>" + tmp);
-                            numTag--;
-                        }
-                        old = cur;
-                        break;
-                }
-            }
-
-        }
-        for (int i = 0; i < numTag; i++) {
-            result.append("</li></ul>");
-        }
-        result.append("</div></html>");
-        return result.toString();
+        StringBuilder ans=new StringBuilder();
+        mean=mean.substring(6,mean.length()-7);
+        ans.append("<html><body style=\"font-family: Arial, Helvetica, sans-serif;font-size:"+fontSize+"px;background-color="+backGroundColor+";color="+textColor1+";\"");
+        mean=mean.replaceAll("#cc0000",textColor2);
+        mean=mean.replaceAll("<b>|</b>","");
+        ans.append(mean);
+        ans.append("</body></html>");
+        return ans.toString();
     }
 }

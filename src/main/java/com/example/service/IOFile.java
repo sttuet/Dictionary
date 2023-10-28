@@ -1,15 +1,19 @@
 package com.example.service;
 
 import com.example.ourdictionary.Dictionary;
+import com.example.ourdictionary.Main;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 
 
 public class IOFile {
     private static final String RECENT_PATH = "src\\main\\resources\\data\\Recent.txt";
     private static final String FAVOURITE_PATH = "src\\main\\resources\\data\\Favourite.txt";
-    private static final String E_V_PATH = "src\\main\\resources\\data\\anhviet109K.txt";
+    private static final String E_V_PATH = "src\\main\\resources\\data\\E_V.txt";
+    private static final String COMMON_WORD_PATH="src\\main\\resources\\data\\common_word.txt";
 
     public static BufferedReader bufferedReader;
     public static BufferedWriter bufferedWriter;
@@ -57,30 +61,22 @@ public class IOFile {
         bufferedReader = new BufferedReader(new FileReader(E_V_PATH));
         Map<String, String> meanings = new HashMap<>();
         String line;
-        String word = "";
-        String definition = "";
-        int k = 0;
+
         while ((line = bufferedReader.readLine()) != null) {
-            if (line.length() == 0) continue;
-            if (line.charAt(0) == '@') {
-                if (!definition.equals("")) {
-                    meanings.put(word, definition);
-                    if (isValidWord(word)) {
-                        dictionary.addWord(word);
-                    }
-                }
-                int i = 1;
-                definition = "";
-                int index = line.indexOf('/');
-                if (index == -1) {
-                    word = line;
-                } else {
-                    word = line.substring(1, index - 1);
-                }
-            }
-            definition += line + '\n';
+            String[] part=line.split("<html>");
+            meanings.put(part[0], "<html>"+part[1]);
+            dictionary.addWord(part[0]);
         }
         return meanings;
+    }
+    public static List<String> readFromCommonWord() throws IOException {
+        List<String> ans=new ArrayList<>();
+        bufferedReader = new BufferedReader(new FileReader(COMMON_WORD_PATH));
+        String tmp="";
+        while((tmp=bufferedReader.readLine())!=null){
+            ans.add(tmp);
+        }
+        return ans;
     }
 
     /**
