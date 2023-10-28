@@ -1,7 +1,5 @@
 package com.example.service;
 
-import com.example.ourdictionary.Definition;
-import com.example.ourdictionary.Meaning;
 import com.example.ourdictionary.Word;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -44,12 +42,12 @@ public class ParseJSON {
             }
         }
         root.get("meanings").forEach(t -> {
-            Meaning meaning = new Meaning();
+            Word.Meaning meaning = new Word.Meaning();
             meaning.setPartOfSpeech(t.get("partOfSpeech").asText());
 
             for (JsonNode jn : t.get("definitions")) {
 
-                Definition definition = new Definition(jn.get("definition").asText(), jn.get("example") == null ? null : jn.get("example").asText());
+                Word.Meaning.Definition definition = new Word.Meaning.Definition(jn.get("definition").asText(), jn.get("example") == null ? null : jn.get("example").asText());
                 meaning.definitions.add(definition);
             }
             result.getMeanings().add(meaning);
