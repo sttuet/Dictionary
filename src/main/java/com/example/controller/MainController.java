@@ -54,6 +54,8 @@ public class MainController implements Initializable {
     @FXML
     private Button settings;
     @FXML
+    private Button game;
+    @FXML
     private Button translateTextButton;
     @FXML
     private ListView<String> listView = new ListView<>();
@@ -400,6 +402,7 @@ public class MainController implements Initializable {
         addFavWord.setTooltip(new Tooltip("Favourite words"));
         translateTextButton.setTooltip(new Tooltip("Translate sentences"));
         settings.setTooltip(new Tooltip("Settings"));
+        game.setTooltip(new Tooltip("game"));
         searchButton.setTooltip(new Tooltip("Search"));
         engLabel.setTooltip(new Tooltip("English"));
         vietLabel.setTooltip(new Tooltip("Vietnamese"));
@@ -409,9 +412,12 @@ public class MainController implements Initializable {
             listView.setBackground(Background.fill(Paint.valueOf("white")));
         }
     }
-
     @FXML
-    public void onSettingsButtonClick(ActionEvent actionEvent) throws IOException {
+    protected void onGameButtonClick(ActionEvent event) throws IOException {
+        Main.changeScreen("chooseGame-view.fxml","chooseGame.css");
+    }
+    @FXML
+    protected void onSettingsButtonClick(ActionEvent actionEvent) throws IOException {
         Main.changeScreen("settings-view.fxml", "settingsView.css");
     }
 
