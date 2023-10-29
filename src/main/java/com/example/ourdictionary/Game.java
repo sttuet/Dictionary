@@ -10,7 +10,5 @@ public abstract class Game {
             Collections.swap(list,random,i);
         }
     }
-    public  boolean checkAnswer(String ans,String ques){
-        return false;
-    };
+
 }

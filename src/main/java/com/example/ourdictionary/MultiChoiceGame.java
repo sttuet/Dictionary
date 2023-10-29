@@ -8,6 +8,7 @@ import java.util.*;
 public class MultiChoiceGame extends Game{
     private LinkedList<String> listQuestion=new LinkedList<>();
     private List<String> listQuestion2=new LinkedList<>();
+    private List<String> currentQuestion=new ArrayList<>();
     private int score=0;
     public static final int NUM_QUESTION=10;
 
@@ -31,35 +32,44 @@ public class MultiChoiceGame extends Game{
         int i2=def.indexOf(s2);
         return def.substring(i1,i2);
     }
-    public List<String> getQuestion(){
+    public void createQuestion(){
         String s=listQuestion.get(0);
-        List<String> question=new ArrayList<>();
-        question.add(getMean(s));
-        question.add(s);
-        while (question.size()<5){
+        currentQuestion=new ArrayList<>();
+        currentQuestion.add(getMean(s));
+        currentQuestion.add(s);
+        currentQuestion.add(s);
+        while (currentQuestion.size()<6){
             int rand=(int)(Math.random()*NUM_QUESTION);
-            if(!question.contains(listQuestion2.get(rand))){
-                question.add(listQuestion2.get(rand));
+            if(!currentQuestion.contains(listQuestion2.get(rand))){
+                currentQuestion.add(listQuestion2.get(rand));
             }
         }
-        shuffle(question,1,5);
-        return question;
+        shuffle(currentQuestion,2,6);
+    }
+    public List<String> getCurrentQuestion(){
+        return currentQuestion;
     }
 
-    @Override
-    public boolean checkAnswer(String ans,String quest) {
-        if(getMean(ans).equals(quest)){
-            listQuestion.removeFirst();
-            score++;
-            System.out.println(listQuestion.get(0));
+    public boolean checkAnswer(String ans) {
+
+        if(ans.equals(currentQuestion.get(1))){
             return true;
         }else{
-            Collections.swap(listQuestion,0,listQuestion.size()-1);
-            System.out.println(listQuestion.get(0));
             return false;
         }
     }
     public int getScore(){
         return score;
+    }
+    public void increaseScore(){
+        score++;
+    }
+    public void updateListQuestion(boolean trueAns){
+        if(trueAns){
+            listQuestion.removeFirst();
+        }else {
+            Collections.swap(listQuestion,0,listQuestion.size()-1);
+        }
+        createQuestion();
     }
 }
