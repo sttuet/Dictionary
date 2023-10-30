@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,8 +10,8 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MultiChoiceGameController">
     <children>
-        <Button mnemonicParsing="false" text="BACK" />
-        <GridPane fx:id="answer" layoutX="123.0" layoutY="226.0" prefHeight="96.0" prefWidth="323.0">
+        <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
+        <GridPane fx:id="gridPane" layoutX="123.0" layoutY="226.0" prefHeight="96.0" prefWidth="323.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -21,14 +21,34 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="A" mnemonicParsing="false" onAction="#onAnswer" prefHeight="25.0" prefWidth="200.0" text="Button">
-                    <GridPane.margin>
-                        <Insets />
-                    </GridPane.margin>
-                </Button>
-                <Button fx:id="C" mnemonicParsing="false" onAction="#onAnswer" prefHeight="25.0" prefWidth="198.0" text="Button" GridPane.rowIndex="1" />
-                <Button fx:id="B" mnemonicParsing="false" onAction="#onAnswer" prefHeight="25.0" prefWidth="218.0" text="Button" GridPane.columnIndex="1" />
-                <Button fx:id="D" mnemonicParsing="false" onAction="#onAnswer" prefHeight="25.0" prefWidth="256.0" text="Button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                      <Button fx:id="A" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="4.0" mnemonicParsing="false" onAction="#onAnswer" prefHeight="40.0" prefWidth="163.0" />
+                  <FontAwesomeIconView fill="RED" glyphName="CLOSE" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+                  <FontAwesomeIconView fill="LIME" glyphName="CHECK" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+               <children>
+                      <Button fx:id="B" layoutY="4.0" mnemonicParsing="false" onAction="#onAnswer" prefHeight="40.0" prefWidth="163.0" />
+                  <FontAwesomeIconView fill="RED" glyphName="CLOSE" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+                  <FontAwesomeIconView fill="LIME" glyphName="CHECK" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="48.0" prefWidth="163.0" GridPane.rowIndex="1">
+               <children>
+                      <Button fx:id="C" layoutX="-1.0" layoutY="4.0" mnemonicParsing="false" onAction="#onAnswer" prefHeight="40.0" prefWidth="163.0" />
+                  <FontAwesomeIconView fill="RED" glyphName="CLOSE" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+                  <FontAwesomeIconView fill="LIME" glyphName="CHECK" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="48.0" prefWidth="163.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                      <Button fx:id="D" layoutX="-1.0" layoutY="4.0" mnemonicParsing="false" onAction="#onAnswer" prefHeight="40.0" prefWidth="163.0" />
+                  <FontAwesomeIconView fill="RED" glyphName="CLOSE" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+                  <FontAwesomeIconView fill="LIME" glyphName="CHECK" layoutX="140.0" layoutY="20.0" opacity="0.0" size="18" />
+               </children>
+            </AnchorPane>
             </children>
         </GridPane>
       <Label fx:id="question" alignment="CENTER" layoutX="124.0" prefHeight="198.0" prefWidth="323.0" wrapText="true" />
