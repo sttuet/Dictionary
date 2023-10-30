@@ -41,6 +41,13 @@
                         <FontAwesomeIconView fill="WHITE" glyphName="GEAR" size="20"/>
                     </graphic>
                 </Button>
+                <Button fx:id="game" layoutX="10.0" layoutY="92.0" maxHeight="-Infinity" maxWidth="-Infinity"
+                        minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onGameButtonClick"
+                        prefHeight="27.0" prefWidth="29.0">
+                    <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="GAMEPAD" size="20"/>
+                    </graphic>
+                </Button>
             </children>
         </VBox>
         <VBox maxHeight="1.7976931348623157E308" maxWidth="150.0" minWidth="150.0" prefHeight="400" prefWidth="220.0"

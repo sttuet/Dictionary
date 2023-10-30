@@ -1,6 +1,28 @@
+<<<<<<< HEAD
 sabbatic
 sabaean
 baa-lamb
+=======
+close
+englishman
+english
+abaci
+abaci
+abaci
+english
+english
+abacus
+aasvogel
+abaci
+abaci
+english
+english
+english
+english
+englishman
+english
+abaci
+>>>>>>> f116ab84857da3a1fb2ebb5337a80d9794e7c543
 aasvogel
 habanera
 fabian
@@ -9,3 +31,20 @@ kaftan
 kago
 kadi
 kabbalah
+<<<<<<< HEAD
+=======
+kailyard
+kaingin
+kailyard
+kail
+kaiak
+gab
+grass
+grass
+grass
+grass
+grass
+grass
+hello
+hi
+>>>>>>> f116ab84857da3a1fb2ebb5337a80d9794e7c543
