@@ -15,4 +15,8 @@ public class ChooseGameController {
     protected void goToMultiChoiceGame(ActionEvent event) throws IOException {
         Main.changeScreen("multiChoiceGameView.fxml","multiChoiceGame.css");
     }
+    @FXML
+    protected void goToHangMan(ActionEvent event) throws IOException {
+        Main.changeScreen("hangMan-view.fxml","hangMan.css");
+    }
 }

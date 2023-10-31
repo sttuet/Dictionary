@@ -79,6 +79,7 @@ public class IOFile {
         return ans;
     }
 
+
     /**
      * kiểm tra xem từ này có phải từ đơn hay k( chỉ chứa kí tự từ a-z) để add vào dictionary.
      *

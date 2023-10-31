@@ -1,14 +1,7 @@
-close
-englishman
-english
-abaci
-abaci
-abaci
+hello
 english
 english
-abacus
 aasvogel
-abaci
 abaci
 english
 english
@@ -18,7 +11,6 @@ englishman
 english
 abaci
 aasvogel
-abacus
 aback
 aasvogel
 aba
@@ -72,5 +64,7 @@ grass
 grass
 grass
 grass
+hello
+hi
 hello
 hi

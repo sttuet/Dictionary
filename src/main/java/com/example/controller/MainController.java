@@ -376,7 +376,6 @@ public class MainController implements Initializable {
         isShowingFavWord = true;
         List<String> list = new ArrayList<>(favouriteList);
         listView.setItems(FXCollections.observableList(list));
-        deleteWord(false);
     }
 
     /**
