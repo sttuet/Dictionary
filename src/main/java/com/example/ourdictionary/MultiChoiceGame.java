@@ -19,9 +19,9 @@ public class MultiChoiceGame extends Game{
             if(!Main.favouriteList.contains(allWord.get(random))){
                 listQuestion.add(allWord.get(random));
                 listQuestion2.add(allWord.get(random));
-
             }
         }
+        createQuestion();
     }
 
     private String getMean(String s){
@@ -70,6 +70,11 @@ public class MultiChoiceGame extends Game{
         }else {
             Collections.swap(listQuestion,0,listQuestion.size()-1);
         }
+        createQuestion();
+    }
+    public void reset(){
+        listQuestion=new LinkedList<>(listQuestion2);
+        score=0;
         createQuestion();
     }
 }
