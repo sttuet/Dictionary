@@ -12,10 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.effect.BlendMode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
@@ -34,17 +31,19 @@ import static com.example.service.SendRequest.downloadAudio;
 
 
 public class MainController implements Initializable {
-    public Label vietLabel;
-    public Label engLabel;
     @FXML
     public WebView webView = new WebView();
-    public VBox MainWindow;
-    public HBox topBar;
     public FontAwesomeIconView volumeIcon;
+    public Button vietLabel;
+    public Button engLabel;
+    public Button speaker;
+    public Button deleteWord;
+    public Label GroupNamLabel;
+    public javafx.scene.layout.Pane Pane;
+    public AnchorPane SubAnchorPane;
+    public AnchorPane mainAnchorPane;
     @FXML
     FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
-    @FXML
-    private HBox hBox;
     @FXML
     private Button searchButton;
     @FXML
@@ -69,8 +68,6 @@ public class MainController implements Initializable {
     private MediaPlayer mediaPlayer;
     private boolean isShowingFavWord = false;
     @FXML
-    private Label speaker;
-    @FXML
     private Button addFav;
 
     public void setDarkMode() {
@@ -88,13 +85,6 @@ public class MainController implements Initializable {
                             setStyle("-fx-background-color: #303030");
                         }
 
-                        if (isSelected()) {
-                            setStyle("-fx-background-color: linear-gradient(to right, #000428, #004e92);\n" +
-                                    "                                -fx-text-fill: white;\n" +
-                                    "                                -fx-background-radius: 5;\n" +
-                                    "                                -fx-border-radius: 5;\n" +
-                                    "                                -fx-cursor: hand;");
-                        }
                     }
 
                 };
@@ -102,10 +92,7 @@ public class MainController implements Initializable {
         });
         webView.getEngine().loadContent("<html><body>" +
                 " <style> body { background-color:#303030; } </style></body></html");
-        webView.setBlendMode(BlendMode.DARKEN);
-        topBar.setBackground(Background.fill(Paint.valueOf("#303030")));
         currentWord.setTextFill(Paint.valueOf("white"));
-        volumeIcon.setFill(Paint.valueOf("white"));
     }
 
     /**
@@ -124,10 +111,16 @@ public class MainController implements Initializable {
         }
         listView.setCellFactory(cell -> {
             return new ListCell<>() {
+                {
+                    if(DARK_MODE) {
+                        setStyle("-fx-background-color: transparent");
+                        setStyle("-fx-border-color: white");
+                    }
+                }
                 final AnchorPane rootLayout = new AnchorPane() {{
                     setTextFill(Paint.valueOf("white"));
                     if (DARK_MODE) {
-                        setStyle("-fx-background-color: #303030; -fx-text-fill: white");
+                        setStyle("-fx-background-color: #303030; -fx-text-fill: white;");
                     }
 
                 }};
@@ -142,7 +135,7 @@ public class MainController implements Initializable {
                         title.setTextFill(Paint.valueOf("white"));
                         title.setStyle("-fx-background-color: #303030; -fx-text-fill: white;");
                     }
-                    title.getStyleClass().add("label-anChor");
+                   // title.getStyleClass().add("label-anChor");
                 }
 
                 {
@@ -150,12 +143,12 @@ public class MainController implements Initializable {
                 }
 
                 {
-                    //deleteButton.setAlignment(Pos.TOP_RIGHT);
                     deleteButton.setMinWidth(20);
                     deleteButton.setMinHeight(20);
                     deleteButton.setPrefSize(20, 20);
                     deleteButton.setAlignment(Pos.BOTTOM_CENTER);
-                    deleteButton.getStyleClass().add("button-hover");
+                    deleteButton.setBackground(Background.fill(Paint.valueOf("transparent")));
+                //    deleteButton.getStyleClass().add("button-hover");
 
                 }
 
@@ -176,11 +169,13 @@ public class MainController implements Initializable {
                         }
                         if (DARK_MODE) {
                             setOnMouseEntered(event -> {
-                                rootLayout.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
-                                title.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
+                                rootLayout.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);");
+                                title.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);");
                                 setStyle(
-                                        "    -fx-text-fill: white;\n" +
+                                        "  -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);  " +
+                                                "-fx-text-fill: white;\n" +
                                                 "    -fx-border-radius: 5;\n" +
+                                                " -fx-border-color: white;" +
                                                 "    -fx-background-radius: 5;\n" +
                                                 "    -fx-cursor: hand;\n" +
                                                 "    -fx-text-alignment: LEFT;");
@@ -192,8 +187,6 @@ public class MainController implements Initializable {
                                         " -fx-border-radius: 5;" +
                                         " -fx-background-radius: 5;");
                                 rootLayout.setStyle("-fx-background-color: #303030;");
-                                title.setBackground(Background.fill(Paint.valueOf("#303030")));
-                                title.setTextFill(Paint.valueOf("white"));
                                 title.setStyle("-fx-background-color: #303030; -fx-text-fill: white;");
 
                             });
@@ -213,17 +206,6 @@ public class MainController implements Initializable {
                                                         : selectedIdx;
 
                                         listView.getItems().remove(selectedIdx);
-                                        if (DARK_MODE) {
-                                            rootLayout.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
-                                            title.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);\n");
-                                            setStyle(
-                                                    " -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);"
-                                                            + " -fx-text-fill: white;\n"
-                                                            + " -fx-border-radius: 5;\n"
-                                                            + " -fx-background-radius: 5;\n"
-                                                            + " -fx-cursor: hand;\n"
-                                                            + " -fx-text-alignment: LEFT;");
-                                        }
                                         if (FavOrRecent) {
                                             recentList.remove(itemToRemove);
                                         } else {
@@ -300,6 +282,10 @@ public class MainController implements Initializable {
         }
         addFav.setVisible(b);
         addFav.setDisable(!b);
+        engLabel.setVisible(b);
+        engLabel.setDisable(!b);
+        vietLabel.setVisible(b);
+        vietLabel.setDisable(!b);
     }
 
     /**
@@ -405,14 +391,12 @@ public class MainController implements Initializable {
         addFavWord.setTooltip(new Tooltip("Favourite words"));
         translateTextButton.setTooltip(new Tooltip("Translate sentences"));
         settings.setTooltip(new Tooltip("Settings"));
-        game.setTooltip(new Tooltip("game"));
+        game.setTooltip(new Tooltip("Game"));
         searchButton.setTooltip(new Tooltip("Search"));
         engLabel.setTooltip(new Tooltip("English"));
         vietLabel.setTooltip(new Tooltip("Vietnamese"));
         if (Main.DARK_MODE) {
             setDarkMode();
-        } else {
-            listView.setBackground(Background.fill(Paint.valueOf("white")));
         }
     }
     @FXML

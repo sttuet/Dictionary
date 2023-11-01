@@ -57,7 +57,7 @@ public class ConvertToHTML {
         String backGroundColor = "white";
         String textColor1 = "black";
         String textColor2 = "#003366";
-        int fontSize=14;
+        int fontSize = 14;
         if (Main.DARK_MODE) {
             backGroundColor = "#303030";
             textColor1 = "white";
@@ -66,11 +66,14 @@ public class ConvertToHTML {
         if (word == null || mean == null) {
             return "";
         }
-        StringBuilder ans=new StringBuilder();
-        mean=mean.substring(6,mean.length()-7);
-        ans.append("<html><body style=\"font-family: Arial, Helvetica, sans-serif;font-size:"+fontSize+"px;background-color="+backGroundColor+";color="+textColor1+";\"");
-        mean=mean.replaceAll("#cc0000",textColor2);
-        mean=mean.replaceAll("<b>|</b>","");
+        StringBuilder ans = new StringBuilder();
+        mean = mean.substring(6, mean.length() - 7);
+        ans.append("<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor
+                + ";font-family: Arial, Helvetica, sans-serif;font-size:"
+                + fontSize + "px;" +  ";color=" + textColor1 + ";\">");
+        mean = mean.replaceAll("#cc0000", textColor2);
+        mean = mean.replaceAll("<b>|</b>", "");
+        mean = mean.replaceAll("<i>|</i>", "");
         ans.append(mean);
         ans.append("</body></html>");
         return ans.toString();

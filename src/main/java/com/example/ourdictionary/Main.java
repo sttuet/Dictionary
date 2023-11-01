@@ -95,7 +95,7 @@ public class Main extends Application {
         primaryStage = stage;
         loadData();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 824, 537);
         scene.getStylesheets().add(getClass().getResource("MainView.css").toExternalForm());
         primaryStage.setTitle("Dictionary");
         primaryStage.setScene(scene);
