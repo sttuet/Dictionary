@@ -13,7 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
+
 <AnchorPane fx:id="mainAnchorPane" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MainController">
+
     <children>
         <Button fx:id="translateTextButton" layoutX="5.0" layoutY="71.0" mnemonicParsing="false" onAction="#onGoToTranslateViewButtonClick" prefHeight="45.0" prefWidth="45.0">
             <graphic>

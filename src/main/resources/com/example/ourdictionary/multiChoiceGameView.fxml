@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -66,9 +67,16 @@
                 </AnchorPane>
             </children>
         </GridPane>
-        <Label fx:id="question" alignment="CENTER" layoutX="141.0" layoutY="50.0" prefHeight="208.0" prefWidth="535.0"
+        <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
+       <Label fx:id="question" alignment="CENTER" layoutX="141.0" layoutY="50.0" prefHeight="208.0" prefWidth="535.0"
                wrapText="true" AnchorPane.leftAnchor="141.0" AnchorPane.rightAnchor="148.0"/>
         <Label fx:id="score" alignment="CENTER" layoutX="754.0" layoutY="13.0" prefHeight="51.0" prefWidth="55.0"
                text="0/10" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"/>
-    </children>
-</AnchorPane>
+      <AnchorPane fx:id="finish" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: aqua;" visible="false">
+         <children>
+            <Button fx:id="exit" layoutX="225.0" layoutY="232.0" mnemonicParsing="false" onAction="#onExitClick" prefHeight="40.0" prefWidth="150.0" text="Exit" />
+            <Button fx:id="newGame" layoutX="225.0" layoutY="160.0" mnemonicParsing="false" onAction="#onNewGameClick" prefHeight="40.0" prefWidth="150.0" text="New Game" />
+            <Button fx:id="again" layoutX="225.0" layoutY="85.0" mnemonicParsing="false" onAction="#onAgainClick" prefHeight="40.0" prefWidth="150.0" text="Again" />
+         </children>
+      </AnchorPane>
+

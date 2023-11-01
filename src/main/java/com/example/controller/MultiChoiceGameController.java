@@ -52,7 +52,6 @@ public class MultiChoiceGameController implements Initializable {
         listButton.add(B);
         listButton.add(C);
         listButton.add(D);
-        game.createQuestion();
         setQuestion();
         if (Main.DARK_MODE) {
             multiChoicePane.setStyle("-fx-background-color: #04293A;");
@@ -79,12 +78,13 @@ public class MultiChoiceGameController implements Initializable {
         showTrueAnswer(res, button);
         if (res == true) {
             game.increaseScore();
-            if (game.getScore() == 10) {
-                replay();
-                return;
-            }
+
         }
-        score.setText(game.getScore() + "/10");
+        score.setText(game.getScore()+"/10");
+        if(game.getScore()>=10){
+            finish.setVisible(true);
+            return;
+        }
         game.updateListQuestion(game.checkAnswer(button.getText()));
     }
 
@@ -118,12 +118,33 @@ public class MultiChoiceGameController implements Initializable {
         }
     }
 
-    private void replay() {
-
-    }
-
     @FXML
     protected void onBackClick(ActionEvent event) throws IOException {
         Main.changeScreen("chooseGame-view.fxml", "chooseGame.css", multiChoicePane.getWidth(), multiChoicePane.getHeight());
+    }
+    @FXML
+    private AnchorPane finish=new AnchorPane();
+//    @FXML
+//    private Button again;
+//    @FXML
+//    private Button newGame;
+//    @FXML
+//    private Button exit;
+    @FXML
+    protected void onAgainClick(){
+        finish.setVisible(false);
+        game.reset();
+        setQuestion();
+    }
+    @FXML
+    protected void onNewGameClick() throws IOException {
+        finish.setVisible(false);
+        game=new MultiChoiceGame();
+        setQuestion();
+    }
+    @FXML
+    protected void onExitClick() throws IOException {
+        finish.setVisible(false);
+        Main.changeScreen("chooseGame-view.fxml","chooseGame.css");
     }
 }

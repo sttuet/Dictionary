@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane fx:id="anchorPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.TranslateController">
+
     <children>
         <Button fx:id="closeButton" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="22.0" prefWidth="49.0" text="BACK" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="18.0" layoutY="57.0" onAction="#onTranslate" prefHeight="124.0" prefWidth="775.0" promptText="Enter a sentence " AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="57.0" />
