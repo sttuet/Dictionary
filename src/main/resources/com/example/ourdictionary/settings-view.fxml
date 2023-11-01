@@ -1,55 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox fx:id="vBoxSetting" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.controller.SettingController">
+<AnchorPane fx:id="SettingAnchorPane" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.SettingController">
     <children>
-        <Label fx:id="topLabel" alignment="CENTER" prefHeight="58.0" prefWidth="607.0" text="STT DICTIONARY"/>
-        <GridPane prefHeight="262.0" prefWidth="274.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="289.6000122070312" minWidth="10.0"
-                                   prefWidth="180.39998779296874"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.7999755859375" minWidth="10.0"
-                                   prefWidth="241.5999755859375"/>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.2000244140625" minWidth="0.0"
-                                   prefWidth="179.2000244140625"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints maxHeight="160.80002822875977" minHeight="10.0" prefHeight="55.999990081787104"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="164.80001220703124" minHeight="10.0" prefHeight="55.99999389648437"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="191.19996032714846" minHeight="0.0" prefHeight="61.40003967285156"
-                                vgrow="SOMETIMES"/>
-                <RowConstraints maxHeight="146.19996032714846" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
+        <Button fx:id="backSettingButton" layoutX="284.0" layoutY="401.0" mnemonicParsing="false"
+                onAction="#onBackClick" prefHeight="40.0" prefWidth="268.0" text="Back" textFill="WHITE"
+                AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0"/>
+        <MenuButton fx:id="setFontButton" layoutX="284.0" layoutY="321.0" mnemonicParsing="false" prefHeight="40.0"
+                    prefWidth="268.0" text="Font size" textFill="WHITE" AnchorPane.leftAnchor="284.0"
+                    AnchorPane.rightAnchor="272.0">
+            <items>
+                <MenuItem mnemonicParsing="false" onAction="#onFontSize14" text="14"/>
+                <MenuItem mnemonicParsing="false" onAction="#onFontSize18" text="18"/>
+            </items>
+        </MenuButton>
+        <Label fx:id="topLabel" alignment="CENTER" layoutY="-1.0" prefHeight="76.0" prefWidth="824.0"
+               text="STT DICTIONARY" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="-1.0"/>
+        <HBox fx:id="darkModeBox" layoutX="284.0" layoutY="161.0" prefHeight="40.0" prefWidth="268.0"
+              AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="161.0">
             <children>
-                <MenuButton fx:id="setDarkModeButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="252.0"
-                            text="Dark Mode" textFill="WHITE" GridPane.columnIndex="1">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onLightModeSelect" text="Light"/>
-                        <MenuItem mnemonicParsing="false" onAction="#onDarkModeSelect" text="Dark"/>
-                    </items>
-                </MenuButton>
-                <MenuButton fx:id="setFontButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="268.0"
-                            text="Font size" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="14"/>
-                        <MenuItem mnemonicParsing="false" text="16"/>
-                    </items>
-                </MenuButton>
-                <Button fx:id="backSettingButton" mnemonicParsing="false" onAction="#onBackClick" prefHeight="30.0"
-                        prefWidth="302.0" text="Back" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                <MenuButton fx:id="autoPlayButton" mnemonicParsing="false" prefHeight="28.0" prefWidth="250.0"
-                            text="Auto Play" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onYesSelect" text="Yes"/>
-                        <MenuItem mnemonicParsing="false" onAction="#onNoSelect" text="No"/>
-                    </items>
-                </MenuButton>
+                <Label fx:id="settingDarkModeLabel" prefHeight="40.0" prefWidth="236.0" text="  Dark Mode"
+                       HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                </Label>
+                <CheckBox fx:id="checkDarkMode" mnemonicParsing="false" onAction="#onDarkModeSelect" prefHeight="43.0"
+                          prefWidth="33.0"/>
             </children>
-        </GridPane>
+        </HBox>
+        <HBox fx:id="autoPlayBox" layoutX="284.0" layoutY="241.0" prefHeight="40.0" prefWidth="268.0"
+              AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
+            <children>
+                <Label fx:id="SettingAutoPlayLabel" prefHeight="40.0" prefWidth="236.0" text="  Auto Play"/>
+                <CheckBox fx:id="checkAutoPlay" mnemonicParsing="false" onAction="#onAutoPlaySelect" prefHeight="43.0"
+                          prefWidth="33.0"/>
+            </children>
+        </HBox>
     </children>
-</VBox>
+</AnchorPane>

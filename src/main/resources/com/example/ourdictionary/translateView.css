@@ -1,43 +1,48 @@
 .button {
-    -fx-background-color: #003366;
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
 .button:hover {
-    -fx-background-color: #2980b9;
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-cursor: hand;
 }
 
-.label {
+#TranslateLabel {
     -fx-font-family: Arial;
     -fx-font-weight: bold;
-    -fx-text-fill: #003366;
+    -fx-text-fill: #C4DFDF;
 }
 
-.text-field {
+#inputText {
     -fx-text-fill: black;
     -fx-font-family: Arial;
     -fx-font-size: 14;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 }
 
-.text-area {
+#translateResult {
     -fx-text-fill: black;
     -fx-font-family: Arial;
     -fx-font-size: 14;
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
 }
 
-#sourceLanguageLabel {
+#sourceLanguageLabel, #targetLanguageLabel {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
     -fx-border-color: #696969;
     -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
     -fx-text-alignment: CENTER;
-    -fx-font-weight: normal;
+    -fx-font-weight: bold;
 }
 
-#targetLanguageLabel {
-    -fx-border-radius: 5;
-    -fx-border-color: #696969;
-    -fx-text-alignment: CENTER;
-    -fx-font-weight: normal;
+#anchorPane {
+    -fx-background-color: #f8dad0;
 }
 

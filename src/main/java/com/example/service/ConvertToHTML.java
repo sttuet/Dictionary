@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.controller.MainController;
 import com.example.ourdictionary.Main;
 import com.example.ourdictionary.Word;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,9 +58,8 @@ public class ConvertToHTML {
         String backGroundColor = "white";
         String textColor1 = "black";
         String textColor2 = "#003366";
-        int fontSize = 14;
         if (Main.DARK_MODE) {
-            backGroundColor = "#303030";
+            backGroundColor = "#041C32";
             textColor1 = "white";
             textColor2 = "#00BFFF";
         }
@@ -70,7 +70,7 @@ public class ConvertToHTML {
         mean = mean.substring(6, mean.length() - 7);
         ans.append("<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor
                 + ";font-family: Arial, Helvetica, sans-serif;font-size:"
-                + fontSize + "px;" +  ";color=" + textColor1 + ";\">");
+                + MainController.fontSize + "px;" +  ";color=" + textColor1 + ";\">");
         mean = mean.replaceAll("#cc0000", textColor2);
         mean = mean.replaceAll("<b>|</b>", "");
         mean = mean.replaceAll("<i>|</i>", "");

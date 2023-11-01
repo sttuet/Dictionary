@@ -49,9 +49,9 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void changeScreen(String fxml, String cssFile) throws IOException {
+    public static void changeScreen(String fxml, String cssFile,double width, double height) throws IOException {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
-        Scene scene = new Scene(pane);
+        Scene scene = new Scene(pane,width,height);
         scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource(cssFile)).toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.getScene().setRoot(pane);

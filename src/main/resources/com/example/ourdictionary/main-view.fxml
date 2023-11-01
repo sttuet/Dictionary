@@ -9,7 +9,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
@@ -43,38 +43,43 @@
         <AnchorPane fx:id="SubAnchorPane" layoutX="54.0" layoutY="10.0" prefHeight="522.0" prefWidth="762.0" style="-fx-background-color: #2d99ae;" AnchorPane.bottomAnchor="4.600000000000023" AnchorPane.leftAnchor="54.0" AnchorPane.rightAnchor="7.600000000000023" AnchorPane.topAnchor="10.0">
             <children>
                 <ListView fx:id="listView" editable="true" focusTraversable="false" layoutX="6.0" layoutY="61.0" maxHeight="1.7976931348623157E308" onMouseClicked="#onChooseWord" prefHeight="450.0" prefWidth="194.0" style="-fx-background-radius: 10px;" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="61.0" />
-                <Button fx:id="vietLabel" disable="true" layoutX="597.0" layoutY="62.0" mnemonicParsing="false" onAction="#onVietLabelClick" prefHeight="28.0" prefWidth="40.0" text="VIE" visible="false" />
-                <Button fx:id="engLabel" disable="true" layoutX="637.0" layoutY="62.0" mnemonicParsing="false" onAction="#onEngLabelClick" prefHeight="28.0" prefWidth="40.0" text="EN" visible="false" />
                 <WebView fx:id="webView" layoutX="210.0" layoutY="90.0" prefHeight="422.0" prefWidth="547.0" AnchorPane.bottomAnchor="10.000006103515602" AnchorPane.leftAnchor="210.0000122070312" AnchorPane.rightAnchor="5.199987792968727" AnchorPane.topAnchor="90.0" />
                 <Label fx:id="currentWord" layoutX="210.0" layoutY="63.0" prefHeight="26.0" prefWidth="298.0">
                     <font>
                         <Font name="Times New Roman Bold" size="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="speaker" disable="true" layoutX="677.0" layoutY="62.0" mnemonicParsing="false" onAction="#onSpeakerClick" prefHeight="28.0" prefWidth="40.0" visible="false">
-                    <graphic>
-                        <FontAwesomeIconView fx:id="volumeIcon" fill="WHITE" glyphName="VOLUME_UP" size="20" />
-                    </graphic>
-                </Button>
-                <Button fx:id="addFav" disable="true" layoutX="717.0" layoutY="62.0" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="28.0" prefWidth="40.0" visible="false">
-                    <graphic>
-                        <FontAwesomeIconView fx:id="addFavIcon" fill="WHITE" glyphName="STAR" size="20" />
-                    </graphic>
-                </Button>
-                <Label fx:id="GroupNamLabel" layoutX="14.0" layoutY="18.0" prefHeight="26.0" prefWidth="188.0" text="STT Translate" />
-                <ImageView fitHeight="62.0" fitWidth="78.0" layoutX="686.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="449.4" AnchorPane.rightAnchor="14.399999999999977" AnchorPane.topAnchor="11.0">
+                <Label fx:id="GroupNameLabel" layoutX="9.0" layoutY="11.0" prefHeight="26.0" prefWidth="188.0" text="STT Translate" />
+                <ImageView fitHeight="60.0" fitWidth="59.0" layoutX="694.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="462.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                     <image>
                         <Image url="@../../../image/uetlogo.png" />
                     </image>
                 </ImageView>
-                <Pane fx:id="Pane" layoutX="215.0" layoutY="11.0" prefHeight="38.0" prefWidth="424.0" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="123.39999999999998">
-                    <children>
-                        <Button fx:id="deleteWord" alignment="CENTER" layoutX="400.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" AnchorPane.rightAnchor="4.0">
+            <HBox fx:id="EngVietSpeaker" layoutX="598.0" layoutY="61.0" prefHeight="30.0" prefWidth="158.0" AnchorPane.rightAnchor="5.999999999999972">
+               <children>
+                      <Button fx:id="vietLabel" disable="true" mnemonicParsing="false" onAction="#onVietLabelClick" prefHeight="28.0" prefWidth="40.0" text="VIE" visible="false" />
+                      <Button fx:id="engLabel" disable="true" mnemonicParsing="false" onAction="#onEngLabelClick" prefHeight="28.0" prefWidth="40.0" text="EN" visible="false" />
+                      <Button fx:id="speaker" disable="true" mnemonicParsing="false" onAction="#onSpeakerClick" prefHeight="28.0" prefWidth="40.0" visible="false">
+                          <graphic>
+                              <FontAwesomeIconView fx:id="volumeIcon" fill="WHITE" glyphName="VOLUME_UP" size="20" />
+                          </graphic>
+                      </Button>
+                      <Button fx:id="addFav" disable="true" mnemonicParsing="false" onAction="#addToFavourite" prefHeight="28.0" prefWidth="40.0" visible="false">
+                          <graphic>
+                              <FontAwesomeIconView fx:id="addFavIcon" fill="WHITE" glyphName="STAR" size="20" />
+                          </graphic>
+                      </Button>
+               </children>
+            </HBox>
+            <HBox fx:id="Pane" layoutX="210.0" layoutY="11.0" prefHeight="30.0" prefWidth="450.0" style="-fx-alignment: CENTER;" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="102.0" AnchorPane.topAnchor="11.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="12.0" />
+                        <Button fx:id="searchButton" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="20.0" prefWidth="20.0">
                             <graphic>
-                                <FontAwesomeIconView fill="WHITE" glyphName="TIMES" size="15" />
+                                <FontAwesomeIconView fx:id="searchEngine" fill="WHITE" glyphName="SEARCH" size="15" text="" wrappingWidth="13.928571701049805" />
                             </graphic>
                         </Button>
-                        <TextField fx:id="inputWord" layoutX="23.0" layoutY="4.0" onKeyTyped="#onTypeWord" prefHeight="30.0" prefWidth="379.0" promptText="Enter a word">
+                        <TextField fx:id="inputWord" onAction="#onSearchButtonClick" onKeyTyped="#onTypeWord" prefHeight="30.0" prefWidth="346.0" promptText="  Enter a word" HBox.hgrow="ALWAYS">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -82,13 +87,14 @@
                                 <Insets right="150.0" />
                             </padding>
                         </TextField>
-                        <Button fx:id="searchButton" contentDisplay="CENTER" layoutX="4.0" layoutY="8.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSearchButtonClick" prefHeight="20.0" prefWidth="20.0">
+                        <Button fx:id="deleteWord" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onDeleteButtonClick" prefHeight="20.0" prefWidth="20.0">
                             <graphic>
-                                <FontAwesomeIconView fx:id="searchEngine" fill="WHITE" glyphName="SEARCH" size="15" text="" wrappingWidth="13.928571701049805" />
+                                <FontAwesomeIconView fill="WHITE" glyphName="TIMES" size="15" />
                             </graphic>
                         </Button>
-                    </children>
-                </Pane>
+                  <Label prefHeight="18.0" prefWidth="6.0" />
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
         <ImageView fitHeight="52.0" fitWidth="46.0" layoutX="4.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">

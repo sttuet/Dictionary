@@ -14,7 +14,11 @@
     -fx-cursor: hand;
 }
 
-
+#SubAnchorPane {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: white ;
+}
 #searchButton {
     -fx-background-color: transparent;
 }
@@ -28,17 +32,14 @@
 }
 
 #deleteWord {
-    -fx-background-color: grey;
-    -fx-border-color: white;
-    -fx-background-radius: 10px;
-    -fx-border-radius: 10px;
+    -fx-background-color: transparent;
     -fx-cursor: hand;
 }
 
 #translateTextButton, #settings, #recentButton, #game, #addFavWord {
     -fx-background-color: linear-gradient(to right, #000428, #004e92);
-    -fx-border-radius: 10px;
-    -fx-background-radius: 10px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 
 }
 
@@ -69,9 +70,10 @@
     -fx-background-color: transparent;
 }
 
-#GroupNamLabel {
+#GroupNameLabel {
     -fx-text-fill: linear-gradient(to right, #000428, #004e92);
-    -fx-font-size: 20;
+    -fx-font-size: 28;
+
 }
 
 
@@ -85,8 +87,8 @@
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
     -fx-background-color: linear-gradient(to left, #ff512f, #f09819);;
     -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-cursor: hand;
     -fx-text-alignment: LEFT;
 }
@@ -94,8 +96,8 @@
 .list-cell:filled:hover {
     -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);
     -fx-text-fill: white;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-cursor: hand;
     -fx-text-alignment: LEFT;
 }
@@ -156,7 +158,7 @@
     -fx-background: rgba(30, 30, 30);
     -fx-text-fill: white;
     -fx-background-color: rgba(30, 30, 30, 0.8);
-    -fx-background-radius: 6px;
+    -fx-background-radius: 10px;
     -fx-background-insets: 0;
     -fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 3);

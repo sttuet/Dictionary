@@ -1,0 +1,22 @@
+.button {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-fill: white;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-cursor: hand;
+}
+#gameAnchorPane {
+    -fx-background-color: #f8dad0;
+}
