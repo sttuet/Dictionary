@@ -9,10 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static com.example.service.ConvertToHTML.getInfoEng;
 
@@ -20,7 +17,7 @@ public class Main extends Application {
     public static Dictionary dictionary;
 
     public static ObjectMapper objectMapper;
-    public static Set<String> favouriteList;
+    public static HashSet<String> favouriteList;
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
     public static boolean DARK_MODE = false;
@@ -52,9 +49,9 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static void changeScreen(String fxml, String cssFile) throws IOException {
+    public static void changeScreen(String fxml, String cssFile,double width, double height) throws IOException {
         Parent pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
-        Scene scene = new Scene(pane);
+        Scene scene = new Scene(pane,width,height);
         scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource(cssFile)).toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.getScene().setRoot(pane);
@@ -72,7 +69,7 @@ public class Main extends Application {
         dictionary = new Dictionary();
         meanings = IOFile.readFromE_VFile(dictionary);
         recentList = IOFile.readFromRecentFile();
-        favouriteList = IOFile.readFromFavouriteFile();
+        favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
     }
 
     /**
@@ -98,7 +95,7 @@ public class Main extends Application {
         primaryStage = stage;
         loadData();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 824, 537);
         scene.getStylesheets().add(getClass().getResource("MainView.css").toExternalForm());
         primaryStage.setTitle("Dictionary");
         primaryStage.setScene(scene);

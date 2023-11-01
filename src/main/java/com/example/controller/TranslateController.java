@@ -4,34 +4,39 @@ import com.example.ourdictionary.Main;
 import com.example.service.ParseJSON;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+import javafx.scene.layout.Background;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 
-public class TranslateController {
+public class TranslateController implements Initializable {
+    public Label TranslateLabel;
+    public Button closeButton;
     @FXML
     Label sourceLanguageLabel;
     @FXML
     Label targetLanguageLabel;
     @FXML
     private AnchorPane anchorPane;
-    private Stage stage;
-    private Scene scene;
     @FXML
     private TextField inputText;
     @FXML
-    private TextArea translateResult;
+    private Label translateResult;
     private boolean engToViet = true;
 
     @FXML
     protected void onCloseButtonClick(ActionEvent event) throws IOException {
-        Main.changeScreen("main-view.fxml", "MainView.css");
+        Main.changeScreen("main-view.fxml", "MainView.css", anchorPane.getWidth(), anchorPane.getHeight());
 
     }
 
@@ -61,4 +66,19 @@ public class TranslateController {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (Main.DARK_MODE) {
+            anchorPane.setStyle("-fx-background-color: #04293A");
+            inputText.setStyle("-fx-background-color: #041C32; -fx-text-fill: #ADC4CE; -fx-font-size: "
+                    + MainController.fontSize + ";");
+            translateResult.setStyle("-fx-background-color: #041C32; -fx-text-fill: #ADC4CE; -fx-font-size: "
+                    + MainController.fontSize + ";");
+        }
+        else {
+            inputText.setStyle(" -fx-font-size: " + MainController.fontSize + ";");
+            translateResult.setStyle("-fx-font-size: " + MainController.fontSize + ";");
+        }
+
+    }
 }

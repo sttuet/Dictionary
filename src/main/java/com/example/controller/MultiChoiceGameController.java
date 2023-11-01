@@ -1,46 +1,45 @@
 package com.example.controller;
 
-import com.example.ourdictionary.Game;
 import com.example.ourdictionary.Main;
 import com.example.ourdictionary.MultiChoiceGame;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import javafx.animation.FadeTransition;
-import javafx.animation.FillTransition;
 import javafx.animation.PauseTransition;
-import javafx.animation.SequentialTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class MultiChoiceGameController implements Initializable {
+    public AnchorPane multiChoicePane;
+    List<Button> listButton;
     private MultiChoiceGame game;
     @FXML
     private Label question;
     @FXML
     private Label score;
     @FXML
-    private Button A=new Button();
+    private Button A = new Button();
     @FXML
-    private Button B=new Button();
+    private Button B = new Button();
     @FXML
-    private Button C=new Button();
+    private Button C = new Button();
     @FXML
-    private Button D=new Button();
+    private Button D = new Button();
     @FXML
     private GridPane gridPane;
-    List<Button> listButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -48,20 +47,38 @@ public class MultiChoiceGameController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        listButton=new ArrayList<>();
+        listButton = new ArrayList<>();
         listButton.add(A);
         listButton.add(B);
         listButton.add(C);
         listButton.add(D);
         setQuestion();
+        if (Main.DARK_MODE) {
+            multiChoicePane.setStyle("-fx-background-color: #04293A;");
+            question.setTextFill(Paint.valueOf("#ADC4CE"));
+            for (int i = 0; i < 4; i++) {
+                listButton.get(i).setStyle("-fx-text-fill: #ADC4CE;-fx-font-size:" + MainController.fontSize
+                        + ";");
+            }
+            question.setFont(Font.font((MainController.fontSize + 8)));
+        } else {
+            for (int i = 0; i < 4; i++) {
+                listButton.get(i).setStyle("-fx-text-fill: #ADC4CE;-fx-font-size:" + MainController.fontSize
+                        + ";");
+            }
+            question.setFont(Font.font((MainController.fontSize + 8)));
+        }
+
     }
+
     @FXML
-    protected void onAnswer(ActionEvent event){
-        Button button=(Button) event.getSource();
-        boolean res=game.checkAnswer(button.getText());
-        showTrueAnswer(res,button);
-        if(res==true){
+    protected void onAnswer(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        boolean res = game.checkAnswer(button.getText());
+        showTrueAnswer(res, button);
+        if (res == true) {
             game.increaseScore();
+
         }
         score.setText(game.getScore()+"/10");
         if(game.getScore()>=10){
@@ -71,26 +88,27 @@ public class MultiChoiceGameController implements Initializable {
         game.updateListQuestion(game.checkAnswer(button.getText()));
     }
 
-    private void setQuestion(){
-        List<String> list= game.getCurrentQuestion();
+    private void setQuestion() {
+        List<String> list = game.getCurrentQuestion();
         question.setText(list.get(0));
-        for(int i=0;i<4;i++){
-            listButton.get(i).setText(list.get(i+2));
+        for (int i = 0; i < 4; i++) {
+            listButton.get(i).setText(list.get(i + 2));
         }
     }
-    private void showTrueAnswer(boolean isTrueAns,Button button){
-        for(int i=0;i<4;i++){
-            if(game.checkAnswer(listButton.get(i).getText())){
-                Node node=(((AnchorPane)(gridPane.getChildren().get(i))).getChildren().get(2));
-                Node falseNode=button.getParent().getChildrenUnmodifiable().get(1);
-                if(!isTrueAns){
+
+    private void showTrueAnswer(boolean isTrueAns, Button button) {
+        for (int i = 0; i < 4; i++) {
+            if (game.checkAnswer(listButton.get(i).getText())) {
+                Node node = (((AnchorPane) (gridPane.getChildren().get(i))).getChildren().get(2));
+                Node falseNode = button.getParent().getChildrenUnmodifiable().get(1);
+                if (!isTrueAns) {
                     falseNode.setOpacity(1);
                 }
                 node.setOpacity(1);
-                PauseTransition pause=new PauseTransition(Duration.millis(1000));
+                PauseTransition pause = new PauseTransition(Duration.millis(1000));
                 pause.setOnFinished(event -> {
                     node.setOpacity(0);
-                    if(!isTrueAns){
+                    if (!isTrueAns) {
                         falseNode.setOpacity(0);
                     }
                     setQuestion();
@@ -99,9 +117,10 @@ public class MultiChoiceGameController implements Initializable {
             }
         }
     }
+
     @FXML
     protected void onBackClick(ActionEvent event) throws IOException {
-        Main.changeScreen("chooseGame-view.fxml","chooseGame.css");
+        Main.changeScreen("chooseGame-view.fxml", "chooseGame.css", multiChoicePane.getWidth(), multiChoicePane.getHeight());
     }
     @FXML
     private AnchorPane finish=new AnchorPane();

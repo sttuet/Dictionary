@@ -1,50 +1,52 @@
-#vietLabel {
+#vietLabel, #engLabel, #speaker, #addFav {
     -fx-font-family: Open Sans;
-    -fx-font-size: 14;
+    -fx-font-size: 12;
     -fx-text-fill: "white";
     -fx-font-weight: bold;
     -fx-background-color: transparent;
 }
 
-#engLabel {
-    -fx-background-color: transparent;
-    -fx-font-family: Open Sans;
-    -fx-font-size: 14;
-    -fx-text-fill: "white";
-    -fx-font-weight: bold;
-}
-
-#engLabel:hover, #engLabel:selected, #engLabel:focused {
+#engLabel:hover, #engLabel:selected, #engLabel:focused, #vietLabel:hover, #vietLabel:selected, #vietLabel:focused,
+#speaker:hover, #speaker:selected, #addFav:hover, #addFav:selected {
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-cursor: hand;
 }
 
-#vietLabel:hover, #vietLabel:selected, #vietLabel:focused {
-    -fx-border-color: white;
-    -fx-border-width: 0px 0px 3px 0px;
-    -fx-cursor: hand;
-    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
+#SubAnchorPane {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-border-color: white ;
 }
-
-#MainWindow {
-    -fx-background-color: linear-gradient(to bottom, #000428, #004e92);
-}
-
-.button {
-    -fx-background-color: transparent;
-}
-
 #searchButton {
-    -fx-background-color: #000428;
+    -fx-background-color: transparent;
 }
 
 #searchButton:hover {
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
-    -fx-border-width: 0px 0px 3px 0px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
     -fx-cursor: hand;
+}
+
+#deleteWord {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+#translateTextButton, #settings, #recentButton, #game, #addFavWord {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+
+}
+
+#Pane {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
 }
 
 #translateTextButton:hover {
@@ -54,50 +56,27 @@
     -fx-cursor: hand;
 }
 
-#addFavWord:hover, #addFavWord:selected {
+#addFavWord:hover, #addFavWord:selected, #game:hover, #game:selected,
+#recentButton:hover, #recentButton:focused, #settings:hover, #settings:focused {
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-cursor: hand;
 }
 
-#recentButton:hover, #recentButton:focused {
-    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
-    -fx-border-color: white;
-    -fx-border-width: 0px 0px 3px 0px;
-    -fx-cursor: hand;
-}
-
-#settings:hover, #settings:focused {
-    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
-    -fx-border-color: white;
-    -fx-border-width: 0px 0px 3px 0px;
-    -fx-cursor: hand;
-}
 
 #inputWord {
-    -fx-text-fill: "black";
-}
-
-#addFavIcon, #addFavIcon:hover {
-    -fx-cursor: hand;
-    -fx-stroke: #000000;
-    -fx-stroke-width: 1;
+    -fx-text-fill: white;
     -fx-background-color: transparent;
 }
 
-#addFav {
-    -fx-background-color: transparent;
+#GroupNameLabel {
+    -fx-text-fill: linear-gradient(to right, #000428, #004e92);
+    -fx-font-size: 28;
+
 }
 
-#vBox {
-    -fx-background-color: white;
-}
 
-#volumeIcon:hover {
-    -fx-fill: linear-gradient(to bottom, #a73737, #7a2828);
-    -fx-cursor: hand;
-}
 
 #currentWord {
     -fx-font-size: 20;
@@ -106,10 +85,10 @@
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-background-color: linear-gradient(to left, #ff512f, #f09819);;
     -fx-text-fill: white;
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-cursor: hand;
     -fx-text-alignment: LEFT;
 }
@@ -117,8 +96,8 @@
 .list-cell:filled:hover {
     -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);
     -fx-text-fill: white;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-cursor: hand;
     -fx-text-alignment: LEFT;
 }
@@ -170,11 +149,6 @@
     -fx-background-radius: 2.0em;
 }
 
-#inputWord {
-    -fx-border-color: linear-gradient(to bottom, #a73737, #7a2828);
-    -fx-text-fill: "black";
-}
-
 .list-cell {
     -fx-background-color: white;
     -fx-text-alignment: LEFT;
@@ -184,16 +158,12 @@
     -fx-background: rgba(30, 30, 30);
     -fx-text-fill: white;
     -fx-background-color: rgba(30, 30, 30, 0.8);
-    -fx-background-radius: 6px;
+    -fx-background-radius: 10px;
     -fx-background-insets: 0;
     -fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 10, 0.0, 0, 3);
     -fx-font-size: 0.85em;
     -fx-font-weight: normal;
-}
-
-.button-hover:hover {
-    -fx-background-color: transparent;
 }
 
 .label-anChor {
@@ -204,10 +174,6 @@
     -fx-text-fill: white;
 }
 
-#hBox1 {
-    -fx-background-color: linear-gradient(to right, #000428, #004e92);
-}
-
-.label:hover, .label:selected {
-    -fx-text-fill: white;
+#mainAnchorPane {
+    -fx-background-color: f8dad0;
 }
