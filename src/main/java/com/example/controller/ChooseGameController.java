@@ -47,6 +47,6 @@ public class ChooseGameController implements Initializable {
     }
     @FXML
     protected void goToHangMan(ActionEvent event) throws IOException {
-        Main.changeScreen("hangMan-view.fxml","hangMan.css");
+        Main.changeScreen("hangMan-view.fxml","hangMan.css", gameAnchorPane.getWidth(), gameAnchorPane.getHeight());
     }
 }

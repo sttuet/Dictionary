@@ -30,7 +30,7 @@
       </GridPane>
       <Button fx:id="back" layoutY="1.0" mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
       <ImageView fx:id="imageView" fitHeight="260.0" fitWidth="163.0" layoutX="-36.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true" />
-      <AnchorPane fx:id="resultPane" layoutX="199.0" layoutY="147.0" prefHeight="138.0" prefWidth="202.0" style="-fx-border-color: black; -fx-border-style: solid; -fx-border-radius: 5px; -fx-background-radius: 5px;">
+      <AnchorPane fx:id="resultPane" layoutX="199.0" layoutY="147.0" prefHeight="138.0" prefWidth="202.0" style="-fx-border-color: black; -fx-border-style: solid; -fx-border-radius: 5px; -fx-background-radius: 5px;" visible="false">
          <children>
             <Label fx:id="result" alignment="CENTER" layoutY="-2.0" prefHeight="36.0" prefWidth="200.0" textAlignment="CENTER" textOverrun="LEADING_WORD_ELLIPSIS" wrapText="true">
                <font>
