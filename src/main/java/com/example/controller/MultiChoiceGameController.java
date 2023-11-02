@@ -78,7 +78,6 @@ public class MultiChoiceGameController implements Initializable {
         showTrueAnswer(res, button);
         if (res == true) {
             game.increaseScore();
-
         }
         score.setText(game.getScore()+"/10");
         if(game.getScore()>=10){
@@ -124,12 +123,6 @@ public class MultiChoiceGameController implements Initializable {
     }
     @FXML
     private AnchorPane finish=new AnchorPane();
-//    @FXML
-//    private Button again;
-//    @FXML
-//    private Button newGame;
-//    @FXML
-//    private Button exit;
     @FXML
     protected void onAgainClick(){
         finish.setVisible(false);
@@ -145,6 +138,6 @@ public class MultiChoiceGameController implements Initializable {
     @FXML
     protected void onExitClick() throws IOException {
         finish.setVisible(false);
-        Main.changeScreen("chooseGame-view.fxml","chooseGame.css");
+        Main.changeScreen("chooseGame-view.fxml","chooseGame.css", multiChoicePane.getWidth(), multiChoicePane.getHeight());
     }
 }

@@ -116,7 +116,7 @@ public class HangManController implements Initializable {
     }
     @FXML
     protected void onBackClick() throws IOException {
-        Main.changeScreen("chooseGame-view.fxml","chooseGame.css");
+        Main.changeScreen("chooseGame-view.fxml","chooseGame.css", parent.getWidth(), parent.getHeight());
     }
     @FXML
     private ImageView imageView=new ImageView();
@@ -126,7 +126,7 @@ public class HangManController implements Initializable {
     }
     @FXML
     protected void onExitClick() throws IOException {
-        Main.changeScreen("main-view.fxml","MainView.css");
+        Main.changeScreen("main-view.fxml","MainView.css", parent.getWidth(), parent.getHeight());
     }
     @FXML
     protected void onPlayAgainClick(){
