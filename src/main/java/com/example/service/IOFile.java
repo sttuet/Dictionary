@@ -1,11 +1,8 @@
 package com.example.service;
 
 import com.example.ourdictionary.Dictionary;
-import com.example.ourdictionary.Main;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 
 
@@ -13,7 +10,7 @@ public class IOFile {
     private static final String RECENT_PATH = "src\\main\\resources\\data\\Recent.txt";
     private static final String FAVOURITE_PATH = "src\\main\\resources\\data\\Favourite.txt";
     private static final String E_V_PATH = "src\\main\\resources\\data\\E_V.txt";
-    private static final String COMMON_WORD_PATH="src\\main\\resources\\data\\common_word.txt";
+    private static final String COMMON_WORD_PATH = "src\\main\\resources\\data\\common_word.txt";
 
     public static BufferedReader bufferedReader;
     public static BufferedWriter bufferedWriter;
@@ -63,17 +60,18 @@ public class IOFile {
         String line;
 
         while ((line = bufferedReader.readLine()) != null) {
-            String[] part=line.split("<html>");
-            meanings.put(part[0], "<html>"+part[1]);
+            String[] part = line.split("<html>");
+            meanings.put(part[0], "<html>" + part[1]);
             dictionary.addWord(part[0]);
         }
         return meanings;
     }
+
     public static List<String> readFromCommonWord() throws IOException {
-        List<String> ans=new ArrayList<>();
+        List<String> ans = new ArrayList<>();
         bufferedReader = new BufferedReader(new FileReader(COMMON_WORD_PATH));
-        String tmp="";
-        while((tmp=bufferedReader.readLine())!=null){
+        String tmp;
+        while ((tmp = bufferedReader.readLine()) != null) {
             ans.add(tmp);
         }
         return ans;
