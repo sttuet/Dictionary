@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.ourdictionary.HangMan;
+import com.example.ourdictionary.Main;
 import com.example.service.IOFile;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -33,6 +35,8 @@ public class HangManController extends Controller implements Initializable {
     @FXML
     private Label result = new Label();
     private HangMan hangMan;
+    @FXML
+    private ImageView imageView = new ImageView();
 
     public HangManController() throws IOException {
     }
@@ -46,97 +50,123 @@ public class HangManController extends Controller implements Initializable {
                 Button button = new Button();
                 button.setPrefWidth(widthButton);
                 button.setPrefHeight(heightButton);
-                char c = (char) ('A' + i * 4 + j);
-                if (c <= 'Z') {
-                    String s = String.valueOf(c);
-                    button.setText(s);
-                    button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onGuessCharacterClick);
-                    gridPane.add(button, i, j);
+                if (Main.DARK_MODE) {
+                    button.setStyle("-fx-background-color:#95948F;-fx-border-radius: 5px;" +
+                            "-fx-background-radius:5;-fx-font-size: " + (MainController.fontSize - 2) + ";");
+                } else {
+                    button.setStyle("-fx-background-color:#95948F;-fx-border-radius: 5px;-fx-background-radius:5;" +
+                            "-fx-font-size: " + (MainController.fontSize - 2) + ";");
+                }
+                button.setOnMouseEntered(event -> {
+                    button.setStyle("-fx-background-color: #adaaa8;");
+                });
+                button.setOnMouseExited(event -> {
+                    button.setStyle("-fx-background-color: #95948F;");
+                });
+                    char c = (char) ('A' + i * 4 + j);
+                    if (c <= 'Z') {
+                        String s = String.valueOf(c);
+                        button.setText(s);
+                        button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onGuessCharacterClick);
+                        gridPane.add(button, i, j);
+                    }
                 }
             }
-        }
-        currentWord = new GridPane();
-        rootPane.getChildren().add(currentWord);
-        hangMan = new HangMan(allWords);
-        setNewCurrentWord(hangMan.getAnswer().length());
-    }
-
-    private void setNewCurrentWord(int n) {
-        currentWord = new GridPane();
-        rootPane.getChildren().remove(rootPane.getChildren().size() - 1);
-        rootPane.getChildren().add(currentWord);
-        int widthLabel = 24;
-        currentWord.setHgap(3);
-        currentWord.setPrefWidth(n * widthLabel + (n - 1) * currentWord.getHgap());
-        currentWord.setPrefHeight(widthLabel);
-        currentWord.setLayoutX(440 - currentWord.getPrefWidth() / 2);
-        currentWord.setLayoutY(140);
-        for (int i = 0; i < n; i++) {
-            Label label = new Label();
-            label.setPrefHeight(widthLabel - 2);
-            label.setPrefWidth(widthLabel - 2);
-            label.setText("_");
-            label.setAlignment(Pos.BASELINE_CENTER);
-            label.setBorder(Border.stroke(Paint.valueOf("black")));
-            currentWord.add(label, i, 0);
-        }
-    }
-
-    private void onGuessCharacterClick(MouseEvent event) {
-        if (hangMan.isOver() || hangMan.isWin()) {
-            return;
-        }
-        Button button = (Button) event.getSource();
-        button.setVisible(false);
-        hangMan.playerChoose(button.getText());
-        if (hangMan.isOver()) {
-            resultPane.setVisible(true);
-            result.setText("You died. Secret word is " + hangMan.getAnswer() + "!");
-        } else if (hangMan.isWin()) {
-            resultPane.setVisible(true);
-            result.setText("You won!");
-        }
-        setTextInCurrentWord(hangMan.getCurrentWord());
-        setImage(hangMan.getCurrentWrong());
-    }
-
-    private void setTextInCurrentWord(List<Character> list) {
-        for (int i = 0; i < list.size(); i++) {
-            String tmp = "";
-            if (list.get(i) == '_') {
-                tmp += '_';
+            currentWord = new GridPane();
+            rootPane.getChildren().add(currentWord);
+                    hangMan = new HangMan(allWords);
+            setNewCurrentWord(hangMan.getAnswer().length());
+            if (Main.DARK_MODE) {
+                rootPane.setStyle("-fx-background-color: #04293A");
+                resultPane.setStyle("-fx-background-color: #04293A");
+                result.setStyle("-fx-text-fill:white; -fx-font-size: 14;");
             } else {
-                tmp += (char) (list.get(i));
+                result.setStyle("-fx-font-size: 14;");
             }
-            ((Label) (currentWord.getChildren().get(i))).setText(tmp);
+            setImage(0);
+        }
+
+        private void setNewCurrentWord ( int n){
+            currentWord = new GridPane();
+            rootPane.getChildren().remove(rootPane.getChildren().size() - 1);
+            rootPane.getChildren().add(currentWord);
+            int widthLabel = 24;
+            currentWord.setHgap(3);
+            currentWord.setPrefWidth(n * widthLabel + (n - 1) * currentWord.getHgap());
+            currentWord.setPrefHeight(widthLabel);
+            currentWord.setLayoutX(440 - currentWord.getPrefWidth() / 2);
+            currentWord.setLayoutY(140);
+            for (int i = 0; i < n; i++) {
+                Label label = new Label();
+                label.setPrefHeight(widthLabel - 2);
+                label.setPrefWidth(widthLabel - 2);
+                if (Main.DARK_MODE) {
+                    label.setStyle("-fx-text-fill: white;-fx-border-color: white;-fx-font-size: " + MainController.fontSize + ";");
+                } else {
+                    label.setStyle("-fx-border-color: black;-fx-font-size: " + MainController.fontSize + ";");
+                }
+                label.setText("_");
+                label.setAlignment(Pos.BASELINE_CENTER);
+                label.setBorder(Border.stroke(Paint.valueOf("black")));
+                currentWord.add(label, i, 0);
+            }
+        }
+
+        private void onGuessCharacterClick (MouseEvent event){
+            if (hangMan.isOver() || hangMan.isWin()) {
+                return;
+            }
+            Button button = (Button) event.getSource();
+            button.setVisible(false);
+            hangMan.playerChoose(button.getText());
+            if (hangMan.isOver()) {
+                resultPane.setVisible(true);
+                currentWord.setVisible(false);
+                result.setText("You died. Secret word is " + hangMan.getAnswer() + "!");
+            } else if (hangMan.isWin()) {
+                resultPane.setVisible(true);
+                currentWord.setVisible(false);
+                result.setText("You won!");
+            }
+            setTextInCurrentWord(hangMan.getCurrentWord());
+            setImage(hangMan.getCurrentWrong());
+        }
+
+        private void setTextInCurrentWord (List < Character > list) {
+            for (int i = 0; i < list.size(); i++) {
+                String tmp = "";
+                if (list.get(i) == '_') {
+                    tmp += '_';
+                } else {
+                    tmp += (char) (list.get(i));
+                }
+                ((Label) (currentWord.getChildren().get(i))).setText(tmp);
+            }
+        }
+
+        @FXML
+        protected void onBackClick () throws IOException {
+            changeScreen("chooseGame-view.fxml", "chooseGame.css");
+        }
+
+        private void setImage ( int i){
+            File file = new File("src\\main\\resources\\image\\" + i + ".jpg");
+            Image image = new Image(file.getAbsolutePath());
+            imageView.setImage(image);
+        }
+        @FXML
+        protected void onExitClick () throws IOException {
+            changeScreen("main-view.fxml", "MainView.css");
+        }
+
+        @FXML
+        protected void onPlayAgainClick () {
+            for (int i = 0; i < 26; i++) {
+                gridPane.getChildren().get(i).setVisible(true);
+            }
+            resultPane.setVisible(false);
+            hangMan = new HangMan(allWords);
+            setNewCurrentWord(hangMan.getAnswer().length());
+            setImage(0);
         }
     }
-
-    @FXML
-    protected void onBackClick() throws IOException {
-        changeScreen("chooseGame-view.fxml", "chooseGame.css");
-    }
-
-    @FXML
-    private ImageView imageView = new ImageView();
-
-    private void setImage(int i) {
-        Image image = new Image("D:\\Projects\\OurDictionary\\src\\main\\resources\\image\\pic" + i + ".png");
-        imageView.setImage(image);
-    }
-
-    @FXML
-    protected void onExitClick() throws IOException {
-        changeScreen("main-view.fxml", "MainView.css");
-    }
-
-    @FXML
-    protected void onPlayAgainClick() {
-        for (int i = 0; i < 26; i++) {
-            gridPane.getChildren().get(i).setVisible(true);
-        }
-        hangMan = new HangMan(allWords);
-        setNewCurrentWord(hangMan.getAnswer().length());
-        setImage(0);
-    }
-}

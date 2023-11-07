@@ -52,15 +52,15 @@
             </children>
         </GridPane>
         <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
-       <Label fx:id="question" alignment="CENTER" layoutX="156.0" layoutY="113.0" prefHeight="134.0" prefWidth="457.0" wrapText="true" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="211.0" />
+        <Label fx:id="question" alignment="CENTER" layoutX="156.0" layoutY="113.0" prefHeight="134.0" prefWidth="457.0" wrapText="true" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="211.0" />
         <Label fx:id="score" alignment="CENTER" layoutX="754.0" layoutY="13.0" prefHeight="51.0" prefWidth="55.0" text="0/10" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <AnchorPane fx:id="finish" layoutX="63.0" layoutY="129.0" prefHeight="297.0" prefWidth="600.0" style="-fx-background-color: aqua;" visible="false" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
-         <children>
-            <Button fx:id="exit" layoutX="225.0" layoutY="232.0" mnemonicParsing="false" onAction="#onExitClick" prefHeight="40.0" prefWidth="150.0" text="Exit" />
-            <Button fx:id="newGame" layoutX="225.0" layoutY="160.0" mnemonicParsing="false" onAction="#onNewGameClick" prefHeight="40.0" prefWidth="150.0" text="New Game" />
-            <Button fx:id="again" layoutX="225.0" layoutY="85.0" mnemonicParsing="false" onAction="#onAgainClick" prefHeight="40.0" prefWidth="150.0" text="Again" />
-         </children>
-      </AnchorPane>
+        <AnchorPane fx:id="finish" layoutX="63.0" layoutY="129.0" prefHeight="297.0" prefWidth="600.0" visible="false" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
+            <children>
+                <Button fx:id="exit" layoutX="225.0" layoutY="232.0" mnemonicParsing="false" onAction="#onExitClick" prefHeight="40.0" prefWidth="150.0" text="Exit" />
+                <Button fx:id="newGame" layoutX="225.0" layoutY="160.0" mnemonicParsing="false" onAction="#onNewGameClick" prefHeight="40.0" prefWidth="150.0" text="New Game" />
+                <Button fx:id="again" layoutX="225.0" layoutY="85.0" mnemonicParsing="false" onAction="#onAgainClick" prefHeight="40.0" prefWidth="150.0" text="Again" />
+            </children>
+        </AnchorPane>
 
     </children>
 </AnchorPane>

@@ -54,7 +54,7 @@ public class MultiChoiceGameController extends Controller implements Initializab
         setQuestion();
         if (Main.DARK_MODE) {
             rootPane.setStyle("-fx-background-color: #04293A;");
-            question.setTextFill(Paint.valueOf("#ADC4CE"));
+            question.setStyle("-fx-text-fill: white;");
             for (int i = 0; i < 4; i++) {
                 listButton.get(i).setStyle("-fx-text-fill: #ADC4CE;-fx-font-size:" + MainController.fontSize
                         + ";");
@@ -81,6 +81,7 @@ public class MultiChoiceGameController extends Controller implements Initializab
         score.setText(game.getScore() + "/10");
         if (game.getScore() >= 10) {
             finish.setVisible(true);
+            question.setVisible(false);
             return;
         }
         game.updateListQuestion(game.checkAnswer(button.getText()));

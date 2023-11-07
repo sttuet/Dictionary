@@ -17,6 +17,6 @@
     -fx-font-family: Arial;
     -fx-cursor: hand;
 }
-#gameAnchorPane {
+#rootPane {
     -fx-background-color: #f8dad0;
 }

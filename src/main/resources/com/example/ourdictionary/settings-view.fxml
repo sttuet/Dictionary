@@ -28,11 +28,11 @@
                 <CheckBox fx:id="checkAutoPlay" mnemonicParsing="false" onAction="#onAutoPlaySelect" prefHeight="43.0" prefWidth="33.0" />
             </children>
         </HBox>
-      <HBox fx:id="setFontButton" alignment="CENTER" layoutX="284.0" layoutY="332.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
-         <children>
-            <Label prefHeight="40.0" prefWidth="236.0" text="  Font size" />
-            <ChoiceBox fx:id="choiceBox" prefHeight="27.0" prefWidth="13.0" />
-         </children>
-      </HBox>
+        <HBox fx:id="setFontButton" alignment="CENTER" layoutX="284.0" layoutY="332.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
+            <children>
+                <Label prefHeight="40.0" prefWidth="194.0" text="  Font size" textFill="WHITE" />
+                <ChoiceBox fx:id="choiceBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="49.0" />
+            </children>
+        </HBox>
     </children>
 </AnchorPane>
