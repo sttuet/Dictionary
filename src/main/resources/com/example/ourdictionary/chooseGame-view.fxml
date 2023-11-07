@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
-<AnchorPane fx:id="gameAnchorPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1"
+<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ChooseGameController">
     <children>
         <Button fx:id="LetterSorting" layoutX="272.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToHangMan"

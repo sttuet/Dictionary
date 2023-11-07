@@ -17,10 +17,10 @@ public class ParseJSON {
      * @return {@link Word}
      * @throws JsonProcessingException
      */
-    public static Word fromJson(String json, ObjectMapper objectMapper) throws JsonProcessingException {
+    public static Word fromJson(String json, ObjectMapper objectMapper) throws IOException {
         if (json == null) {
             return null;
-        }else if(json.equals(SendRequest.NO_INTERNET)){
+        } else if (json.equals(SendRequest.NO_INTERNET)) {
             return null;
         }
         JsonNode root = objectMapper.readTree(json).get(0);
@@ -33,7 +33,6 @@ public class ParseJSON {
         }
         if (root.get("phonetics") != null) {
             for (JsonNode jsonNode : root.get("phonetics")) {
-                System.out.println(jsonNode);
                 if (jsonNode.get("text") != null && jsonNode.get("audio") != null && !jsonNode.get("audio").asText().equals("")) {
                     result.setText(jsonNode.get("text").asText());
                     result.setAudio(jsonNode.get("audio").asText());
@@ -52,6 +51,7 @@ public class ParseJSON {
             }
             result.getMeanings().add(meaning);
         });
+        SendRequest.downloadAudio(result.getAudio(), result.getWord());
         return result;
     }
 

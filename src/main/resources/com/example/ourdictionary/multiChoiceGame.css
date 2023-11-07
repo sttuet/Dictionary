@@ -1,4 +1,4 @@
-#multiChoicePane {
+#rootPane {
     -fx-background-color: #f8dad0;
 }
 .button {
@@ -36,4 +36,10 @@
     -fx-font-size: 14;
     -fx-font-family: Arial;
     -fx-text-fill: white;
+}
+#finish {
+    -fx-background-color: #f8dad0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
 }

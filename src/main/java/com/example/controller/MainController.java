@@ -5,24 +5,18 @@ import com.example.service.ConvertToHTML;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.web.WebView;
 import javafx.util.Callback;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,10 +24,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.example.ourdictionary.Main.*;
-import static com.example.service.SendRequest.downloadAudio;
 
 
-public class MainController implements Initializable {
+public class MainController extends Controller implements Initializable {
     public static boolean autoPlay = false;
     public static int fontSize = 14;
     @FXML
@@ -46,7 +39,6 @@ public class MainController implements Initializable {
     public Label GroupNameLabel;
     public HBox Pane;
     public AnchorPane SubAnchorPane;
-    public AnchorPane mainAnchorPane;
     public HBox EngVietSpeaker;
     @FXML
     FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
@@ -70,19 +62,17 @@ public class MainController implements Initializable {
     private Label currentWord = new Label("");
     private String vietMeaning = "";
     private String engMeaning = "";
-    private Media media;
-    private MediaPlayer mediaPlayer;
     private boolean isShowingFavWord = false;
     @FXML
     private Button addFav;
 
     public void setDarkMode() {
-        mainAnchorPane.setStyle("-fx-background-color: #04293A;");
+        rootPane.setStyle("-fx-background-color: #04293A;");
         listView.setStyle("-fx-background-color: #041C32; -fx-background-radius: 10px;-fx-border-radius: 10px;");
-        listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        listView.setCellFactory(new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> param) {
-                return new ListCell<String>() {
+                return new ListCell<>() {
                     @Override
                     protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
@@ -123,128 +113,119 @@ public class MainController implements Initializable {
         listView.setItems(FXCollections.observableList(list));
     }
 
-    protected void deleteWord(boolean FavOrRecent) {
+    protected void deleteWord() {
         if (DARK_MODE) {
             listView.setBackground(Background.fill(Paint.valueOf("#041C32")));
         }
-        listView.setCellFactory(cell -> {
-            return new ListCell<>() {
-                final AnchorPane rootLayout = new AnchorPane() {{
-                    setTextFill(Paint.valueOf("white"));
-                    if (DARK_MODE) {
-                        setStyle("-fx-background-color: #041C32; -fx-text-fill: white;");
+        listView.setCellFactory(cell -> new ListCell<>() {
+            final AnchorPane rootLayout = new AnchorPane() {{
+                setTextFill(Paint.valueOf("white"));
+                if (DARK_MODE) {
+                    setStyle("-fx-background-color: #041C32; -fx-text-fill: white;");
+                }
+
+            }};
+            final Label title = new Label();
+            final FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.TIMES);
+            // The Button we'll include to order the book
+            final Button deleteButton = new Button("", iconView);
+
+            {
+                title.setFont(Font.font("Arial", fontSize));
+            }
+
+            {
+                if (DARK_MODE) {
+                    setStyle("-fx-background-color: transparent");
+                    setStyle("-fx-border-color: white");
+                }
+            }
+
+            {
+                if (DARK_MODE) {
+                    title.setBackground(Background.fill(Paint.valueOf("#041C32")));
+                    title.setTextFill(Paint.valueOf("white"));
+                    title.setStyle("-fx-background-color: #041C32; -fx-text-fill: white;");
+                }
+            }
+
+            {
+                iconView.setFill(Paint.valueOf("black"));
+            }
+
+            {
+                deleteButton.setMinWidth(20);
+                deleteButton.setMinHeight(20);
+                deleteButton.setPrefSize(20, 20);
+                deleteButton.setAlignment(Pos.BOTTOM_CENTER);
+                deleteButton.setBackground(Background.fill(Paint.valueOf("transparent")));
+            }
+
+            {
+                rootLayout.getChildren().addAll(title, deleteButton);
+                AnchorPane.setRightAnchor(deleteButton, 0.0);
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (DARK_MODE) {
+                    setStyle("-fx-background-color: #041C32");
+                }
+                if (item != null) {
+                    if (cell.isFocused()) {
+                        setTextFill(Paint.valueOf("white"));
                     }
-
-                }};
-                final Label title = new Label();
-                final FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.TIMES);
-                // The Button we'll include to order the book
-                final Button deleteButton = new Button("", iconView);
-
-                {
-                    title.setFont(Font.font("Arial", fontSize));
-                }
-
-                {
                     if (DARK_MODE) {
-                        setStyle("-fx-background-color: transparent");
-                        setStyle("-fx-border-color: white");
-                    }
-                }
-
-                {
-                    if (DARK_MODE) {
-                        title.setBackground(Background.fill(Paint.valueOf("#041C32")));
-                        title.setTextFill(Paint.valueOf("white"));
-                        title.setStyle("-fx-background-color: #041C32; -fx-text-fill: white;");
-                    }
-                    // title.getStyleClass().add("label-anChor");
-                }
-
-                {
-                    iconView.setFill(Paint.valueOf("black"));
-                }
-
-                {
-                    deleteButton.setMinWidth(20);
-                    deleteButton.setMinHeight(20);
-                    deleteButton.setPrefSize(20, 20);
-                    deleteButton.setAlignment(Pos.BOTTOM_CENTER);
-                    deleteButton.setBackground(Background.fill(Paint.valueOf("transparent")));
-                }
-
-                {
-                    rootLayout.getChildren().addAll(title, deleteButton);
-                    AnchorPane.setRightAnchor(deleteButton, 0.0);
-                }
-
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (DARK_MODE) {
-                        setStyle("-fx-background-color: #041C32");
-                    }
-                    if (item != null) {
-                        if (cell.isFocused()) {
-                            setTextFill(Paint.valueOf("white"));
-                        }
-                        if (DARK_MODE) {
-                            setOnMouseEntered(event -> {
-                                rootLayout.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);");
-                                title.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);");
-                                setStyle(
-                                        "  -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);  " +
-                                                "-fx-text-fill: white;" +
-                                                "    -fx-border-radius: 10;" +
-                                                " -fx-border-color: white;" +
-                                                "    -fx-background-radius: 10;" +
-                                                "    -fx-cursor: hand;" +
-                                                "    -fx-text-alignment: LEFT;");
-                            });
-
-                            setOnMouseExited(event -> {
-
-                                setStyle("-fx-background-color: #041C32;-fx-text-fill: white;" +
-                                        " -fx-border-radius: 10;" +
-                                        " -fx-background-radius: 10;");
-                                rootLayout.setStyle("-fx-background-color: #041C32;");
-                                title.setStyle("-fx-background-color: #041C32; -fx-text-fill: white;");
-
-                            });
-                        }
-
-                        title.setText(item);
-                        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-                            public void handle(ActionEvent event) {
-                                if (!listView.getItems().isEmpty()) {
-                                    final int selectedIdx = listView.getSelectionModel().getSelectedIndex();
-                                    if (selectedIdx != -1) {
-                                        String itemToRemove = listView.getSelectionModel().getSelectedItem();
-
-                                        final int newSelectedIdx =
-                                                (selectedIdx == listView.getItems().size() - 1)
-                                                        ? selectedIdx - 1
-                                                        : selectedIdx;
-
-                                        listView.getItems().remove(selectedIdx);
-                                        if (FavOrRecent) {
-                                            recentList.remove(itemToRemove);
-                                        } else {
-                                            favouriteList.remove(itemToRemove);
-                                        }
-                                        listView.getSelectionModel().select(newSelectedIdx);
-                                    }
-                                }
-
-                            }
+                        setOnMouseEntered(event -> {
+                            rootLayout.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);");
+                            title.setStyle("-fx-background-color: linear-gradient(to right, #eb3349, #f45c43);");
+                            setStyle(
+                                    "  -fx-background-color: linear-gradient(to right, #eb3349, #f45c43);  " +
+                                            "-fx-text-fill: white;" +
+                                            "    -fx-border-radius: 10;" +
+                                            " -fx-border-color: white;" +
+                                            "    -fx-background-radius: 10;" +
+                                            "    -fx-cursor: hand;" +
+                                            "    -fx-text-alignment: LEFT;");
                         });
-                        setGraphic(rootLayout);
-                    } else {
-                        setGraphic(null);
-                    }
-                }
 
-            };
+                        setOnMouseExited(event -> {
+
+                            setStyle("-fx-background-color: #041C32;-fx-text-fill: white;" +
+                                    " -fx-border-radius: 10;" +
+                                    " -fx-background-radius: 10;");
+                            rootLayout.setStyle("-fx-background-color: #041C32;");
+                            title.setStyle("-fx-background-color: #041C32; -fx-text-fill: white;");
+
+                        });
+                    }
+
+                    title.setText(item);
+                    deleteButton.setOnAction(event -> {
+                        if (!listView.getItems().isEmpty()) {
+                            final int selectedIdx = listView.getSelectionModel().getSelectedIndex();
+                            if (selectedIdx != -1) {
+                                String itemToRemove = listView.getSelectionModel().getSelectedItem();
+
+                                final int newSelectedIdx =
+                                        (selectedIdx == listView.getItems().size() - 1)
+                                                ? selectedIdx - 1
+                                                : selectedIdx;
+
+                                listView.getItems().remove(selectedIdx);
+                                recentList.remove(itemToRemove);
+                                listView.getSelectionModel().select(newSelectedIdx);
+                            }
+                        }
+
+                    });
+                    setGraphic(rootLayout);
+                } else {
+                    setGraphic(null);
+                }
+            }
+
         });
     }
 
@@ -256,15 +237,24 @@ public class MainController implements Initializable {
         String s = listView.getSelectionModel().getSelectedItem();
 
         if (s != null && !s.equals("")) {
-            if (recentList.contains(s)) {
-                recentList.remove(s);
-            }
+            recentList.remove(s);
             recentList.addFirst(s);
             inputWord.setText(s);
             currentWord.setText(s);
             showSpeakerAndHeart(true);
             vietMeaning = ConvertToHTML.vietMeaningToHTML(s, meanings.get(s));
             webView.getEngine().loadContent(vietMeaning);
+            {
+                new Thread(() -> {
+                    try {
+                        if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
+                            engMeaning = getInfoInEnglish(inputWord.getText());
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
             if (autoPlay) {
                 onSpeakerClick();
             }
@@ -273,7 +263,7 @@ public class MainController implements Initializable {
     }
 
     /**
-     * dịch từ. 2 nghĩa tiếng viêtj và tiếng anh.
+     * get definition (viet or eng).
      */
     @FXML
     protected void onSearchButtonClick() {
@@ -282,6 +272,17 @@ public class MainController implements Initializable {
             webView.getEngine().loadContent(vietMeaning);
         } else {
             vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
+            {
+                new Thread(() -> {
+                    try {
+                        if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
+                            engMeaning = getInfoInEnglish(inputWord.getText());
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).start();
+            }
             currentWord.setText(inputWord.getText());
             if (vietMeaning != null) {
                 showSpeakerAndHeart(true);
@@ -293,7 +294,7 @@ public class MainController implements Initializable {
                 webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
             }
             if (autoPlay) {
-                onSpeakerClick();
+                this.onSpeakerClick();
             }
         }
 
@@ -322,10 +323,7 @@ public class MainController implements Initializable {
      * chuyển sang nghĩa tiêngs anh
      */
     @FXML
-    protected void onEngLabelClick() throws IOException {
-        if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
-            engMeaning = getInfoInEnglish(inputWord.getText());
-        }
+    protected void onEngLabelClick() {
         webView.getEngine().loadContent(engMeaning);
     }
 
@@ -338,35 +336,12 @@ public class MainController implements Initializable {
     }
 
     /**
-     * just speak .
-     */
-    @FXML
-    protected void onSpeakerClick() {
-        File file_audio = new File("src\\main\\resources\\audio\\" + currentWord.getText() + ".mp3");
-        if (!file_audio.exists()) {
-            try {
-                downloadAudio(currentWord.getText());
-            } catch (Exception e) {
-                System.out.println("cant download");
-            }
-        }
-        try {
-            media = new Media(file_audio.toURI().toString());
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.play();
-            mediaPlayer.seek(mediaPlayer.getStartTime());
-        } catch (Exception e) {
-            System.out.println("cant create media");
-        }
-    }
-
-    /**
      * trả về các từ vừa tra vào ListView.
      */
     @FXML
     protected void onRecentButtonClick() {
         listView.setItems(FXCollections.observableList(recentList));
-        deleteWord(true);
+        deleteWord();
     }
 
     /**
@@ -395,22 +370,22 @@ public class MainController implements Initializable {
     /**
      * change to translate-view.
      *
-     * @param event click on book button
-     * @throws IOException
+     * @throws IOException exception
      */
     @FXML
-    protected void onGoToTranslateViewButtonClick(ActionEvent event) throws IOException {
-        Main.changeScreen("translate-view.fxml", "translateView.css", mainAnchorPane.getWidth(), mainAnchorPane.getHeight());
+    protected void onGoToTranslateViewButtonClick() throws IOException {
+        changeScreen("translate-view.fxml", "translateView.css");
     }
 
     /**
-     * thêm tooltip
+     * add tooltip.
      *
-     * @param url
-     * @param resourceBundle
+     * @param url            url
+     * @param resourceBundle resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         recentButton.setTooltip(new Tooltip("Recent words"));
         addFavWord.setTooltip(new Tooltip("Favourite words"));
         translateTextButton.setTooltip(new Tooltip("Translate sentences"));
@@ -425,10 +400,10 @@ public class MainController implements Initializable {
         }
         inputWord.setStyle("-fx-font-size:" + fontSize);
         if (!DARK_MODE) {
-            listView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            listView.setCellFactory(new Callback<>() {
                 @Override
                 public ListCell<String> call(ListView<String> param) {
-                    return new ListCell<String>() {
+                    return new ListCell<>() {
                         @Override
                         protected void updateItem(String item, boolean empty) {
                             super.updateItem(item, empty);
@@ -443,16 +418,20 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    protected void onGameButtonClick(ActionEvent event) throws IOException {
-        Main.changeScreen("chooseGame-view.fxml", "chooseGame.css", mainAnchorPane.getWidth(), mainAnchorPane.getHeight());
+    protected void onGameButtonClick() throws IOException {
+        changeScreen("chooseGame-view.fxml", "chooseGame.css");
+    }
+
+    public MainController() {
+
     }
 
     @FXML
-    protected void onSettingsButtonClick(ActionEvent actionEvent) throws IOException {
-        Main.changeScreen("settings-view.fxml", "settingsView.css", mainAnchorPane.getWidth(), mainAnchorPane.getHeight());
+    protected void onSettingsButtonClick() throws IOException {
+        super.changeScreen("settings-view.fxml", "settingsView.css");
     }
 
-    public void onDeleteButtonClick(ActionEvent event) {
+    public void onDeleteButtonClick() {
         boolean b = true;
         inputWord.setText("");
         listView.setItems(FXCollections.observableList(new ArrayList<>()));
@@ -461,5 +440,9 @@ public class MainController implements Initializable {
         EngVietSpeaker.setVisible(!b);
         EngVietSpeaker.setDisable(b);
 
+    }
+
+    public void onSpeakerClick() {
+        super.onSpeakerClick(currentWord.getText());
     }
 }

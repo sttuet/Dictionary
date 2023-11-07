@@ -33,24 +33,32 @@ public class ConvertToHTML {
      * @return String
      */
     public static String engMeaningToHTML(Word word) {
+        String backGroundColor = "white";
+        String textColor1 = "black";
+        String textColor2 = "#003366";
+        if (Main.DARK_MODE) {
+            backGroundColor = "#041C32";
+            textColor1 = "white";
+            textColor2 = "#00BFFF";
+        }
         if (word == null) {
-            return "can't find this word";
+            return "";
         }
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<html><ul>");
-        stringBuilder.append("<li >" + word.getWord() + "</li>");
-        stringBuilder.append("<li >" + word.getText() + "</li>");
+        stringBuilder.append("<html><body style=\"color:").append(textColor1).append(";background-color:").append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:").append(MainController.fontSize).append("px;").append(";color=").append(textColor1).append(";\"><ul>");
+        stringBuilder.append("<li >").append(word.getWord()).append("</li>");
+        stringBuilder.append("<li >").append(word.getText()).append("</li>");
         for (Word.Meaning meaning : word.getMeanings()) {
-
-            stringBuilder.append("<li><dl><dt >Type :" + meaning.partOfSpeech + "</dt>");
+            stringBuilder.append("<li>Type :").append(meaning.partOfSpeech).append("</li><ul>");
             for (Word.Meaning.Definition definition : meaning.definitions) {
-                stringBuilder.append("<dt >-definition : " + definition.definition + "</dt>");
+                stringBuilder.append("<li><font color=\">").append(textColor2).append("\">").append(definition.definition).append("</font></li>");
                 if (!definition.example.equals(""))
-                    stringBuilder.append("<dd style=\"text-decoration: underline;\">Ex: " + definition.example + "</dd>");
+                    stringBuilder.append("<ul><li>").append(definition.example).append("</li></ul>");
             }
-            stringBuilder.append("</dl></li>");
+            stringBuilder.append("</ul>");
         }
-        stringBuilder.append("</ul></html>");
+        stringBuilder.append("</ul></body></html>");
+
         return stringBuilder.toString();
     }
 
@@ -68,9 +76,7 @@ public class ConvertToHTML {
         }
         StringBuilder ans = new StringBuilder();
         mean = mean.substring(6, mean.length() - 7);
-        ans.append("<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor
-                + ";font-family: Arial, Helvetica, sans-serif;font-size:"
-                + MainController.fontSize + "px;" +  ";color=" + textColor1 + ";\">");
+        ans.append("<html><body style=\"color:").append(textColor1).append(";background-color:").append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:").append(MainController.fontSize).append("px;").append(";color=").append(textColor1).append(";\">");
         mean = mean.replaceAll("#cc0000", textColor2);
         mean = mean.replaceAll("<b>|</b>", "");
         mean = mean.replaceAll("<i>|</i>", "");

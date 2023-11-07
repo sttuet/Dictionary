@@ -25,18 +25,21 @@ public class Dictionary {
     Dictionary() {
         root = new Node();
     }
-    public int toIndex(char c){
-        if(c<='z'&&c>='a'){
-            return c-'a';
-        }else if(c==' ')return 26;
+
+    public int toIndex(char c) {
+        if (c <= 'z' && c >= 'a') {
+            return c - 'a';
+        } else if (c == ' ') return 26;
         else return 27;
     }
-    public char toChar(int i){
-        if(i<26){
-            return (char) (i+'a');
-        }else if(i==26){
+
+    public char toChar(int i) {
+        if (i < 26) {
+            return (char) (i + 'a');
+        } else if (i == 26) {
             return ' ';
-        }return '-';
+        }
+        return '-';
     }
 
     /**
@@ -47,7 +50,7 @@ public class Dictionary {
      */
     public List<String> allWordsHas(String prefix) {
         List<String> list = new ArrayList<>();
-        if(!isValidWord(prefix)){
+        if (!isValidWord(prefix)) {
             return list;
         }
         return root.find(prefix);
@@ -77,6 +80,7 @@ public class Dictionary {
         char character;
         int pre;
         boolean end;
+
         Node() {
             end = false;
             pre = 0;
@@ -94,14 +98,11 @@ public class Dictionary {
         public void add(String s) {
             Node root = this;
             for (int i = 0; i < s.length(); i++) {
-                if (root.next[toIndex(s.charAt(i))] != null) {
-                    root = root.next[toIndex(s.charAt(i))];
-                    root.pre++;
-                } else {
+                if (root.next[toIndex(s.charAt(i))] == null) {
                     root.next[toIndex(s.charAt(i))] = new Node();
-                    root = root.next[toIndex(s.charAt(i))];
-                    root.pre++;
                 }
+                root = root.next[toIndex(s.charAt(i))];
+                root.pre++;
                 if (i == s.length() - 1) {
                     root.end = true;
                 }

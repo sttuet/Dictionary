@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="anchorPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.TranslateController">
+<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.TranslateController">
 
     <children>
         <Button fx:id="closeButton" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="22.0" prefWidth="49.0" text="BACK" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -30,6 +29,6 @@
                 <Font name="Arial" size="14.0" />
             </font>
         </Label>
-      <Label fx:id="translateResult" contentDisplay="CENTER" layoutX="14.0" layoutY="229.0" prefHeight="231.0" prefWidth="782.0" textAlignment="CENTER" AnchorPane.bottomAnchor="76.80000000000001" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="27.600000000000023" AnchorPane.topAnchor="229.0" />
+      <Label fx:id="translateResult" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="229.0" prefHeight="231.0" prefWidth="782.0" AnchorPane.bottomAnchor="76.80000000000001" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="27.600000000000023" AnchorPane.topAnchor="229.0" />
     </children>
 </AnchorPane>

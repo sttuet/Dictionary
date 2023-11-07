@@ -3,23 +3,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="SettingAnchorPane" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.SettingController">
+<AnchorPane fx:id="rootPane" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.SettingController">
     <children>
-        <Button fx:id="backSettingButton" layoutX="284.0" layoutY="401.0" mnemonicParsing="false" onAction="#onBackClick" prefHeight="40.0" prefWidth="268.0" text="Back" textFill="WHITE" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0" />
-        <MenuButton fx:id="setFontButton" layoutX="284.0" layoutY="321.0" maxHeight="50.0" maxWidth="300.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="268.0" text="Font size" textFill="WHITE" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
-            <items>
-                <MenuItem mnemonicParsing="false" onAction="#onFontSize14" text="14" />
-                <MenuItem mnemonicParsing="false" onAction="#onFontSize18" text="18" />
-            </items>
-        </MenuButton>
+        <Button fx:id="backSettingButton" layoutX="284.0" layoutY="452.0" mnemonicParsing="false" onAction="#onBackClick" prefHeight="40.0" prefWidth="268.0" text="Back" textFill="WHITE" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0" />
         <Label fx:id="topLabel" alignment="CENTER" layoutY="-1.0" prefHeight="76.0" prefWidth="824.0" text="STT DICTIONARY" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-1.0" />
-        <HBox fx:id="darkModeBox" layoutX="284.0" layoutY="161.0" maxHeight="50.0" maxWidth="300.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="161.0">
+        <HBox fx:id="darkModeBox" layoutX="284.0" layoutY="161.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0" AnchorPane.topAnchor="161.0">
             <children>
                 <Label fx:id="settingDarkModeLabel" prefHeight="40.0" prefWidth="236.0" text="  Dark Mode" HBox.hgrow="ALWAYS">
                     <HBox.margin>
@@ -29,10 +22,16 @@
                 <CheckBox fx:id="checkDarkMode" mnemonicParsing="false" onAction="#onDarkModeSelect" prefHeight="43.0" prefWidth="33.0" />
             </children>
         </HBox>
-        <HBox fx:id="autoPlayBox" layoutX="284.0" layoutY="241.0" maxHeight="50.0" maxWidth="300.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
+        <HBox fx:id="autoPlayBox" layoutX="284.0" layoutY="241.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
             <children>
                 <Label fx:id="SettingAutoPlayLabel" prefHeight="40.0" prefWidth="236.0" text="  Auto Play" />
                 <CheckBox fx:id="checkAutoPlay" mnemonicParsing="false" onAction="#onAutoPlaySelect" prefHeight="43.0" prefWidth="33.0" />
+            </children>
+        </HBox>
+        <HBox fx:id="setFontButton" alignment="CENTER" layoutX="284.0" layoutY="332.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
+            <children>
+                <Label prefHeight="40.0" prefWidth="194.0" text="  Font size" textFill="WHITE" />
+                <ChoiceBox fx:id="choiceBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="49.0" />
             </children>
         </HBox>
     </children>
