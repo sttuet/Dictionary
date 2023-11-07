@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MultiChoiceGameController implements Initializable {
-    public AnchorPane multiChoicePane;
+public class MultiChoiceGameController extends Controller implements Initializable {
     List<Button> listButton;
     private MultiChoiceGame game;
     @FXML
@@ -54,7 +53,7 @@ public class MultiChoiceGameController implements Initializable {
         listButton.add(D);
         setQuestion();
         if (Main.DARK_MODE) {
-            multiChoicePane.setStyle("-fx-background-color: #04293A;");
+            rootPane.setStyle("-fx-background-color: #04293A;");
             question.setTextFill(Paint.valueOf("#ADC4CE"));
             for (int i = 0; i < 4; i++) {
                 listButton.get(i).setStyle("-fx-text-fill: #ADC4CE;-fx-font-size:" + MainController.fontSize
@@ -76,15 +75,16 @@ public class MultiChoiceGameController implements Initializable {
         Button button = (Button) event.getSource();
         boolean res = game.checkAnswer(button.getText());
         showTrueAnswer(res, button);
-        if (res == true) {
+        if (res) {
             game.increaseScore();
         }
-        score.setText(game.getScore()+"/10");
-        if(game.getScore()>=10){
+        score.setText(game.getScore() + "/10");
+        if (game.getScore() >= 10) {
             finish.setVisible(true);
             return;
         }
         game.updateListQuestion(game.checkAnswer(button.getText()));
+
     }
 
     private void setQuestion() {
@@ -118,26 +118,30 @@ public class MultiChoiceGameController implements Initializable {
     }
 
     @FXML
-    protected void onBackClick(ActionEvent event) throws IOException {
-        Main.changeScreen("chooseGame-view.fxml", "chooseGame.css", multiChoicePane.getWidth(), multiChoicePane.getHeight());
+    protected void onBackClick() throws IOException {
+        changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
+
     @FXML
-    private AnchorPane finish=new AnchorPane();
+    private AnchorPane finish = new AnchorPane();
+
     @FXML
-    protected void onAgainClick(){
+    protected void onAgainClick() {
         finish.setVisible(false);
         game.reset();
         setQuestion();
     }
+
     @FXML
     protected void onNewGameClick() throws IOException {
         finish.setVisible(false);
-        game=new MultiChoiceGame();
+        game = new MultiChoiceGame();
         setQuestion();
     }
+
     @FXML
     protected void onExitClick() throws IOException {
         finish.setVisible(false);
-        Main.changeScreen("chooseGame-view.fxml","chooseGame.css", multiChoicePane.getWidth(), multiChoicePane.getHeight());
+        changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 }

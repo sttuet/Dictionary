@@ -1,28 +1,24 @@
 package com.example.controller;
 
 import com.example.ourdictionary.Main;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class SettingController implements Initializable {
+public class SettingController extends Controller implements Initializable {
     public Button backSettingButton;
-
-    public MenuButton setFontButton;
+    public ChoiceBox<Integer> choiceBox;
+    //    public Label setFontButton;
     public Label topLabel;
-    public AnchorPane SettingAnchorPane;
     public HBox autoPlayBox;
     public HBox darkModeBox;
     public CheckBox checkDarkMode;
@@ -32,19 +28,19 @@ public class SettingController implements Initializable {
 
 
     @FXML
-    protected void onBackClick(ActionEvent event) throws IOException {
-        Main.changeScreen("main-view.fxml", "MainView.css", SettingAnchorPane.getWidth(), SettingAnchorPane.getHeight());
+    protected void onBackClick() throws IOException {
+        super.changeScreen("main-view.fxml", "MainView.css");
     }
 
-    public void onDarkModeSelect(ActionEvent event) {
+    public void onDarkModeSelect() {
         if (Main.DARK_MODE) {
             checkDarkMode.setSelected(false);
             Main.DARK_MODE = false;
-            SettingAnchorPane.setBackground(Background.fill(Paint.valueOf("#f8dad0")));
+            rootPane.setBackground(Background.fill(Paint.valueOf("#f8dad0")));
         } else {
             checkDarkMode.setSelected(true);
             Main.DARK_MODE = true;
-            SettingAnchorPane.setBackground(Background.fill(Paint.valueOf("#04293A")));
+            rootPane.setBackground(Background.fill(Paint.valueOf("#04293A")));
         }
     }
 
@@ -52,28 +48,25 @@ public class SettingController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (Main.DARK_MODE) {
             checkDarkMode.setSelected(true);
-            SettingAnchorPane.setBackground(Background.fill(Paint.valueOf("#04293A")));
+            rootPane.setBackground(Background.fill(Paint.valueOf("#04293A")));
         } else {
-            SettingAnchorPane.setBackground(Background.fill(Paint.valueOf("#f8dad0")));
+            rootPane.setBackground(Background.fill(Paint.valueOf("#f8dad0")));
         }
-        if(MainController.autoPlay) {
+        if (MainController.autoPlay) {
             checkAutoPlay.setSelected(true);
         }
-        if(MainController.fontSize == 14) {
-            settingDarkModeLabel.setStyle("-fx-font-size: 14");
-            SettingAutoPlayLabel.setStyle("-fx-font-size: 14");
-            setFontButton.setStyle("-fx-font-size: 14");
-            backSettingButton.setStyle("-fx-font-size: 14");
+        List<Integer> list = new ArrayList<>();
+        for (int i = 10; i < 18; i++) {
+            list.add(i);
         }
-        if(MainController.fontSize == 18) {
-            settingDarkModeLabel.setStyle("-fx-font-size: 18");
-            SettingAutoPlayLabel.setStyle("-fx-font-size: 18");
-            setFontButton.setStyle("-fx-font-size: 18");
-            backSettingButton.setStyle("-fx-font-size: 18");
-        }
+        choiceBox.getItems().addAll(list);
+        choiceBox.setValue(MainController.fontSize);
+        choiceBox.getSelectionModel().selectedItemProperty().
+                addListener((observableValue, integer, t1) -> onFontSizeClick(t1));
+        onFontSizeClick(MainController.fontSize);
     }
 
-    public void onAutoPlaySelect(ActionEvent event) {
+    public void onAutoPlaySelect() {
         if (MainController.autoPlay) {
             checkAutoPlay.setSelected(false);
             MainController.autoPlay = false;
@@ -82,19 +75,12 @@ public class SettingController implements Initializable {
         }
     }
 
-    public void onFontSize14(ActionEvent event) {
-        MainController.fontSize = 14;
-        settingDarkModeLabel.setStyle("-fx-font-size: 14");
-        SettingAutoPlayLabel.setStyle("-fx-font-size: 14");
-        setFontButton.setStyle("-fx-font-size: 14");
-        backSettingButton.setStyle("-fx-font-size: 14");
+    public void onFontSizeClick(int size) {
+        MainController.fontSize = size;
+        settingDarkModeLabel.setStyle("-fx-font-size: " + size);
+        SettingAutoPlayLabel.setStyle("-fx-font-size: " + size);
+//        setFontButton.setStyle("-fx-font-size: "+size);
+        backSettingButton.setStyle("-fx-font-size: " + size);
     }
 
-    public void onFontSize18(ActionEvent event) {
-        MainController.fontSize = 18;
-        settingDarkModeLabel.setStyle("-fx-font-size: 18");
-        SettingAutoPlayLabel.setStyle("-fx-font-size: 18");
-        setFontButton.setStyle("-fx-font-size: 18");
-        backSettingButton.setStyle("-fx-font-size: 18");
-    }
 }
