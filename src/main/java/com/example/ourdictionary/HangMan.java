@@ -6,7 +6,7 @@ import java.util.List;
 public class HangMan {
     private String answer;
     private List<Character> currentWord;
-    public static final int MAX_WRONG=9;
+    public static final int MAX_WRONG=6;
     private int currentWrong=0;
     public HangMan(List<String> allWords){
         answer=allWords.get((int)(Math.random()*allWords.size()));
