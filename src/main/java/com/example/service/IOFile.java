@@ -19,7 +19,7 @@ public class IOFile {
     }
 
     public static void writeToFavouriteFile(Set<String> list) throws IOException {
-        bufferedWriter = new BufferedWriter(new FileWriter(FAVOURITE_PATH));
+        bufferedWriter = new BufferedWriter(new FileWriter(FAVOURITE_PATH,true));
         for (String s : list) {
             bufferedWriter.write(s + '\n');
         }
@@ -28,6 +28,10 @@ public class IOFile {
 
     public static Set<String> readFromFavouriteFile() throws IOException {
         Set<String> list = new HashSet<>();
+        File file=new File(FAVOURITE_PATH);
+        if(!file.exists()){
+            file.createNewFile();
+        }
         bufferedReader = new BufferedReader(new FileReader(FAVOURITE_PATH));
         String word;
         while ((word = bufferedReader.readLine()) != null) {
@@ -37,7 +41,7 @@ public class IOFile {
     }
 
     public static void writeToRecentFile(List<String> list) throws IOException {
-        bufferedWriter = new BufferedWriter(new FileWriter(RECENT_PATH));
+        bufferedWriter = new BufferedWriter(new FileWriter(RECENT_PATH,true));
         for (String s : list) {
             bufferedWriter.write(s + '\n');
         }
@@ -45,6 +49,10 @@ public class IOFile {
     }
 
     public static LinkedList<String> readFromRecentFile() throws IOException {
+        File file=new File(RECENT_PATH);
+        if(!file.exists()){
+            file.createNewFile();
+        }
         bufferedReader = new BufferedReader(new FileReader(RECENT_PATH));
         LinkedList<String> list = new LinkedList<>();
         String word;

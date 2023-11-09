@@ -350,8 +350,13 @@ public class MainController extends Controller implements Initializable {
     @FXML
     protected void addToFavourite() {
         String s = currentWord.getText();
-        favouriteList.add(s);
-        addFavIcon.setFill(Paint.valueOf("#003366"));
+        if(!favouriteList.contains(s)){
+            favouriteList.add(s);
+            addFavIcon.setFill(Paint.valueOf("#003366"));
+        }else {
+            favouriteList.remove(s);
+            addFavIcon.setFill(Paint.valueOf("white"));
+        }
         if (isShowingFavWord) {
             listView.setItems(FXCollections.observableList(new ArrayList<>(favouriteList)));
         }
@@ -385,7 +390,6 @@ public class MainController extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         recentButton.setTooltip(new Tooltip("Recent words"));
         addFavWord.setTooltip(new Tooltip("Favourite words"));
         translateTextButton.setTooltip(new Tooltip("Translate sentences"));
@@ -420,10 +424,6 @@ public class MainController extends Controller implements Initializable {
     @FXML
     protected void onGameButtonClick() throws IOException {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
-    }
-
-    public MainController() {
-
     }
 
     @FXML

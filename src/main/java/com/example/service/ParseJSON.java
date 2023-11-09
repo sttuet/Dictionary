@@ -58,6 +58,11 @@ public class ParseJSON {
     public static String getTranslateText(String from, String to, String text) throws IOException {
         String translateResult = SendRequest.getJsonTranslate(from, to, text);
         Scanner scanner = new Scanner(translateResult);
+//        System.out.println(translateResult);
+//        System.out.println(scanner.findInLine("<div class=\"result-container\">"));
+//        if(scanner.findInLine("<div class=\"result-container\">")==null){
+//            return "";
+//        }
         scanner.useDelimiter("<div class=\"result-container\">");
         scanner.next();
         StringBuilder stringBuilder = new StringBuilder();
