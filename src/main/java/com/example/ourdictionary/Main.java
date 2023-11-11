@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.*;
 
-import static com.example.service.ConvertToHTML.getInfoEng;
-
 public class Main extends Application {
     public static Dictionary dictionary;
     public static ObjectMapper objectMapper;
@@ -19,28 +17,6 @@ public class Main extends Application {
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
     public static boolean DARK_MODE = false;
-
-    /**
-     * lấy nghĩa tiếng việt của từ.
-     *
-     * @param word tù cần tìm
-     * @return String (html)
-     */
-    public static String getInfoInVietnamese(String word) {
-        return meanings.get(word);
-    }
-
-    /**
-     * lấy nghĩa tiếng anh của từ.
-     *
-     * @param word từ cần lấy
-     * @return String (html)
-     * @throws IOException
-     */
-    public static String getInfoInEnglish(String word) throws IOException {
-        return getInfoEng(word, objectMapper);
-    }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -51,7 +27,7 @@ public class Main extends Application {
      * thêm các từ vào công cụ search {@link Dictionary}.
      * read data from Favourite.txt and Recent.txt to favlist and recentlist.
      *
-     * @throws IOException
+     * @throws IOException if file not found
      */
     public void loadData() throws IOException {
         objectMapper = new ObjectMapper();
@@ -64,7 +40,7 @@ public class Main extends Application {
     /**
      * write data in favouritelist and recentlist to file txt.
      *
-     * @throws IOException
+     * @throws IOException exception if can not write data against
      */
     @Override
     public void stop() throws IOException {
@@ -76,8 +52,8 @@ public class Main extends Application {
     /**
      * chạy chương trình
      *
-     * @param stage
-     * @throws IOException
+     * @param stage stage
+     * @throws IOException i don't know
      */
     @Override
     public void start(Stage stage) throws IOException {

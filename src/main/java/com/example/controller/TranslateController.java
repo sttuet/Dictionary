@@ -2,12 +2,14 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.ParseJSON;
+import com.example.service.SendRequest;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -69,6 +71,16 @@ public class TranslateController extends Controller implements Initializable {
             inputText.setStyle(" -fx-font-size: " + MainController.fontSize + ";");
             translateResult.setStyle("-fx-font-size: " + MainController.fontSize + ";");
         }
-
+    }
+    @FXML
+    protected void onSpeaker() throws IOException {
+        SendRequest.downloadAudio(inputText.getText());
+        super.onSpeakerClick(inputText.getText());
+        File file=new File("src\\main\\resources\\audio\\" + inputText.getText() + ".mp3");
+        try {
+            file.delete();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }

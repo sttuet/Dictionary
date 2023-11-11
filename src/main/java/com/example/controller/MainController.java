@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
+import com.example.service.SendRequest;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.example.ourdictionary.Main.*;
+import static com.example.service.ConvertToHTML.getInfoEng;
 
 
 public class MainController extends Controller implements Initializable {
@@ -235,7 +237,6 @@ public class MainController extends Controller implements Initializable {
     @FXML
     protected void onChooseWord() {
         String s = listView.getSelectionModel().getSelectedItem();
-
         if (s != null && !s.equals("")) {
             recentList.remove(s);
             recentList.addFirst(s);
@@ -248,15 +249,16 @@ public class MainController extends Controller implements Initializable {
                 new Thread(() -> {
                     try {
                         if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
-                            engMeaning = getInfoInEnglish(inputWord.getText());
+                            SendRequest.downloadAudio(currentWord.getText());
+                            if (autoPlay) {
+                                onSpeakerClick();
+                            }
+                            engMeaning = getInfoEng(currentWord.getText(), objectMapper);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }).start();
-            }
-            if (autoPlay) {
-                onSpeakerClick();
             }
         }
 
@@ -269,14 +271,17 @@ public class MainController extends Controller implements Initializable {
     protected void onSearchButtonClick() {
         if (inputWord.getText().isEmpty()) {
             vietMeaning = "";
-            webView.getEngine().loadContent(vietMeaning);
         } else {
-            vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
+            vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), meanings.get(inputWord.getText()));
             {
                 new Thread(() -> {
                     try {
                         if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
-                            engMeaning = getInfoInEnglish(inputWord.getText());
+                            SendRequest.downloadAudio(currentWord.getText());
+                            if (autoPlay) {
+                                this.onSpeakerClick();
+                            }
+                            engMeaning = getInfoEng(currentWord.getText(), objectMapper);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -284,20 +289,11 @@ public class MainController extends Controller implements Initializable {
                 }).start();
             }
             currentWord.setText(inputWord.getText());
-            if (vietMeaning != null) {
-                showSpeakerAndHeart(true);
-                webView.getEngine().loadContent(vietMeaning);
-                recentList.add(currentWord.getText());
-            } else {
-                vietMeaning = "";
+            if(vietMeaning.equals("")){
                 showSpeakerAndHeart(false);
-                webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
-            }
-            if (autoPlay) {
-                this.onSpeakerClick();
             }
         }
-
+        webView.getEngine().loadContent(vietMeaning);
     }
 
     private void showSpeakerAndHeart(boolean b) {

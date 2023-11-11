@@ -19,7 +19,7 @@ public class IOFile {
     }
 
     public static void writeToFavouriteFile(Set<String> list) throws IOException {
-        bufferedWriter = new BufferedWriter(new FileWriter(FAVOURITE_PATH,true));
+        bufferedWriter = new BufferedWriter(new FileWriter(FAVOURITE_PATH));
         for (String s : list) {
             bufferedWriter.write(s + '\n');
         }
@@ -41,7 +41,7 @@ public class IOFile {
     }
 
     public static void writeToRecentFile(List<String> list) throws IOException {
-        bufferedWriter = new BufferedWriter(new FileWriter(RECENT_PATH,true));
+        bufferedWriter = new BufferedWriter(new FileWriter(RECENT_PATH));
         for (String s : list) {
             bufferedWriter.write(s + '\n');
         }
