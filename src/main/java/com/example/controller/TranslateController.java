@@ -74,7 +74,6 @@ public class TranslateController extends Controller implements Initializable {
     }
     @FXML
     protected void onSpeaker() throws IOException {
-        SendRequest.downloadAudio(inputText.getText());
         super.onSpeakerClick(inputText.getText());
         File file=new File("src\\main\\resources\\audio\\" + inputText.getText() + ".mp3");
         try {

@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.ourdictionary.Main;
+import com.example.service.SendRequest;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public abstract class Controller {
     public Pane rootPane;
 
-    protected void onSpeakerClick(String word) {
+    protected void onSpeakerClick(String word) throws IOException {
         File file_audio = new File("src\\main\\resources\\audio\\" + word + ".mp3");
         if (file_audio.exists()) {
             try {
@@ -26,6 +27,8 @@ public abstract class Controller {
             } catch (Exception e) {
                 System.out.println("cant create media");
             }
+        }else {
+            SendRequest.downloadAudio(word);
         }
     }
 

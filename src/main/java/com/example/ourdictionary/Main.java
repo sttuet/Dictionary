@@ -3,8 +3,11 @@ package com.example.ourdictionary;
 import com.example.service.IOFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -58,7 +61,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 824, 537);
+        Pane pane=fxmlLoader.load();
+        Scene scene = new Scene(pane, 824, 537);
+
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("MainView.css")).toExternalForm());
         stage.setTitle("Dictionary");
         stage.setScene(scene);

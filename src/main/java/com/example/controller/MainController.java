@@ -438,7 +438,7 @@ public class MainController extends Controller implements Initializable {
 
     }
 
-    public void onSpeakerClick() {
+    public void onSpeakerClick() throws IOException {
         super.onSpeakerClick(currentWord.getText());
     }
 }

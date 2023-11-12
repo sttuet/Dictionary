@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.WriteWordController">
+   <children>
+      <Label fx:id="question" alignment="CENTER" layoutX="198.0" layoutY="80.0" prefHeight="77.0" prefWidth="149.0" style="-fx-border-color: black;" />
+      <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
+      <TextField fx:id="holder" editable="false" focusTraversable="false" layoutX="198.0" layoutY="198.0" prefHeight="30.0" style="-fx-border-width: 2px;" />
+      <AnchorPane fx:id="endPane" layoutX="190.0" layoutY="158.0" prefHeight="233.0" prefWidth="259.0" style="-fx-background-color: lightgreen;" visible="false">
+         <children>
+            <Button layoutX="110.0" layoutY="62.0" mnemonicParsing="false" onAction="#onBackClick" text="EXIT" />
+         </children>
+      </AnchorPane>
+      <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="354.0" layoutY="127.0" onMouseClicked="#onSpeaker" size="20" text="" wrappingWidth="26.666656494140625" />
+   </children>
+</AnchorPane>
