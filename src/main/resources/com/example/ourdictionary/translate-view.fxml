@@ -17,18 +17,19 @@
                 <Font size="18.0" />
             </font>
         </Label>
-        <FontAwesomeIconView fx:id="rightArrow" glyphName="LONG_ARROW_RIGHT" layoutX="76.0" layoutY="205.0" onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598" />
-        <FontAwesomeIconView glyphName="LONG_ARROW_LEFT" layoutX="77.0" layoutY="213.0" onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598" />
-        <Label fx:id="sourceLanguageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="12.0" layoutY="190.0" prefHeight="25.0" prefWidth="57.0" text="ANH">
+        <FontAwesomeIconView fx:id="rightArrow" glyphName="LONG_ARROW_RIGHT" layoutX="127.0" layoutY="205.0" onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598" />
+        <FontAwesomeIconView glyphName="LONG_ARROW_LEFT" layoutX="127.0" layoutY="213.0" onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598" />
+        <Label fx:id="sourceLanguageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="190.0" prefHeight="25.0" prefWidth="57.0" text="ANH">
             <font>
                 <Font name="Arial" size="14.0" />
             </font>
         </Label>
-        <Label fx:id="targetLanguageLabel" alignment="CENTER" layoutX="100.0" layoutY="190.0" prefHeight="25.0" prefWidth="57.0" text="VIET">
+        <Label fx:id="targetLanguageLabel" alignment="CENTER" layoutX="150.0" layoutY="190.0" prefHeight="25.0" prefWidth="57.0" text="VIET">
             <font>
                 <Font name="Arial" size="14.0" />
             </font>
         </Label>
       <Label fx:id="translateResult" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="229.0" prefHeight="231.0" prefWidth="782.0" AnchorPane.bottomAnchor="76.80000000000001" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="27.600000000000023" AnchorPane.topAnchor="229.0" />
+      <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="41.0" layoutY="209.0" onMouseClicked="#onSpeaker" size="20" />
     </children>
 </AnchorPane>
