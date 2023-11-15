@@ -2,6 +2,8 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
+import com.example.service.DictionaryDao;
+import com.example.service.SendRequest;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -19,11 +21,13 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.example.ourdictionary.Main.*;
+import static com.example.service.ConvertToHTML.getInfoEng;
 
 
 public class MainController extends Controller implements Initializable {
@@ -65,6 +69,7 @@ public class MainController extends Controller implements Initializable {
     private boolean isShowingFavWord = false;
     @FXML
     private Button addFav;
+    private DictionaryDao dictionaryDao = new DictionaryDao();
 
     public void setDarkMode() {
         rootPane.setStyle("-fx-background-color: #04293A;");
@@ -235,7 +240,6 @@ public class MainController extends Controller implements Initializable {
     @FXML
     protected void onChooseWord() {
         String s = listView.getSelectionModel().getSelectedItem();
-
         if (s != null && !s.equals("")) {
             recentList.remove(s);
             recentList.addFirst(s);
@@ -248,15 +252,16 @@ public class MainController extends Controller implements Initializable {
                 new Thread(() -> {
                     try {
                         if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
-                            engMeaning = getInfoInEnglish(inputWord.getText());
+                            SendRequest.downloadAudio(currentWord.getText());
+                            if (autoPlay) {
+                                onSpeakerClick();
+                            }
+                            engMeaning = getInfoEng(currentWord.getText(), objectMapper);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }).start();
-            }
-            if (autoPlay) {
-                onSpeakerClick();
             }
         }
 
@@ -269,14 +274,17 @@ public class MainController extends Controller implements Initializable {
     protected void onSearchButtonClick() {
         if (inputWord.getText().isEmpty()) {
             vietMeaning = "";
-            webView.getEngine().loadContent(vietMeaning);
         } else {
-            vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), getInfoInVietnamese(inputWord.getText()));
+            vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), meanings.get(inputWord.getText()));
             {
                 new Thread(() -> {
                     try {
                         if (!currentWord.getText().equals("") && !(currentWord.getText() == null)) {
-                            engMeaning = getInfoInEnglish(inputWord.getText());
+                            SendRequest.downloadAudio(currentWord.getText());
+                            if (autoPlay) {
+                                this.onSpeakerClick();
+                            }
+                            engMeaning = getInfoEng(currentWord.getText(), objectMapper);
                         }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -284,20 +292,11 @@ public class MainController extends Controller implements Initializable {
                 }).start();
             }
             currentWord.setText(inputWord.getText());
-            if (vietMeaning != null) {
-                showSpeakerAndHeart(true);
-                webView.getEngine().loadContent(vietMeaning);
-                recentList.add(currentWord.getText());
-            } else {
-                vietMeaning = "";
+            if (vietMeaning.equals("")) {
                 showSpeakerAndHeart(false);
-                webView.getEngine().loadContent("không tìm thấy từ này trong từ điển tiếng việt");
-            }
-            if (autoPlay) {
-                this.onSpeakerClick();
             }
         }
-
+        webView.getEngine().loadContent(vietMeaning);
     }
 
     private void showSpeakerAndHeart(boolean b) {
@@ -348,10 +347,21 @@ public class MainController extends Controller implements Initializable {
      * add word to favourite file when click on heart icon.
      */
     @FXML
-    protected void addToFavourite() {
+    protected void addToFavourite() throws SQLException {
         String s = currentWord.getText();
-        favouriteList.add(s);
-        addFavIcon.setFill(Paint.valueOf("#003366"));
+        if (!favouriteList.contains(s)) {
+            favouriteList.add(s);
+            addFavIcon.setFill(Paint.valueOf("#003366"));
+            if (!isGuest) {
+                dictionaryDao.insertWord(s);
+            }
+
+
+        } else {
+            favouriteList.remove(s);
+            dictionaryDao.removeWord(s);
+            addFavIcon.setFill(Paint.valueOf("white"));
+        }
         if (isShowingFavWord) {
             listView.setItems(FXCollections.observableList(new ArrayList<>(favouriteList)));
         }
@@ -386,7 +396,6 @@ public class MainController extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         recentButton.setTooltip(new Tooltip("Recent words"));
         addFavWord.setTooltip(new Tooltip("Favourite words"));
         translateTextButton.setTooltip(new Tooltip("Translate sentences"));
@@ -423,10 +432,6 @@ public class MainController extends Controller implements Initializable {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
-    public MainController() {
-
-    }
-
     @FXML
     protected void onSettingsButtonClick() throws IOException {
         super.changeScreen("settings-view.fxml", "settingsView.css");
@@ -443,7 +448,7 @@ public class MainController extends Controller implements Initializable {
 
     }
 
-    public void onSpeakerClick() {
+    public void onSpeakerClick() throws IOException {
         super.onSpeakerClick(currentWord.getText());
     }
 }

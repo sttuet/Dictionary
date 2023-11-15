@@ -43,4 +43,11 @@ public class ChooseGameController extends Controller implements Initializable {
     protected void goToHangMan() throws IOException {
         changeScreen("hangMan-view.fxml", "hangMan.css");
     }
+    @FXML
+    protected void goToWriteWord() throws IOException {
+        if(Main.favouriteList.size()<1){
+            System.out.println("has no bookmark words to review");
+        }
+        changeScreen("writeWord-view.fxml","writeWord.css");
+    }
 }

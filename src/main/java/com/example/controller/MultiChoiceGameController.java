@@ -2,15 +2,21 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.ourdictionary.MultiChoiceGame;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.PauseTransition;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -79,9 +85,8 @@ public class MultiChoiceGameController extends Controller implements Initializab
             game.increaseScore();
         }
         score.setText(game.getScore() + "/10");
-        if (game.getScore() >= 10) {
-            finish.setVisible(true);
-            question.setVisible(false);
+        if (game.getScore() >= MultiChoiceGame.NUM_QUESTION) {
+            showResult();
             return;
         }
         game.updateListQuestion(game.checkAnswer(button.getText()));
@@ -144,5 +149,37 @@ public class MultiChoiceGameController extends Controller implements Initializab
     protected void onExitClick() throws IOException {
         finish.setVisible(false);
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
+    }
+    @FXML
+    private VBox listWord;
+    @FXML
+    private VBox listBookmark;
+    private void showResult(){
+        List<String> listResult=game.getListResult();
+        for(int i=0;i<MultiChoiceGame.NUM_QUESTION;i++){
+            FontAwesomeIconView icon=new FontAwesomeIconView(FontAwesomeIcon.STAR);
+            icon.setFill(Paint.valueOf("white"));
+            icon.addEventHandler(MouseEvent.MOUSE_CLICKED,event->{
+                int y=(int)(Math.floor((event.getSceneY()-31)/34));
+                int index=listResult.get(y).indexOf('\n');
+                String s=listResult.get(y).substring(0,index);
+                if(Main.favouriteList.contains(s)){
+                    Main.favouriteList.remove(s);
+                    ((FontAwesomeIconView)(event.getSource())).setFill(Paint.valueOf("white"));
+                }else {
+                    Main.favouriteList.add(s);
+                    ((FontAwesomeIconView)(event.getSource())).setFill(Paint.valueOf("#003366"));
+                }
+            });
+            icon.setGlyphSize(34);
+            listBookmark.getChildren().add(icon);
+            Label label=new Label(listResult.get(i));
+            label.setStyle("fx-font-size:10;fx-border-color:\"black\"");
+            label.setPrefHeight(34);
+            listWord.getChildren().add(label);
+        }
+
+        finish.setVisible(true);
+
     }
 }

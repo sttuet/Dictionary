@@ -1,21 +1,15 @@
 #rootPane {
-    -fx-background-color:#04293A;
+    -fx-background-color: #f8dad0;
 }
-#topLabel {
+#question {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
     -fx-background-color: linear-gradient(to right, #000428, #004e92);
     -fx-text-fill: white;
-    -fx-font-size: 16;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
 }
-.label {
-    -fx-text-fill: white;
-}
-#signUpSucceeded {
-    -fx-text-fill: lightgreen;
-}
-#inappropriatePassword, #existedUsername, #nameAndPassFailed, #wrongPass {
-    -fx-text-fill: red;
-}
-.button {
+.button, #endPane {
     -fx-background-color: linear-gradient(to right, #000428, #004e92);
     -fx-border-radius: 5;
     -fx-background-radius: 5;

@@ -4,6 +4,7 @@ package com.example.service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -12,6 +13,7 @@ public class SendRequest {
     public static final String NO_INTERNET = "No internet connection !";
     public static final String URL_PATH = "https://api.dictionaryapi.dev/api/v2/entries/en/";
     private static final String URL_TRANSLATE_TEXT = "https://translate.google.com/m";
+    private static final String GOOGLE_SYNTHESISER_URL="http://translate.google.com/translate_tts";
 
     /**
      * gửi 1 http get request để lấy về thông tin từ cần tìm,( từ đơn thôi)
@@ -53,21 +55,44 @@ public class SendRequest {
     }
 
     /**
-     * download mp3 file of a word if possible
+     * download mp3 file of a word if possible.
+     * source code of api : <a href="https://github.com/goxr3plus/java-google-speech-api/blob/master/src/main/java/com/goxr3plus/speech/synthesiser/Synthesiser.java">...</a>
      *
      * @param word word need to download
      * @throws IOException
      */
     @SuppressWarnings("deprecation")
-    public static void downloadAudio(String url, String word) throws IOException {
-        if (url != null && url.equals("")) {
-            String path = "src\\main\\resources\\audio\\" + word + ".mp3";
-            URL audio_url = new URL(url);
-            FileOutputStream fout = new FileOutputStream(path);
-            InputStream in = new BufferedInputStream(audio_url.openStream());
-            fout.write(in.readAllBytes());
-            fout.flush();
-            fout.close();
+    public static void downloadAudio(String word) throws IOException {
+        long start =System.currentTimeMillis();
+        String languageCode="en-us";
+        String encoded = URLEncoder.encode(word, StandardCharsets.UTF_8); //Encode
+        StringBuilder sb = new StringBuilder();
+        sb.append(GOOGLE_SYNTHESISER_URL); //The base URL prefixed by the query parameter.
+        sb.append("?tl=");
+        sb.append(languageCode); //The query parameter to specify the language code.
+        sb.append("&q=");
+        sb.append(encoded); //We encode the String using URL Encoder
+        sb.append("&ie=UTF-8&total=1&idx=0"); //Some unknown parameters needed to make the URL work
+        sb.append("&textlen=");
+        sb.append(word.length()); //We need some String length now.
+        sb.append("&client=tw-ob"); //Once again, a weird parameter.
+        //Client=t no longer works as it requires a token, but client=tw-ob seems to work just fine.
+
+        URL url = new URL(sb.toString());
+        // Open New URL connection channel.
+        URLConnection urlConn = url.openConnection(); //Open connection
+
+        //Adding header for user agent is required
+        urlConn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0) "
+                + "Gecko/20100101 Firefox/4.0");
+        InputStream in= urlConn.getInputStream();
+        File audio=new File("src\\main\\resources\\audio\\" + word + ".mp3");
+        if(!audio.exists()) {
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(audio));
+            byte[] b = in.readAllBytes();
+            bufferedOutputStream.write(b);
+            bufferedOutputStream.flush();
+            bufferedOutputStream.close();
         }
     }
 

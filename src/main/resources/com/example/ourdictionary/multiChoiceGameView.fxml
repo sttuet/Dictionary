@@ -6,7 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.MultiChoiceGameController">
     <children>
@@ -54,11 +56,17 @@
         <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
         <Label fx:id="question" alignment="CENTER" layoutX="156.0" layoutY="113.0" prefHeight="134.0" prefWidth="457.0" wrapText="true" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="211.0" />
         <Label fx:id="score" alignment="CENTER" layoutX="754.0" layoutY="13.0" prefHeight="51.0" prefWidth="55.0" text="0/10" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
-        <AnchorPane fx:id="finish" layoutX="63.0" layoutY="129.0" prefHeight="297.0" prefWidth="600.0" visible="false" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
+        <AnchorPane fx:id="finish" layoutX="63.0" layoutY="1.0" prefHeight="529.0" prefWidth="604.0" visible="false" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="110.0">
             <children>
-                <Button fx:id="exit" layoutX="225.0" layoutY="232.0" mnemonicParsing="false" onAction="#onExitClick" prefHeight="40.0" prefWidth="150.0" text="Exit" />
-                <Button fx:id="newGame" layoutX="225.0" layoutY="160.0" mnemonicParsing="false" onAction="#onNewGameClick" prefHeight="40.0" prefWidth="150.0" text="New Game" />
-                <Button fx:id="again" layoutX="225.0" layoutY="85.0" mnemonicParsing="false" onAction="#onAgainClick" prefHeight="40.0" prefWidth="150.0" text="Again" />
+                <Button fx:id="exit" layoutX="391.0" layoutY="426.0" mnemonicParsing="false" onAction="#onExitClick" prefHeight="40.0" prefWidth="150.0" text="Exit" />
+                <Button fx:id="newGame" layoutX="227.0" layoutY="426.0" mnemonicParsing="false" onAction="#onNewGameClick" prefHeight="40.0" prefWidth="150.0" text="New Game" />
+                <Button fx:id="again" layoutX="61.0" layoutY="426.0" mnemonicParsing="false" onAction="#onAgainClick" prefHeight="40.0" prefWidth="150.0" text="Again" />
+            <HBox layoutX="202.0" layoutY="31.0" prefHeight="340.0" prefWidth="200.0" style="-fx-border-color: black;">
+               <children>
+                  <VBox fx:id="listWord" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+                  <VBox fx:id="listBookmark" prefHeight="340.0" prefWidth="34.0" />
+               </children>
+            </HBox>
             </children>
         </AnchorPane>
 

@@ -51,7 +51,6 @@ public class ParseJSON {
             }
             result.getMeanings().add(meaning);
         });
-        SendRequest.downloadAudio(result.getAudio(), result.getWord());
         return result;
     }
 
