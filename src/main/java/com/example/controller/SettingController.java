@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.ourdictionary.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -83,4 +84,7 @@ public class SettingController extends Controller implements Initializable {
         backSettingButton.setStyle("-fx-font-size: " + size);
     }
 
+    public void onLogOutButtonClick(ActionEvent event) throws IOException {
+        super.changeScreenFromMain("Log-in.fxml", "Login.css");
+    }
 }

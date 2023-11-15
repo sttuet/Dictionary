@@ -1,17 +1,18 @@
 package com.example.ourdictionary;
 
+import com.example.service.DictionaryDao;
 import com.example.service.IOFile;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Objects;
 
 public class Main extends Application {
     public static Dictionary dictionary;
@@ -20,6 +21,8 @@ public class Main extends Application {
     public static LinkedList<String> recentList;
     public static Map<String, String> meanings;
     public static boolean DARK_MODE = false;
+    public static boolean isGuest = false;
+    public static String USERNAME, PASSWORD;
 
     public static void main(String[] args) {
         launch(args);
@@ -32,12 +35,18 @@ public class Main extends Application {
      *
      * @throws IOException if file not found
      */
-    public void loadData() throws IOException {
+    public static void loadData() throws IOException {
         objectMapper = new ObjectMapper();
         dictionary = new Dictionary();
         meanings = IOFile.readFromE_VFile(dictionary);
         recentList = IOFile.readFromRecentFile();
-        favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
+        if (isGuest) {
+            favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
+        } else {
+            DictionaryDao dictionaryDao = new DictionaryDao();
+            favouriteList = dictionaryDao.getAllWord(USERNAME);
+        }
+
     }
 
     /**
@@ -48,8 +57,12 @@ public class Main extends Application {
     @Override
     public void stop() throws IOException {
         System.out.println("app ended!");
-        IOFile.writeToFavouriteFile(favouriteList);
-        IOFile.writeToRecentFile(recentList);
+        if(favouriteList != null && isGuest) {
+            IOFile.writeToFavouriteFile(favouriteList);
+        }
+        if(recentList != null) {
+            IOFile.writeToRecentFile(recentList);
+        }
     }
 
     /**
@@ -60,21 +73,12 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Pane pane=fxmlLoader.load();
-        Scene scene = new Scene(pane, 824, 537);
-
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("MainView.css")).toExternalForm());
+        //loadData();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Log-in.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("Login.css")).toExternalForm());
         stage.setTitle("Dictionary");
         stage.setScene(scene);
         stage.show();
-        new Thread(()->{
-            try {
-                loadData();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-
     }
 }

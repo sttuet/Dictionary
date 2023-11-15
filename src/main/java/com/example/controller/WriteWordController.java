@@ -23,8 +23,8 @@ public class WriteWordController extends Controller implements Initializable  {
     private class CharLabel extends Label{
         private final double WIDTH=25;
         private final double WIDTH_AND_GAP=30;
-        private final double POS_X=200;
-        private final double POS_Y=300;
+        private final double POS_X=310;
+        private final double POS_Y=248;
         public static final double POS_X_ANS=200;
         public static final double POS_Y_ANS=200;
         private double initialPosX=0;

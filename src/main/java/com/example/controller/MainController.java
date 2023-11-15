@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.ConvertToHTML;
+import com.example.service.DictionaryDao;
 import com.example.service.SendRequest;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -20,6 +21,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -67,6 +69,7 @@ public class MainController extends Controller implements Initializable {
     private boolean isShowingFavWord = false;
     @FXML
     private Button addFav;
+    private DictionaryDao dictionaryDao = new DictionaryDao();
 
     public void setDarkMode() {
         rootPane.setStyle("-fx-background-color: #04293A;");
@@ -289,7 +292,7 @@ public class MainController extends Controller implements Initializable {
                 }).start();
             }
             currentWord.setText(inputWord.getText());
-            if(vietMeaning.equals("")){
+            if (vietMeaning.equals("")) {
                 showSpeakerAndHeart(false);
             }
         }
@@ -344,18 +347,25 @@ public class MainController extends Controller implements Initializable {
      * add word to favourite file when click on heart icon.
      */
     @FXML
-    protected void addToFavourite() {
+    protected void addToFavourite() throws SQLException {
         String s = currentWord.getText();
-        if(!favouriteList.contains(s)){
+        if (!favouriteList.contains(s)) {
             favouriteList.add(s);
             addFavIcon.setFill(Paint.valueOf("#003366"));
-        }else {
+            if (!isGuest) {
+                dictionaryDao.insertWord(s);
+            }
+
+
+        } else {
             favouriteList.remove(s);
+            dictionaryDao.removeWord(s);
             addFavIcon.setFill(Paint.valueOf("white"));
         }
         if (isShowingFavWord) {
             listView.setItems(FXCollections.observableList(new ArrayList<>(favouriteList)));
         }
+
     }
 
     /**

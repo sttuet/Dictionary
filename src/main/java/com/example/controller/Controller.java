@@ -41,4 +41,27 @@ public abstract class Controller {
         stage.show();
 
     }
+    public void changeScreenFromLogin(String fxml, String cssFile) throws IOException {
+        Main.loadData();
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        Scene scene = new Scene(pane, 824, 537);
+        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource(cssFile)).toExternalForm());
+        Stage stage = (Stage) (rootPane.getScene().getWindow());
+        stage.setX(400);
+        stage.setY(200);
+        stage.setScene(scene);
+        stage.show();
+
+    }
+    public void changeScreenFromMain(String fxml, String cssFile) throws IOException {
+        Pane pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
+        Scene scene = new Scene(pane, 372, 543);
+        scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource(cssFile)).toExternalForm());
+        Stage stage = (Stage) (rootPane.getScene().getWindow());
+        stage.setX(600);
+        stage.setY(180);
+        stage.setScene(scene);
+        stage.show();
+
+    }
 }
