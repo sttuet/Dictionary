@@ -82,9 +82,9 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         loadData();
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 824, 537);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("MainView.css")).toExternalForm());
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Log-in.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("Login.css")).toExternalForm());
         stage.setTitle("Dictionary");
         stage.setScene(scene);
         stage.show();

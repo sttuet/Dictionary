@@ -45,7 +45,7 @@ public class ConvertToHTML {
             return "";
         }
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<html><body style=\"color:").append(textColor1).append(";background-color:").append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:").append(MainController.fontSize).append("px;").append(";color=").append(textColor1).append(";\"><ul>");
+        stringBuilder.append("<html><body style=\"color:").append(textColor1).append(";background-color:").append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:").append(MainController.fontSize).append("px;").append("color=").append(textColor1).append(";\"><ul>");
         stringBuilder.append("<li >").append(word.getWord()).append("</li>");
         stringBuilder.append("<li >").append(word.getText()).append("</li>");
         for (Word.Meaning meaning : word.getMeanings()) {

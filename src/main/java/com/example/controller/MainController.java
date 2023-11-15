@@ -355,6 +355,7 @@ public class MainController extends Controller implements Initializable {
         if (isShowingFavWord) {
             listView.setItems(FXCollections.observableList(new ArrayList<>(favouriteList)));
         }
+
     }
 
     /**
