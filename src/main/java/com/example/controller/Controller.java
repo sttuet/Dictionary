@@ -47,7 +47,7 @@ public abstract class Controller {
         Scene scene = new Scene(pane, 824, 537);
         scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource(cssFile)).toExternalForm());
         Stage stage = (Stage) (rootPane.getScene().getWindow());
-        stage.setX(400);
+        stage.setX(320);
         stage.setY(200);
         stage.setScene(scene);
         stage.show();

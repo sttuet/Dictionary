@@ -26,6 +26,7 @@ public class SettingController extends Controller implements Initializable {
     public CheckBox checkAutoPlay;
     public Label settingDarkModeLabel;
     public Label SettingAutoPlayLabel;
+    public Button logOut;
 
 
     @FXML
@@ -80,7 +81,7 @@ public class SettingController extends Controller implements Initializable {
         MainController.fontSize = size;
         settingDarkModeLabel.setStyle("-fx-font-size: " + size);
         SettingAutoPlayLabel.setStyle("-fx-font-size: " + size);
-//        setFontButton.setStyle("-fx-font-size: "+size);
+        logOut.setStyle("-fx-font-size: " + size);
         backSettingButton.setStyle("-fx-font-size: " + size);
     }
 
