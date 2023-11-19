@@ -174,7 +174,7 @@ public class MultiChoiceGameController extends Controller implements Initializab
             icon.setGlyphSize(34);
             listBookmark.getChildren().add(icon);
             Label label=new Label(listResult.get(i));
-            label.setStyle("fx-font-size:10;fx-border-color:\"black\"");
+            label.setStyle("fx-font-size:10;fx-border-color:\"black\";");
             label.setPrefHeight(34);
             listWord.getChildren().add(label);
         }

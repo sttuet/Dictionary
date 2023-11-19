@@ -18,6 +18,9 @@ public abstract class Controller {
 
     protected void onSpeakerClick(String word) throws IOException {
         File file_audio = new File("src\\main\\resources\\audio\\" + word + ".mp3");
+        if(!file_audio.exists()) {
+            SendRequest.downloadAudio(word);
+        }
         if (file_audio.exists()) {
             try {
                 Media media = new Media(file_audio.toURI().toString());
@@ -27,8 +30,6 @@ public abstract class Controller {
             } catch (Exception e) {
                 System.out.println("cant create media");
             }
-        }else {
-            SendRequest.downloadAudio(word);
         }
     }
 
