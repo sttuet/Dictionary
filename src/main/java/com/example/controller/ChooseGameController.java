@@ -4,6 +4,7 @@ import com.example.ourdictionary.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,10 +45,14 @@ public class ChooseGameController extends Controller implements Initializable {
         changeScreen("hangMan-view.fxml", "hangMan.css");
     }
     @FXML
+    private Label noWordWarning;
+    @FXML
     protected void goToWriteWord() throws IOException {
         if(Main.favouriteList.size()<1){
-            System.out.println("has no bookmark words to review");
+            noWordWarning.setVisible(true);
+            return;
         }
         changeScreen("writeWord-view.fxml","writeWord.css");
+
     }
 }
