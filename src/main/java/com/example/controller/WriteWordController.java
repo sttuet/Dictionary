@@ -1,16 +1,21 @@
 package com.example.controller;
 
+import com.example.ourdictionary.Main;
 import com.example.ourdictionary.WriteWord;
+import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -23,6 +28,9 @@ import java.util.Stack;
 public class WriteWordController extends Controller implements Initializable {
     private final List<CharLabel> shuffleList = new ArrayList<>();
     private final Stack<CharLabel> answerStack = new Stack<>();
+    public Button replayButton;
+    public HBox correctAnswer;
+    public HBox wrongAnswer;
     @FXML
     private Label question;
     @FXML
@@ -62,16 +70,23 @@ public class WriteWordController extends Controller implements Initializable {
     private void checkAnswer() {
         if (!game.checkAnswer(currentAnswer)) {
             holder.setStyle("-fx-border-color:red;");
+            wrongAnswer.setVisible(true);
+            fadeTransition(wrongAnswer);
         } else {
             holder.setStyle("-fx-border-color:green;");
+            correctAnswer.setVisible(true);
+            fadeTransition(correctAnswer);
         }
         if (currentAnswer.equals(game.getWord())) {
-            if (game.nextQuestion() == false) {
+            if (!game.nextQuestion()) {
                 endGame();
                 return;
             }
-            ;
-            setQuestion();
+            PauseTransition pause = new PauseTransition(Duration.millis(2000));
+            pause.setOnFinished(event -> {
+                setQuestion();
+            });
+            pause.play();
         }
     }
 
@@ -95,11 +110,18 @@ public class WriteWordController extends Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (Main.DARK_MODE) {
+            rootPane.setStyle("-fx-background-color: #04293A");
+        }
         game = new WriteWord();
         holder.setText("");
         holder.setOnKeyPressed(keyEvent -> onAnswer(keyEvent));
         for (int i = 0; i < 20; i++) {
-            rootPane.getChildren().add(new CharLabel(i, " "));
+            CharLabel charLabel = new CharLabel(i, " ");
+            if(Main.DARK_MODE) {
+                charLabel.setStyle("-fx-background-color: white");
+            }
+            rootPane.getChildren().add(charLabel);
         }
         Platform.runLater(() -> holder.requestFocus());
         setQuestion();
@@ -133,6 +155,10 @@ public class WriteWordController extends Controller implements Initializable {
     @FXML
     protected void onBackClick() throws IOException {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
+    }
+
+    public void onReplayClick(ActionEvent event) throws IOException {
+        changeScreen("writeWord-view.fxml", "writeWord.css");
     }
 
     private class CharLabel extends Label {

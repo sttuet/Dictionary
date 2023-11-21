@@ -103,7 +103,8 @@ public class DictionaryDao {
                 builder.append(s);
                 builder.append(',');
             }
-            String query = "update table UserInformation set FavouriteWord =\'" + builder.toString() + "\' where username =\'" + Main.USERNAME + "'";
+            String temp = builder.toString();
+            String query = "update UserInformation set FavouriteWord ='" + temp + "' where username ='" + Main.USERNAME + "'";
             try {
                 PreparedStatement statement1 = con.prepareStatement(query);
                 statement1.executeUpdate();

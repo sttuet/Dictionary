@@ -26,7 +26,7 @@
         </HBox>
         <HBox fx:id="setFontButton" alignment="CENTER" layoutX="284.0" layoutY="255.0" prefHeight="40.0" prefWidth="268.0" AnchorPane.leftAnchor="284.0" AnchorPane.rightAnchor="272.0">
             <children>
-                <Label prefHeight="40.0" prefWidth="194.0" text="  Font size" textFill="WHITE" />
+                <Label fx:id="fontSize" prefHeight="40.0" prefWidth="194.0" text="  Font size" textFill="WHITE" />
                 <ChoiceBox fx:id="choiceBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="49.0" />
             </children>
         </HBox>

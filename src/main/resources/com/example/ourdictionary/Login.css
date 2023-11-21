@@ -1,20 +1,25 @@
 #rootPane {
-    -fx-background-color:#04293A;
+    -fx-background-color: 	#91BB9E;
 }
+
 #topLabel {
-    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-background-color: transparent;
     -fx-text-fill: white;
-    -fx-font-size: 16;
+    -fx-font-size: 20;
 }
+
 .label {
     -fx-text-fill: white;
 }
+
 #signUpSucceeded {
     -fx-text-fill: lightgreen;
 }
-#inappropriatePassword, #existedUsername, #nameAndPassFailed, #wrongPass {
+
+#inappropriatePassword, #existedUsername, #nameAndPassFailed, #wrongPass, #noInternet {
     -fx-text-fill: red;
 }
+
 .button {
     -fx-background-color: linear-gradient(to right, #000428, #004e92);
     -fx-border-radius: 5;
@@ -24,6 +29,7 @@
     -fx-font-family: Arial;
     -fx-text-fill: white;
 }
+
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-radius: 5;

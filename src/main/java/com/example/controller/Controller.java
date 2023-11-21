@@ -2,12 +2,16 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.SendRequest;
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,5 +70,18 @@ public abstract class Controller {
         stage.setScene(scene);
         stage.show();
 
+    }
+    public void fadeTransition(HBox hBox) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(3), hBox);
+
+        // Đặt giá trị alpha (độ trong suốt) từ 0 (biến mất) đến 1 (hiển thị)
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        // Đặt thời gian hiệu ứng xuất hiện và biến mất
+        fadeTransition.setCycleCount(1);
+
+        // Bắt đầu hiệu ứng
+        fadeTransition.play();
     }
 }

@@ -76,6 +76,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>1.7</version> <!-- Hoặc phiên bản mới nhất -->
+        </dependency>
     </dependencies>
 
     <build>

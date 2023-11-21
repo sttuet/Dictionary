@@ -15,6 +15,9 @@ public class ChooseGameController extends Controller implements Initializable {
     public Button RandomWordLearning;
     public Button WordRevision;
     public Button backGameChooser;
+    public Label noInternet;
+    @FXML
+    private Label noWordWarning;
 
     @FXML
     protected void backToMain() throws IOException {
@@ -23,7 +26,13 @@ public class ChooseGameController extends Controller implements Initializable {
 
     @FXML
     protected void goToMultiChoiceGame() throws IOException {
-        changeScreen("multiChoiceGameView.fxml", "multiChoiceGame.css");
+        if (Main.checkInternetConnection()) {
+            changeScreen("multiChoiceGameView.fxml", "multiChoiceGame.css");
+        } else {
+            noInternet.setVisible(false);
+            noInternet.setLayoutY(355.0);
+            noInternet.setVisible(true);
+        }
     }
 
     @Override
@@ -44,15 +53,19 @@ public class ChooseGameController extends Controller implements Initializable {
     protected void goToHangMan() throws IOException {
         changeScreen("hangMan-view.fxml", "hangMan.css");
     }
-    @FXML
-    private Label noWordWarning;
+
     @FXML
     protected void goToWriteWord() throws IOException {
-        if(Main.favouriteList.size()<1){
+        if (Main.favouriteList.size() < 1) {
             noWordWarning.setVisible(true);
             return;
         }
-        changeScreen("writeWord-view.fxml","writeWord.css");
+        if (Main.checkInternetConnection()) {
+            changeScreen("writeWord-view.fxml", "writeWord.css");
+        } else {
+            noInternet.setLayoutY(255.0);
+            noInternet.setVisible(true);
+        }
 
     }
 }

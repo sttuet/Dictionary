@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
@@ -42,19 +44,49 @@ public class Main extends Application {
         modifiedWord = IOFile.readFromModifiedFile(dictionary);
         meanings = IOFile.readFromE_VFile(dictionary);
         recentList = IOFile.readFromRecentFile();
-        try{
-            System.out.println("is guest "+isGuest);
+        try {
+            System.out.println("is guest " + isGuest);
             if (isGuest) {
                 favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
             } else {
                 DictionaryDao dictionaryDao = new DictionaryDao();
                 favouriteList = dictionaryDao.getAllWord(USERNAME);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
 
+    }
+
+    /**
+     * kiểm tra kết nối mạng.
+     * @return trả về true nếu có mạng, false nếu không có mạng
+     */
+    public static boolean checkInternetConnection() {
+        String url = "http://www.google.com";
+
+        try {
+            URL targetUrl = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) targetUrl.openConnection();
+
+            // Thực hiện GET request
+            connection.setRequestMethod("GET");
+
+            // Kiểm tra mã phản hồi
+            int statusCode = connection.getResponseCode();
+
+            if (statusCode == HttpURLConnection.HTTP_OK) {
+                System.out.println("Kết nối mạng thành công!");
+                return true;
+            } else {
+                System.out.println("Không thể kết nối mạng! Mã phản hồi: " + statusCode);
+                return false;
+            }
+        } catch (IOException e) {
+            System.out.println("Không thể kết nối mạng! Lỗi: " + e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -65,17 +97,23 @@ public class Main extends Application {
     @Override
     public void stop() throws IOException {
         System.out.println("app ended!");
-        if(favouriteList != null && isGuest) {
+        if (favouriteList != null && isGuest) {
             IOFile.writeToFavouriteFile(favouriteList);
         }
-        if(recentList != null) {
+        if (recentList != null) {
             IOFile.writeToRecentFile(recentList);
         }
-        if(!isGuest){
-            DictionaryDao dictionaryDao=new DictionaryDao();
-            dictionaryDao.updateListWord();
+        if (!isGuest) {
+            if (checkInternetConnection()) {
+                DictionaryDao dictionaryDao = new DictionaryDao();
+                if (Main.favouriteList != null) {
+                    dictionaryDao.updateListWord();
+                }
+            }
         }
-        IOFile.writeToModifiedFile();
+        if (Main.modifiedWord != null) {
+            IOFile.writeToModifiedFile();
+        }
     }
 
     /**
