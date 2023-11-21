@@ -22,7 +22,7 @@ public class Dictionary {
     /**
      * khởi tạo 1 cái cây rỗng với root.
      */
-    Dictionary() {
+    public Dictionary() {
         root = new Node();
     }
 

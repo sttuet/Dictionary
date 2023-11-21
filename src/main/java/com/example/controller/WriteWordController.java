@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.ourdictionary.WriteWord;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -100,6 +101,7 @@ public class WriteWordController extends Controller implements Initializable {
         for (int i = 0; i < 20; i++) {
             rootPane.getChildren().add(new CharLabel(i, " "));
         }
+        Platform.runLater(() -> holder.requestFocus());
         setQuestion();
 
     }
@@ -134,8 +136,8 @@ public class WriteWordController extends Controller implements Initializable {
     }
 
     private class CharLabel extends Label {
-        public static final double POS_X_ANS = 200;
-        public static final double POS_Y_ANS = 200;
+        public final double POS_X_ANS = holder.getLayoutX() + 2;
+        public final double POS_Y_ANS = holder.getLayoutY() + 2;
         private final double WIDTH = 25;
         private final double WIDTH_AND_GAP = 30;
         private final double POS_X = 310;
@@ -187,7 +189,6 @@ public class WriteWordController extends Controller implements Initializable {
                     answerStack.push(this);
                 }
                 if (currentAnswer.length() == game.getWord().length() && answerStack.size() == game.getWord().length()) {
-                    System.out.println("check answer");
                     checkAnswer();
 
                 }
@@ -201,5 +202,4 @@ public class WriteWordController extends Controller implements Initializable {
             currentPosY = initialPosY;
         }
     }
-
 }

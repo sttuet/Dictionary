@@ -19,6 +19,7 @@ public class Main extends Application {
     public static ObjectMapper objectMapper;
     public static HashSet<String> favouriteList;
     public static LinkedList<String> recentList;
+    public static Map<String, String> modifiedWord;
     public static Map<String, String> meanings;
     public static boolean DARK_MODE = false;
     public static boolean isGuest = false;
@@ -38,14 +39,21 @@ public class Main extends Application {
     public static void loadData() throws IOException {
         objectMapper = new ObjectMapper();
         dictionary = new Dictionary();
+        modifiedWord = IOFile.readFromModifiedFile(dictionary);
         meanings = IOFile.readFromE_VFile(dictionary);
         recentList = IOFile.readFromRecentFile();
-        if (isGuest) {
-            favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
-        } else {
-            DictionaryDao dictionaryDao = new DictionaryDao();
-            favouriteList = dictionaryDao.getAllWord(USERNAME);
+        try{
+            System.out.println("is guest "+isGuest);
+            if (isGuest) {
+                favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
+            } else {
+                DictionaryDao dictionaryDao = new DictionaryDao();
+                favouriteList = dictionaryDao.getAllWord(USERNAME);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
+
 
     }
 
@@ -63,6 +71,11 @@ public class Main extends Application {
         if(recentList != null) {
             IOFile.writeToRecentFile(recentList);
         }
+        if(!isGuest){
+            DictionaryDao dictionaryDao=new DictionaryDao();
+            dictionaryDao.updateListWord();
+        }
+        IOFile.writeToModifiedFile();
     }
 
     /**
@@ -73,7 +86,6 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        //loadData();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Log-in.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("Login.css")).toExternalForm());

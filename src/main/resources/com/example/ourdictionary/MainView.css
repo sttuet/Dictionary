@@ -1,4 +1,4 @@
-#vietLabel, #engLabel, #speaker, #addFav {
+#vietLabel, #engLabel, #speaker, #addFav, #saveButton, #refreshButton {
     -fx-font-family: Open Sans;
     -fx-font-size: 12;
     -fx-text-fill: "white";
@@ -7,7 +7,7 @@
 }
 
 #engLabel:hover, #engLabel:selected, #engLabel:focused, #vietLabel:hover, #vietLabel:selected, #vietLabel:focused,
-#speaker:hover, #speaker:selected, #addFav:hover, #addFav:selected {
+#speaker:hover, #speaker:selected, #addFav:hover, #addFav:selected, #saveButton:hover, #saveButton:selected, #refreshButton:hover, #refreshButton:selected {
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
@@ -17,8 +17,9 @@
 #SubAnchorPane {
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
-    -fx-border-color: white ;
+    -fx-border-color: white;
 }
+
 #searchButton {
     -fx-background-color: transparent;
 }
@@ -36,7 +37,7 @@
     -fx-cursor: hand;
 }
 
-#translateTextButton, #settings, #recentButton, #game, #addFavWord {
+#translateTextButton, #settings, #recentButton, #game, #addFavWord, #modifyWordButton {
     -fx-background-color: linear-gradient(to right, #000428, #004e92);
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -57,7 +58,7 @@
 }
 
 #addFavWord:hover, #addFavWord:selected, #game:hover, #game:selected,
-#recentButton:hover, #recentButton:focused, #settings:hover, #settings:focused {
+#recentButton:hover, #recentButton:focused, #settings:hover, #settings:focused, #modifyWordButton:hover, #modifyWordButton:focused {
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;
@@ -75,7 +76,6 @@
     -fx-font-size: 28;
 
 }
-
 
 
 #currentWord {

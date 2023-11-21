@@ -14,7 +14,7 @@ public class DictionaryDao {
     public DictionaryDao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12661845", "sql12661845", "b91yWry7Zx");
+            con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663911", "sql12663911", "Pf1M4D3gAy");
             statement = con.createStatement();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -29,15 +29,18 @@ public class DictionaryDao {
         try {
             ResultSet resultSet = statement.executeQuery("select FavouriteWord from UserInformation where (username = "
                     + "'" + user + "' and FavouriteWord is not null)");
-            while (resultSet.next()) {
-                list.add(resultSet.getString(1));
+//            while (resultSet.next()) {
+//                list.add(resultSet.getString(1));
+//            }
+            resultSet.next();
+            String allWords = resultSet.getString(1);
+            String[] tmp = allWords.split(",");
+            for (String s : tmp) {
+                list.add(s);
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-        for (String s : list) {
-            System.out.println(s);
         }
         return list;
     }
@@ -93,8 +96,22 @@ public class DictionaryDao {
         System.out.println("delete successfully");
     }
 
-//    public static void main(String[] args) throws SQLException {
-//        DictionaryDao dd = new DictionaryDao();
-//        System.out.println(dd.checkAcount("thinh2004", "thinh@2004"));
-//    }
+    public void updateListWord() {
+        if (!Main.isGuest) {
+            StringBuilder builder = new StringBuilder();
+            for (String s : Main.favouriteList) {
+                builder.append(s);
+                builder.append(',');
+            }
+            String query = "update table UserInformation set FavouriteWord =\'" + builder.toString() + "\' where username =\'" + Main.USERNAME + "'";
+            try {
+                PreparedStatement statement1 = con.prepareStatement(query);
+                statement1.executeUpdate();
+            } catch (Exception e) {
+                System.out.println("can not update list ");
+            }
+
+        }
+
+    }
 }
