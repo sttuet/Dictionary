@@ -18,41 +18,32 @@ public class GetContentOfHTML {
         }
         int currentIndex=0;
         String tag=null;
-        String stringInBound=null;
+        String stringInBound;
         int ulTags=0;
-        int liTags=0;
         while(currentIndex<s.length()){
             if (s.charAt(currentIndex)=='<'){
                 tag=getNextTag(s,currentIndex);
                 currentIndex+=tag.length();
-                switch (tag){
-                    case "<ul>":
+                switch (tag) {
+                    case "<ul>" -> {
                         ulTags++;
-                        if(ans.charAt(ans.length()-1)!='\n'){
+                        if (ans.charAt(ans.length() - 1) != '\n') {
                             ans.append('\n');
                         }
-                        break;
-                    case "<li>":
-                        liTags++;
-                        if(ans.charAt(ans.length()-1)!='\n'){
+                    }
+                    case "<li>" -> {
+                        if (ans.charAt(ans.length() - 1) != '\n') {
                             ans.append('\n');
                         }
-                        break;
-                    case "</ul>":
-                        ulTags--;
-
-                        break;
-                    case "</li>":
-                        liTags--;
-
-                        break;
-                    default:
-                        break;
+                    }
+                    case "</ul>" -> ulTags--;
+                    default -> {
+                    }
                 }
             }else {
                 stringInBound=getStringInBound(s,currentIndex);
-                System.out.println(stringInBound);
                 currentIndex+=stringInBound.length();
+                assert tag != null;
                 if(!tag.equals("</b>")){
                     for(int i=0;i<ulTags;i++){
                         ans.append('\t');
@@ -65,24 +56,24 @@ public class GetContentOfHTML {
         return ans.toString();
     }
     public static String getNextTag(String s,int currentIndex){
-        String ans="";
+        StringBuilder ans= new StringBuilder();
         if(s.charAt(currentIndex)=='<'){
             for(int i=currentIndex;;i++){
-                ans+=s.charAt(i);
+                ans.append(s.charAt(i));
                 if(s.charAt(i)=='>'){
-                    return ans;
+                    return ans.toString();
                 }
             }
         }
         return "";
     }
     public static String getStringInBound(String s,int currentIndex){
-        String ans="";
+        StringBuilder ans= new StringBuilder();
         for(int i=currentIndex;i<s.length();i++){
             if(s.charAt(i)=='<'){
-                return ans;
+                return ans.toString();
             }else {
-                ans+=s.charAt(i);
+                ans.append(s.charAt(i));
             }
         }
         return "";

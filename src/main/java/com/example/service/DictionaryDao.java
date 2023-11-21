@@ -29,15 +29,15 @@ public class DictionaryDao {
         try {
             ResultSet resultSet = statement.executeQuery("select FavouriteWord from UserInformation where (username = "
                     + "'" + user + "' and FavouriteWord is not null)");
-//            while (resultSet.next()) {
-//                list.add(resultSet.getString(1));
-//            }
-            resultSet.next();
+            if(resultSet.next()==false){
+                return list;
+            }
             String allWords = resultSet.getString(1);
             String[] tmp = allWords.split(",");
             for (String s : tmp) {
                 list.add(s);
             }
+            list.remove("");
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

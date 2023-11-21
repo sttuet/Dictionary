@@ -45,7 +45,6 @@ public class Main extends Application {
         meanings = IOFile.readFromE_VFile(dictionary);
         recentList = IOFile.readFromRecentFile();
         try {
-            System.out.println("is guest " + isGuest);
             if (isGuest) {
                 favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
             } else {
@@ -96,7 +95,6 @@ public class Main extends Application {
      */
     @Override
     public void stop() throws IOException {
-        System.out.println("app ended!");
         if (favouriteList != null && isGuest) {
             IOFile.writeToFavouriteFile(favouriteList);
         }
