@@ -32,13 +32,18 @@ public class LogInController extends Controller {
     public Label nameAndPassFailed;
     public Label signUpSucceeded;
     public Button login1;
-    private DictionaryDao dictionaryDao = new DictionaryDao();
+    private DictionaryDao dictionaryDao = null;
 
     public void onLoginButtonClick(ActionEvent event) throws SQLException, IOException {
-        DictionaryDao DD = new DictionaryDao();
+        try{
+            dictionaryDao=new DictionaryDao();
+        }catch (Exception e){
+            System.out.println("no internet");
+            return;
+        }
         String user = username.getText();
         String pass = password.getText();
-        if (DD.checkAccount(user, pass)) {
+        if (dictionaryDao.checkAccount(user, pass)) {
             Main.isGuest = false;
             Main.USERNAME = user;
             Main.PASSWORD = pass;
@@ -56,7 +61,11 @@ public class LogInController extends Controller {
 
     public void asGuestButtonClick(ActionEvent event) throws IOException {
         Main.isGuest = true;
-        super.changeScreenFromLogin("main-view.fxml", "MainView.css");
+        try {
+            super.changeScreenFromLogin("main-view.fxml", "MainView.css");
+        }catch (Exception e){
+            System.out.println("error on guest ");
+        }
     }
 
     public void onSignUp2ButtonClick(ActionEvent event) throws SQLException {

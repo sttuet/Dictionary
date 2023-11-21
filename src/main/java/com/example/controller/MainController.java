@@ -1,9 +1,7 @@
 package com.example.controller;
 
 import com.example.ourdictionary.Main;
-import com.example.service.ConvertToHTML;
-import com.example.service.DictionaryDao;
-import com.example.service.SendRequest;
+import com.example.service.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -45,7 +43,7 @@ public class MainController extends Controller implements Initializable {
     public AnchorPane SubAnchorPane;
     public HBox EngVietSpeaker;
     @FXML
-    FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.HEART);
+    FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.STAR);
     @FXML
     private Button searchButton;
     @FXML
@@ -71,7 +69,7 @@ public class MainController extends Controller implements Initializable {
     private boolean isShowingFavWord = false;
     @FXML
     private Button addFav;
-    private DictionaryDao dictionaryDao = new DictionaryDao();
+    private DictionaryDao dictionaryDao;
 
     public void setDarkMode() {
         rootPane.setStyle("-fx-background-color: #04293A;");
@@ -104,7 +102,7 @@ public class MainController extends Controller implements Initializable {
                 };
             }
         });
-        webView.getEngine().loadContent("<html><body>" +
+        showWebView("<html><body>" +
                 " <style> body { background-color:#041C32; } </style></body></html");
         currentWord.setTextFill(Paint.valueOf("white"));
     }
@@ -248,8 +246,8 @@ public class MainController extends Controller implements Initializable {
             inputWord.setText(s);
             currentWord.setText(s);
             showSpeakerAndHeart(true);
-            vietMeaning = ConvertToHTML.vietMeaningToHTML(s, meanings.get(s));
-            webView.getEngine().loadContent(vietMeaning);
+
+            showWebView(s);
             {
                 new Thread(() -> {
                     try {
@@ -277,7 +275,6 @@ public class MainController extends Controller implements Initializable {
         if (inputWord.getText().isEmpty()) {
             vietMeaning = "";
         } else {
-            vietMeaning = ConvertToHTML.vietMeaningToHTML(inputWord.getText(), meanings.get(inputWord.getText()));
             {
                 new Thread(() -> {
                     try {
@@ -294,29 +291,29 @@ public class MainController extends Controller implements Initializable {
                 }).start();
             }
             currentWord.setText(inputWord.getText());
-            if (vietMeaning.equals("")) {
-                showSpeakerAndHeart(false);
-            }
+            showWebView(currentWord.getText());
+            showSpeakerAndHeart(true);
         }
-        webView.getEngine().loadContent(vietMeaning);
+
     }
 
     private void showSpeakerAndHeart(boolean b) {
+        EngVietSpeaker.setVisible(b);
+        if (b) {
+            EngVietSpeaker.toFront();
+        } else {
+            EngVietSpeaker.toBack();
+        }
         speaker.setVisible(b);
-        speaker.setDisable(!b);
+        addFav.setVisible(b);
+        vietLabel.setVisible(b);
+        engLabel.setVisible(b);
         if (favouriteList.contains(currentWord.getText())) {
             addFavIcon.setFill(Paint.valueOf("#003366"));
         } else {
             addFavIcon.setFill(Paint.valueOf("#ffffff"));
         }
-        addFav.setVisible(b);
-        addFav.setDisable(!b);
-        engLabel.setVisible(b);
-        engLabel.setDisable(!b);
-        vietLabel.setVisible(b);
-        vietLabel.setDisable(!b);
-        EngVietSpeaker.setVisible(b);
-        EngVietSpeaker.setDisable(!b);
+
 
     }
 
@@ -333,7 +330,7 @@ public class MainController extends Controller implements Initializable {
      */
     @FXML
     protected void onVietLabelClick() {
-        webView.getEngine().loadContent(vietMeaning);
+        showWebView(currentWord.getText());
     }
 
     /**
@@ -351,17 +348,15 @@ public class MainController extends Controller implements Initializable {
     @FXML
     protected void addToFavourite() throws SQLException {
         String s = currentWord.getText();
-        if (!favouriteList.contains(s)) {
+        if (!favouriteList.contains(s) && meanings.containsKey(s)) {
             favouriteList.add(s);
             addFavIcon.setFill(Paint.valueOf("#003366"));
-            if (!isGuest) {
-                dictionaryDao.insertWord(s);
-            }
-
-
+//            if (!isGuest) {
+//                dictionaryDao.insertWord(s);
+//            }
         } else {
             favouriteList.remove(s);
-            dictionaryDao.removeWord(s);
+//            dictionaryDao.removeWord(s);
             addFavIcon.setFill(Paint.valueOf("white"));
         }
         if (isShowingFavWord) {
@@ -439,23 +434,106 @@ public class MainController extends Controller implements Initializable {
         super.changeScreen("settings-view.fxml", "settingsView.css");
     }
 
-    @FXML
-    protected void onModifyButtonClick() throws IOException {
-        super.changeScreen("modify-view.fxml", "modifyView.css");
-    }
-
     public void onDeleteButtonClick() {
-        boolean b = true;
         inputWord.setText("");
         listView.setItems(FXCollections.observableList(new ArrayList<>()));
-        webView.getEngine().loadContent("");
+        showWebView("");
         currentWord.setText("");
-        EngVietSpeaker.setVisible(!b);
-        EngVietSpeaker.setDisable(b);
+        EngVietSpeaker.setVisible(false);
 
     }
 
     public void onSpeakerClick() throws IOException {
         super.onSpeakerClick(currentWord.getText());
     }
+
+    @FXML
+    AnchorPane editPane;
+    @FXML
+    Button refreshButton;
+    @FXML
+    Button saveButton;
+    @FXML
+    TextArea editTextArea;
+    @FXML
+    TextField editTextField;
+
+    /**
+     * hiển thị editPane bao gồm editTextField (từ đang sửa), editTextArea (nghĩa mình đang sửa)
+     * saveButton (lưu từ sau khi sửa), refreshButton( trả lại nghĩa ban đầu của từ)
+     */
+    @FXML
+    protected void onModifyButtonClick() {
+        showSpeakerAndHeart(false);
+        editPane.setVisible(true);
+        String backGroundColor = "white";
+        String textColor1 = "black";
+        if (Main.DARK_MODE) {
+            backGroundColor = "#041C32";
+            textColor1 = "white";
+        }
+        editTextArea.setStyle("-fx-background-color:" + backGroundColor + ";-fx-text-fill:" + textColor1 + ";-fx-font-size:" + fontSize + ";");
+        if (modifiedWord.containsKey(currentWord.getText())) {
+            editTextArea.setText(modifiedWord.get(currentWord.getText()));
+        } else {
+            editTextArea.setText(GetContentOfHTML.parse(currentWord.getText()));
+        }
+        editTextField.setText(currentWord.getText());
+    }
+
+    /**
+     * lưu từ sau khi sửa
+     */
+    @FXML
+    protected void onSaveButtonClick() {
+        if (IOFile.isValidWord(editTextField.getText())) { // từ phải đúng định dạng
+            modifiedWord.put(editTextField.getText(), editTextArea.getText());
+            currentWord.setText(editTextField.getText());
+            if (!dictionary.has(editTextField.getText())) {
+                dictionary.addWord(editTextField.getText());
+            }
+            editPane.setVisible(false);
+            showWebView(editTextField.getText());
+            showSpeakerAndHeart(true);
+        }
+    }
+
+    @FXML
+    protected void onRefreshButtonClick() {
+        if (meanings.containsKey(currentWord.getText())) {
+            editTextArea.setText(GetContentOfHTML.parse(currentWord.getText()));
+            modifiedWord.remove(currentWord.getText());
+            showWebView(currentWord.getText());
+        }
+    }
+
+    /**
+     * lúc chạy hàm webView.getEngine.loadContent , nếu từ đấy đã được thay đổi nghĩa thì load nghĩa trong modifiedWord
+     * còn không thif vẫn load trong Main.meanings
+     *
+     * @param word từ hiển thị
+     */
+    private void showWebView(String word) {
+        editPane.setVisible(false);
+        if (word.equals("") || word == null) {
+            vietMeaning = "";
+            webView.getEngine().loadContent("");
+        } else if (modifiedWord.containsKey(word)) {
+            String backGroundColor = "white";
+            String textColor1 = "black";
+            if (Main.DARK_MODE) {
+                backGroundColor = "#041C32";
+                textColor1 = "white";
+            }
+            String content = "<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor + ";font-family: Arial, Helvetica, sans-serif;font-size:" + fontSize +
+                    ";\"><textarea disable style=\"width:" + webView.getWidth() + "px;height:" + webView.getHeight() + "px;\">"
+                    + modifiedWord.get(word)
+                    + "</textarea></body></html>";
+            webView.getEngine().loadContent(content);
+        } else {
+            vietMeaning = ConvertToHTML.vietMeaningToHTML(word, meanings.get(word));
+            webView.getEngine().loadContent(vietMeaning);
+        }
+    }
+
 }
