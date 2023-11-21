@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="rootPane" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.WriteWordController">
+<AnchorPane fx:id="rootPane" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.WriteWordController">
    <children>
       <Label fx:id="question" alignment="CENTER" layoutX="310.0" layoutY="80.0" prefHeight="94.0" prefWidth="203.0" />
       <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
@@ -38,7 +34,7 @@
       </HBox>
       <HBox fx:id="wrongAnswer" layoutX="30.0" layoutY="436.0" prefHeight="100.0" prefWidth="629.0" style="-fx-background-color: red;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label prefHeight="122.0" prefWidth="668.0" style="-fx-background-color: red;" text="   CORRECT!">
+            <Label prefHeight="122.0" prefWidth="668.0" style="-fx-background-color: red;" text="   INCORRECT!">
                <font>
                   <Font size="31.0" />
                </font>
