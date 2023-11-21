@@ -80,12 +80,19 @@ public class SendRequest {
 
         URL url = new URL(sb.toString());
         // Open New URL connection channel.
-        URLConnection urlConn = url.openConnection(); //Open connection
-
+        URLConnection urlConn = null;
+        InputStream in=null;
+        try{
+            urlConn = url.openConnection(); //Open connection
+            urlConn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0) "
+                    + "Gecko/20100101 Firefox/4.0");
+            in= urlConn.getInputStream();
+        }catch (Exception e){
+            System.out.println("no internet");
+            return;
+        }
         //Adding header for user agent is required
-        urlConn.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:2.0) "
-                + "Gecko/20100101 Firefox/4.0");
-        InputStream in= urlConn.getInputStream();
+
         File audio=new File("src\\main\\resources\\audio\\" + word + ".mp3");
         if(!audio.exists()) {
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(audio));

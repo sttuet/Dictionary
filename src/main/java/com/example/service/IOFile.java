@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.ourdictionary.Dictionary;
+import com.example.ourdictionary.Main;
 
 import java.io.*;
 import java.util.*;
@@ -21,6 +22,10 @@ public class IOFile {
     }
 
     public static void writeToFavouriteFile(Set<String> list) throws IOException {
+        File file = new File(FAVOURITE_PATH);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         bufferedWriter = new BufferedWriter(new FileWriter(FAVOURITE_PATH));
         for (String s : list) {
             bufferedWriter.write(s + '\n');
@@ -30,8 +35,8 @@ public class IOFile {
 
     public static Set<String> readFromFavouriteFile() throws IOException {
         Set<String> list = new HashSet<>();
-        File file=new File(FAVOURITE_PATH);
-        if(!file.exists()){
+        File file = new File(FAVOURITE_PATH);
+        if (!file.exists()) {
             file.createNewFile();
         }
         bufferedReader = new BufferedReader(new FileReader(FAVOURITE_PATH));
@@ -43,6 +48,10 @@ public class IOFile {
     }
 
     public static void writeToRecentFile(List<String> list) throws IOException {
+        File file = new File(RECENT_PATH);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         bufferedWriter = new BufferedWriter(new FileWriter(RECENT_PATH));
         for (String s : list) {
             bufferedWriter.write(s + '\n');
@@ -51,8 +60,8 @@ public class IOFile {
     }
 
     public static LinkedList<String> readFromRecentFile() throws IOException {
-        File file=new File(RECENT_PATH);
-        if(!file.exists()){
+        File file = new File(RECENT_PATH);
+        if (!file.exists()) {
             file.createNewFile();
         }
         bufferedReader = new BufferedReader(new FileReader(RECENT_PATH));
@@ -64,14 +73,12 @@ public class IOFile {
         return list;
     }
 
-    public static Map<String, String> readFromE_VFile(Dictionary dictionary,
-                                                      Map<String, String> meanings) throws IOException {
+    public static Map<String, String> readFromE_VFile(Dictionary dictionary) throws IOException {
         bufferedReader = new BufferedReader(new FileReader(E_V_PATH));
         String line;
-        Map<String, String> means = new HashMap<>(meanings);
+        Map<String, String> means = new HashMap<>();
         while ((line = bufferedReader.readLine()) != null) {
             String[] part = line.split("<html>");
-            if (meanings.containsKey(part[0])) continue;
             means.put(part[0], "<html>" + part[1]);
             dictionary.addWord(part[0]);
         }
@@ -88,25 +95,40 @@ public class IOFile {
         return ans;
     }
 
-    public static void writeToModifiedFile(String word, String meaning) throws IOException {
+    public static void writeToModifiedFile() throws IOException {
+        File file = new File(MODIFIED_PATH);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         bufferedWriter = new BufferedWriter(new FileWriter(MODIFIED_PATH));
-        bufferedWriter.write(word + "<html>" + meaning + '\n');
+        for (String s : Main.modifiedWord.keySet()) {
+            bufferedWriter.write(s + DELIMITER);
+            bufferedWriter.write(Main.modifiedWord.get(s) + DELIMITER);
+        }
         bufferedWriter.close();
     }
 
-    public static Map<String, String> readFromModifiedFile(Dictionary dictionary) throws IOException {
-        bufferedReader = new BufferedReader(new FileReader(MODIFIED_PATH));
-        Map<String, String> meanings = new HashMap<>();
-        String line;
+    public static final String DELIMITER = "@#!@!";
 
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] part = line.split("<html>");
-            meanings.put(part[0], "<html>" + part[1]);
-            if (part[1].equals("!")) {
-                meanings.remove(part[0]);
-                continue;
+    public static Map<String, String> readFromModifiedFile(Dictionary dictionary) throws IOException {
+        Map<String, String> meanings = new HashMap<>();
+        File file = new File(MODIFIED_PATH);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        Scanner scanner = new Scanner(file);
+        scanner.useDelimiter(DELIMITER);
+        while (scanner.hasNext()) {
+            String word = scanner.next();
+            String mean = "";
+            if (!scanner.hasNext()) {
+                break;
             }
-            dictionary.addWord(part[0]);
+            mean = scanner.next();
+            meanings.put(word, mean);
+            if (!dictionary.has(word)) {
+                dictionary.addWord(word);
+            }
         }
         return meanings;
     }

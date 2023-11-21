@@ -40,14 +40,20 @@ public class Main extends Application {
         objectMapper = new ObjectMapper();
         dictionary = new Dictionary();
         modifiedWord = IOFile.readFromModifiedFile(dictionary);
-        meanings = IOFile.readFromE_VFile(dictionary, modifiedWord);
+        meanings = IOFile.readFromE_VFile(dictionary);
         recentList = IOFile.readFromRecentFile();
-        if (isGuest) {
-            favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
-        } else {
-            DictionaryDao dictionaryDao = new DictionaryDao();
-            favouriteList = dictionaryDao.getAllWord(USERNAME);
+        try{
+            System.out.println("is guest "+isGuest);
+            if (isGuest) {
+                favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();
+            } else {
+                DictionaryDao dictionaryDao = new DictionaryDao();
+                favouriteList = dictionaryDao.getAllWord(USERNAME);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
+
 
     }
 
@@ -65,6 +71,11 @@ public class Main extends Application {
         if(recentList != null) {
             IOFile.writeToRecentFile(recentList);
         }
+        if(!isGuest){
+            DictionaryDao dictionaryDao=new DictionaryDao();
+            dictionaryDao.updateListWord();
+        }
+        IOFile.writeToModifiedFile();
     }
 
     /**

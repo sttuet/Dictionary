@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.ourdictionary.Main;
+import com.example.service.DictionaryDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -86,6 +87,10 @@ public class SettingController extends Controller implements Initializable {
     }
 
     public void onLogOutButtonClick(ActionEvent event) throws IOException {
+        if(!Main.isGuest){
+            DictionaryDao dictionaryDao=new DictionaryDao();
+            dictionaryDao.updateListWord();
+        }
         super.changeScreenFromMain("Log-in.fxml", "Login.css");
     }
 }
