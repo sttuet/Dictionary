@@ -14,7 +14,7 @@ public class DictionaryDao {
     public DictionaryDao() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12661845", "sql12661845", "b91yWry7Zx");
+            con = DriverManager.getConnection("jdbc:mysql://sql12.freesqldatabase.com:3306/sql12663911", "sql12663911", "Pf1M4D3gAy");
             statement = con.createStatement();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -33,9 +33,9 @@ public class DictionaryDao {
 //                list.add(resultSet.getString(1));
 //            }
             resultSet.next();
-            String allWords=resultSet.getString(1);
-            String[] tmp=allWords.split(",");
-            for(String s:tmp){
+            String allWords = resultSet.getString(1);
+            String[] tmp = allWords.split(",");
+            for (String s : tmp) {
                 list.add(s);
             }
 
@@ -95,18 +95,19 @@ public class DictionaryDao {
         preparedStatement.executeUpdate();
         System.out.println("delete successfully");
     }
-    public void updateListWord(){
-        if(!Main.isGuest){
-            StringBuilder builder=new StringBuilder();
-            for(String s:Main.favouriteList){
+
+    public void updateListWord() {
+        if (!Main.isGuest) {
+            StringBuilder builder = new StringBuilder();
+            for (String s : Main.favouriteList) {
                 builder.append(s);
                 builder.append(',');
             }
-            String query="update table UserInformation set FavouriteWord =\'"+builder.toString()+"\' where username =\'"+Main.USERNAME+"'";
-            try{
-                PreparedStatement statement1=con.prepareStatement(query);
+            String query = "update table UserInformation set FavouriteWord =\'" + builder.toString() + "\' where username =\'" + Main.USERNAME + "'";
+            try {
+                PreparedStatement statement1 = con.prepareStatement(query);
                 statement1.executeUpdate();
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("can not update list ");
             }
 
