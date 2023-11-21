@@ -30,6 +30,10 @@
             </font>
         </Label>
       <Label fx:id="translateResult" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="229.0" prefHeight="231.0" prefWidth="782.0" AnchorPane.bottomAnchor="76.80000000000001" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="27.600000000000023" AnchorPane.topAnchor="229.0" />
-      <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="41.0" layoutY="209.0" onMouseClicked="#onSpeaker" size="20" />
+      <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="35.0" layoutY="209.0" onMouseClicked="#onSpeaker" size="20" />
+        <Label fx:id="noInternet" alignment="CENTER" layoutX="274.0" layoutY="188.0" prefHeight="26.0" prefWidth="358.0" text="No internet connection!" textAlignment="JUSTIFY" textFill="#df0303" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
     </children>
 </AnchorPane>

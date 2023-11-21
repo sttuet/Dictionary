@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.ParseJSON;
-import com.example.service.SendRequest;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,6 +17,7 @@ import java.util.ResourceBundle;
 public class TranslateController extends Controller implements Initializable {
     public Label TranslateLabel;
     public Button closeButton;
+    public Label noInternet;
     @FXML
     Label sourceLanguageLabel;
     @FXML
@@ -37,12 +37,16 @@ public class TranslateController extends Controller implements Initializable {
     protected void onTranslate() throws IOException {
         String s = inputText.getText();
         String res;
-        if (engToViet) {
-            res = ParseJSON.transToViet(s);
+        if (Main.checkInternetConnection()) {
+            if (engToViet) {
+                res = ParseJSON.transToViet(s);
+            } else {
+                res = ParseJSON.transToEng(s);
+            }
+            translateResult.setText(res);
         } else {
-            res = ParseJSON.transToEng(s);
+            noInternet.setVisible(true);
         }
-        translateResult.setText(res);
 
     }
 
@@ -72,13 +76,14 @@ public class TranslateController extends Controller implements Initializable {
             translateResult.setStyle("-fx-font-size: " + MainController.fontSize + ";");
         }
     }
+
     @FXML
     protected void onSpeaker() throws IOException {
         super.onSpeakerClick(inputText.getText());
-        File file=new File("src\\main\\resources\\audio\\" + inputText.getText() + ".mp3");
+        File file = new File("src\\main\\resources\\audio\\" + inputText.getText() + ".mp3");
         try {
             file.delete();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

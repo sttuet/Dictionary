@@ -45,6 +45,16 @@ public class MainController extends Controller implements Initializable {
     @FXML
     FontAwesomeIconView addFavIcon = new FontAwesomeIconView(FontAwesomeIcon.STAR);
     @FXML
+    AnchorPane editPane;
+    @FXML
+    Button refreshButton;
+    @FXML
+    Button saveButton;
+    @FXML
+    TextArea editTextArea;
+    @FXML
+    TextField editTextField;
+    @FXML
     private Button searchButton;
     @FXML
     private Button recentButton;
@@ -102,7 +112,7 @@ public class MainController extends Controller implements Initializable {
                 };
             }
         });
-        showWebView("<html><body>" +
+        webView.getEngine().loadContent("<html><body>" +
                 " <style> body { background-color:#041C32; } </style></body></html");
         currentWord.setTextFill(Paint.valueOf("white"));
     }
@@ -393,6 +403,9 @@ public class MainController extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        modifyWordButton.setTooltip(new Tooltip("Modify words"));
+        saveButton.setTooltip(new Tooltip("Save words changed"));
+        refreshButton.setTooltip(new Tooltip("Reset words"));
         recentButton.setTooltip(new Tooltip("Recent words"));
         addFavWord.setTooltip(new Tooltip("Favourite words"));
         translateTextButton.setTooltip(new Tooltip("Translate sentences"));
@@ -444,19 +457,13 @@ public class MainController extends Controller implements Initializable {
     }
 
     public void onSpeakerClick() throws IOException {
-        super.onSpeakerClick(currentWord.getText());
+        if (checkInternetConnection()) {
+            super.onSpeakerClick(currentWord.getText());
+        }
+        else {
+            System.out.println("no internet connection");
+        }
     }
-
-    @FXML
-    AnchorPane editPane;
-    @FXML
-    Button refreshButton;
-    @FXML
-    Button saveButton;
-    @FXML
-    TextArea editTextArea;
-    @FXML
-    TextField editTextField;
 
     /**
      * hiển thị editPane bao gồm editTextField (từ đang sửa), editTextArea (nghĩa mình đang sửa)

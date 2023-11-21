@@ -32,13 +32,15 @@ public class LogInController extends Controller {
     public Label nameAndPassFailed;
     public Label signUpSucceeded;
     public Button login1;
+    public Label noInternet;
     private DictionaryDao dictionaryDao = null;
 
     public void onLoginButtonClick(ActionEvent event) throws SQLException, IOException {
         try{
             dictionaryDao=new DictionaryDao();
         }catch (Exception e){
-            System.out.println("no internet");
+            noInternet.setVisible(true);
+            System.out.println("no internet connection");
             return;
         }
         String user = username.getText();
@@ -54,9 +56,13 @@ public class LogInController extends Controller {
     }
 
     public void onSignUp1ButtonClick(ActionEvent event) throws SQLException {
-        signUpPane.setVisible(true);
-        subPane.setVisible(false);
-
+        if(Main.checkInternetConnection()) {
+            signUpPane.setVisible(true);
+            subPane.setVisible(false);
+        }
+        else {
+            noInternet.setVisible(true);
+        }
     }
 
     public void asGuestButtonClick(ActionEvent event) throws IOException {
