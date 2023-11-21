@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ModifyWordController">
+    <children>
+        <Button fx:id="addingWord" layoutX="272.0" layoutY="100.0" mnemonicParsing="false" onAction="#onAddingWordButtonClick" prefHeight="43.0" prefWidth="280.0" text="Thêm từ" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0" />
+        <Button fx:id="editingWord" layoutX="272.0" layoutY="200.0" mnemonicParsing="false" onAction="#onEditingWordButtonClick" prefHeight="43.0" prefWidth="280.0" text="Sửa từ" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0" />
+        <Button fx:id="deletingWord" layoutX="272.0" layoutY="300.0" mnemonicParsing="false" onAction="#onDeletingWordButtonClick" prefHeight="43.0" prefWidth="280.0" text="Xóa từ" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0" />
+        <Button fx:id="backModifyWord" layoutY="1.0" mnemonicParsing="false" onAction="#backToMainMenu" text="Quay lại" />
+        <Label fx:id="noWordToDelete" layoutX="272.0" layoutY="363.0" prefHeight="17.0" prefWidth="280.0" text="Không có từ nào để xóa!" textFill="#eb0202" visible="false" />
+
+    </children>
+</AnchorPane>

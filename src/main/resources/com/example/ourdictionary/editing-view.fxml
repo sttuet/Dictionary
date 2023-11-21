@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.EditingWordController">
+    <children>
+        <Button fx:id="backEditingWord" layoutY="1.0" mnemonicParsing="false" onAction="#backToModifyMenu" text="Quay lại" />
+      <Label fx:id="enterWordToBeEditedLabel" layoutX="186.0" layoutY="168.0" text="Nhập từ tiếng Anh cần sửa:" />
+      <Label fx:id="enterMeaningLabel" layoutX="199.0" layoutY="286.0" text="Nhập nghĩa tiếng Việt:" />
+      <TextArea fx:id="editedWordTextArea" layoutX="412.0" layoutY="141.0" prefHeight="71.0" prefWidth="254.0" />
+      <TextArea fx:id="editedMeaningTextArea" layoutX="412.0" layoutY="259.0" prefHeight="71.0" prefWidth="254.0" />
+      <Button fx:id="editWordButton" layoutX="514.0" layoutY="371.0" mnemonicParsing="false" onAction="#editingWord" text="Lưu từ" />
+      <Label fx:id="cantEditWordLabel" layoutX="439.0" layoutY="418.0" text="Không thể sửa từ do từ không tồn tại!" textFill="#ef0808" visible="false" />
+      <Label fx:id="wordEditedLabel" layoutX="488.0" layoutY="427.0" text="Sửa từ thành công!" textFill="#ef0808" visible="false" />
+
+    </children>
+</AnchorPane>

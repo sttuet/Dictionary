@@ -19,6 +19,7 @@ public class Main extends Application {
     public static ObjectMapper objectMapper;
     public static HashSet<String> favouriteList;
     public static LinkedList<String> recentList;
+    public static Map<String, String> modifiedWord;
     public static Map<String, String> meanings;
     public static boolean DARK_MODE = false;
     public static boolean isGuest = false;
@@ -38,7 +39,8 @@ public class Main extends Application {
     public static void loadData() throws IOException {
         objectMapper = new ObjectMapper();
         dictionary = new Dictionary();
-        meanings = IOFile.readFromE_VFile(dictionary);
+        modifiedWord = IOFile.readFromModifiedFile(dictionary);
+        meanings = IOFile.readFromE_VFile(dictionary, modifiedWord);
         recentList = IOFile.readFromRecentFile();
         if (isGuest) {
             favouriteList = (HashSet<String>) IOFile.readFromFavouriteFile();

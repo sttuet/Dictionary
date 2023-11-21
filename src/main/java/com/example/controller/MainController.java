@@ -57,6 +57,8 @@ public class MainController extends Controller implements Initializable {
     @FXML
     private Button game;
     @FXML
+    private Button modifyWordButton;
+    @FXML
     private Button translateTextButton;
     @FXML
     private ListView<String> listView = new ListView<>();
@@ -435,6 +437,11 @@ public class MainController extends Controller implements Initializable {
     @FXML
     protected void onSettingsButtonClick() throws IOException {
         super.changeScreen("settings-view.fxml", "settingsView.css");
+    }
+
+    @FXML
+    protected void onModifyButtonClick() throws IOException {
+        super.changeScreen("modify-view.fxml", "modifyView.css");
     }
 
     public void onDeleteButtonClick() {
