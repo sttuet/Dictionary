@@ -16,22 +16,30 @@ public class ModifyWordController extends Controller implements Initializable {
     public Button deletingWord;
     public Button backModifyWord;
     @FXML
-    private Label noWordToDelete;
+    public Label noWordToDelete;
 
     @FXML
     protected void backToMainMenu() throws IOException {
+        changeScreen("main-view.fxml", "MainView.css");
     }
 
     @FXML
     protected void onAddingWordButtonClick() throws IOException {
+        changeScreen("adding-view.fxml", "AddingView.css");
     }
 
     @FXML
     protected void onDeletingWordButtonClick() throws IOException {
+        if(Main.dictionary == null){
+            noWordToDelete.setVisible(true);
+            return;
+        }
+        changeScreen("deleting-view.fxml", "DeletingView.css");
     }
 
     @FXML
     protected void onEditingWordButtonClick() throws IOException {
+        changeScreen("editing-view.fxml", "EditingView.css");
     }
 
     @Override

@@ -57,7 +57,7 @@ public class MainController extends Controller implements Initializable {
     @FXML
     private Button game;
     @FXML
-    private Button modifyButton;
+    private Button modifyWordButton;
     @FXML
     private Button translateTextButton;
     @FXML

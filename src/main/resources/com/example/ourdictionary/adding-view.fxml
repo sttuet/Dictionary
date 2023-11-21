@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.AddingWordController">
+    <children>
+        <Button fx:id="backAddingWord" layoutY="1.0" mnemonicParsing="false" onAction="#backToModifyMenu" text="Quay lại" />
+      <Label fx:id="enterEnglishLabel" layoutX="182.0" layoutY="168.0" text="Nhập từ tiếng Anh cần thêm:" />
+      <Label fx:id="enterVietnameseLabel" layoutX="199.0" layoutY="286.0" text="Nhập nghĩa tiếng Việt:" />
+      <TextArea fx:id="englishTextArea" layoutX="412.0" layoutY="141.0" prefHeight="71.0" prefWidth="254.0" />
+      <TextArea fx:id="vietnameseTextArea" layoutX="412.0" layoutY="259.0" prefHeight="71.0" prefWidth="254.0" />
+      <Button fx:id="saveWordButton" layoutX="514.0" layoutY="371.0" mnemonicParsing="false" onAction="#addingWord" text="Lưu từ" />
+      <Label fx:id="cantAddWordLabel" layoutX="444.0" layoutY="418.0" text="Không thể thêm từ do từ đã tồn tại!" textFill="#ef0808" visible="false" />
+      <Label fx:id="wordAddedLabel" layoutX="483.0" layoutY="427.0" text="Thêm từ thành công!" textFill="#ef0808" visible="false" />
+
+    </children>
+</AnchorPane>

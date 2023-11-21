@@ -11,6 +11,8 @@ public class IOFile {
     private static final String FAVOURITE_PATH = "src\\main\\resources\\data\\Favourite.txt";
     private static final String E_V_PATH = "src\\main\\resources\\data\\E_V.txt";
     private static final String COMMON_WORD_PATH = "src\\main\\resources\\data\\common_word.txt";
+    private static final String MODIFIED_PATH = "src\\main\\resources\\data\\modified_word.txt";
+
 
     public static BufferedReader bufferedReader;
     public static BufferedWriter bufferedWriter;
@@ -62,17 +64,18 @@ public class IOFile {
         return list;
     }
 
-    public static Map<String, String> readFromE_VFile(Dictionary dictionary) throws IOException {
+    public static Map<String, String> readFromE_VFile(Dictionary dictionary,
+                                                      Map<String, String> meanings) throws IOException {
         bufferedReader = new BufferedReader(new FileReader(E_V_PATH));
-        Map<String, String> meanings = new HashMap<>();
         String line;
-
+        Map<String, String> means = new HashMap<>(meanings);
         while ((line = bufferedReader.readLine()) != null) {
             String[] part = line.split("<html>");
-            meanings.put(part[0], "<html>" + part[1]);
+            if (meanings.containsKey(part[0])) continue;
+            means.put(part[0], "<html>" + part[1]);
             dictionary.addWord(part[0]);
         }
-        return meanings;
+        return means;
     }
 
     public static List<String> readFromCommonWord() throws IOException {
@@ -83,6 +86,29 @@ public class IOFile {
             ans.add(tmp);
         }
         return ans;
+    }
+
+    public static void writeToModifiedFile(String word, String meaning) throws IOException {
+        bufferedWriter = new BufferedWriter(new FileWriter(MODIFIED_PATH));
+        bufferedWriter.write(word + "<html>" + meaning + '\n');
+        bufferedWriter.close();
+    }
+
+    public static Map<String, String> readFromModifiedFile(Dictionary dictionary) throws IOException {
+        bufferedReader = new BufferedReader(new FileReader(MODIFIED_PATH));
+        Map<String, String> meanings = new HashMap<>();
+        String line;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] part = line.split("<html>");
+            meanings.put(part[0], "<html>" + part[1]);
+            if (part[1].equals("!")) {
+                meanings.remove(part[0]);
+                continue;
+            }
+            dictionary.addWord(part[0]);
+        }
+        return meanings;
     }
 
 
