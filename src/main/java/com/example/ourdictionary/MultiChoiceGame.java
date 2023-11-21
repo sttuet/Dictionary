@@ -10,7 +10,7 @@ public class MultiChoiceGame extends Game {
     private LinkedList<String> listQuestion = new LinkedList<>();
     private final List<String> listQuestion2 = new LinkedList<>();
     private List<String> currentQuestion = new ArrayList<>();
-    private List<String> listResult=new ArrayList<>();
+    private List<String> listResult = new ArrayList<>();
     private int score = 0;
 
     public static final int NUM_QUESTION = 10;
@@ -32,8 +32,9 @@ public class MultiChoiceGame extends Game {
         try {
             return ParseJSON.getTranslateText("en", "vi", s);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("cant translate");
         }
+        return "";
     }
 
     public void createQuestion() {
@@ -49,8 +50,8 @@ public class MultiChoiceGame extends Game {
             }
         }
         shuffle(currentQuestion, 2, 6);
-        if(!listResult.contains(currentQuestion.get(1)+"\n"+currentQuestion.get(0))){
-            listResult.add(currentQuestion.get(1)+"\n"+currentQuestion.get(0));
+        if (!listResult.contains(currentQuestion.get(1) + "\n" + currentQuestion.get(0))) {
+            listResult.add(currentQuestion.get(1) + "\n" + currentQuestion.get(0));
         }
     }
 
@@ -84,7 +85,8 @@ public class MultiChoiceGame extends Game {
         score = 0;
         createQuestion();
     }
-    public List<String> getListResult(){
+
+    public List<String> getListResult() {
         return listResult;
     }
 }

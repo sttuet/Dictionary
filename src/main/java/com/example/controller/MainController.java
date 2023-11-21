@@ -301,6 +301,7 @@ public class MainController extends Controller implements Initializable {
                 }).start();
             }
             currentWord.setText(inputWord.getText());
+            recentList.addFirst(currentWord.getText());
             showWebView(currentWord.getText());
             showSpeakerAndHeart(true);
         }
@@ -479,7 +480,7 @@ public class MainController extends Controller implements Initializable {
             backGroundColor = "#041C32";
             textColor1 = "white";
         }
-        editTextArea.setStyle("-fx-background-color:" + backGroundColor + ";-fx-text-fill:" + textColor1 + ";-fx-font-size:" + fontSize + ";");
+        editTextArea.setStyle("-fx-control-inner-background:" + backGroundColor + ";-fx-text-fill:" + textColor1 +"-fx-prompt-text-fill:"+textColor1+ ";-fx-font-size:" + fontSize + ";");
         if (modifiedWord.containsKey(currentWord.getText())) {
             editTextArea.setText(modifiedWord.get(currentWord.getText()));
         } else {
@@ -522,18 +523,23 @@ public class MainController extends Controller implements Initializable {
      */
     private void showWebView(String word) {
         editPane.setVisible(false);
+        String backGroundColor = "white";
+        String textColor1 = "black";
+        if (Main.DARK_MODE) {
+            backGroundColor = "#041C32";
+            textColor1 = "white";
+        }
         if (word.equals("") || word == null) {
             vietMeaning = "";
-            webView.getEngine().loadContent("");
-        } else if (modifiedWord.containsKey(word)) {
-            String backGroundColor = "white";
-            String textColor1 = "black";
-            if (Main.DARK_MODE) {
-                backGroundColor = "#041C32";
-                textColor1 = "white";
-            }
             String content = "<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor + ";font-family: Arial, Helvetica, sans-serif;font-size:" + fontSize +
-                    ";\"><textarea disable style=\"width:" + webView.getWidth() + "px;height:" + webView.getHeight() + "px;\">"
+                    ";\"></body></html>";
+            webView.getEngine().loadContent(content);
+        } else if (modifiedWord.containsKey(word)) {
+            String content = "<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor  +
+                    ";\"><textarea disable style=\"width:" + webView.getWidth() + "px;height:" + webView.getHeight()
+                    + "px;background-color:"+backGroundColor+";color:"
+                    +textColor1+ ";font-family: Arial, Helvetica, sans-serif;font-size:" + fontSize
+                    +";border:transparent;\">"
                     + modifiedWord.get(word)
                     + "</textarea></body></html>";
             webView.getEngine().loadContent(content);
