@@ -51,6 +51,12 @@ public class MultiChoiceGameController extends Controller implements Initializab
     @FXML
     private VBox listBookmark;
 
+    /**
+     * khơi tạo các giá trị cho game.
+     *
+     * @param url            url
+     * @param resourceBundle nguồn
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -82,6 +88,11 @@ public class MultiChoiceGameController extends Controller implements Initializab
 
     }
 
+    /**
+     * trả lời đúng hay sai. Nếu đúng tăng điểm và hiển thị hiệu ứng.
+     *
+     * @param event
+     */
     @FXML
     protected void onAnswer(ActionEvent event) {
         Button button = (Button) event.getSource();
@@ -99,6 +110,9 @@ public class MultiChoiceGameController extends Controller implements Initializab
 
     }
 
+    /**
+     * tạo câu hỏi cho game.
+     */
     private void setQuestion() {
         List<String> list = game.getCurrentQuestion();
         question.setText(list.get(0));
@@ -107,6 +121,12 @@ public class MultiChoiceGameController extends Controller implements Initializab
         }
     }
 
+    /**
+     * tạo hiệu ứng, nếu đúng thì hiển thị hiêệu ứng correct, sai thì incorrect
+     *
+     * @param isTrueAns đáp án có đúng không
+     * @param button    nút chứa đáp án
+     */
     private void showTrueAnswer(boolean isTrueAns, Button button) {
         for (int i = 0; i < 4; i++) {
             if (game.checkAnswer(listButton.get(i).getText())) {
@@ -127,11 +147,19 @@ public class MultiChoiceGameController extends Controller implements Initializab
         }
     }
 
+    /**
+     * quay lại màn hình chọn game.
+     *
+     * @throws IOException ngoại lệ input output
+     */
     @FXML
     protected void onBackClick() throws IOException {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
+    /**
+     * chơi lại game.
+     */
     @FXML
     protected void onAgainClick() {
         finish.setVisible(false);
@@ -139,6 +167,11 @@ public class MultiChoiceGameController extends Controller implements Initializab
         setQuestion();
     }
 
+    /**
+     * chơi một ván mới.
+     *
+     * @throws IOException ngoại lệ input ouput
+     */
     @FXML
     protected void onNewGameClick() throws IOException {
         finish.setVisible(false);
@@ -146,12 +179,20 @@ public class MultiChoiceGameController extends Controller implements Initializab
         setQuestion();
     }
 
+    /**
+     * thoát khởi màn hình.
+     *
+     * @throws IOException ngoại lệ io
+     */
     @FXML
     protected void onExitClick() throws IOException {
         finish.setVisible(false);
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
+    /**
+     * đưa ra kết quả trong màn hình.
+     */
     private void showResult() {
         List<String> listResult = game.getListResult();
         for (int i = 0; i < MultiChoiceGame.NUM_QUESTION; i++) {

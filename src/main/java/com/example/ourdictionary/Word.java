@@ -18,6 +18,11 @@ public class Word {
 
     }
 
+    /**
+     * chuyển về string theo format.
+     *
+     * @return xâu trả về.
+     */
     @Override
     public String toString() {
         return "Word{" +
@@ -48,17 +53,10 @@ public class Word {
         return meanings;
     }
 
-    public void setMeanings(ArrayList<Meaning> meanings) {
-        this.meanings = meanings;
-    }
-
-    public String getAudio() {
-        return audio;
-    }
-
     public void setAudio(String audio) {
         this.audio = audio;
     }
+
     public static class Meaning {
         public String partOfSpeech;
         public ArrayList<Definition> definitions = new ArrayList<>();
@@ -68,21 +66,10 @@ public class Word {
             return "partOfSpeech :" + partOfSpeech + "\n" + definitions.toString();
         }
 
-        public String getPartOfSpeech() {
-            return partOfSpeech;
-        }
-
         public void setPartOfSpeech(String partOfSpeech) {
             this.partOfSpeech = partOfSpeech;
         }
 
-        public List<Definition> getDefinitions() {
-            return definitions;
-        }
-
-        public void setDefinitions(ArrayList<Definition> definitions) {
-            this.definitions = definitions;
-        }
         public static class Definition {
             public String definition;
             public String example;
@@ -100,14 +87,6 @@ public class Word {
             @Override
             public String toString() {
                 return "definition :" + definition + "\n" + "example :" + example + "\n";
-            }
-
-            public String getDefinition() {
-                return definition;
-            }
-
-            public void setDefinition(String definition) {
-                this.definition = definition;
             }
 
             public String getExample() {

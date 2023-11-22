@@ -11,7 +11,7 @@ import static com.example.service.SendRequest.sendRequest;
 
 public class ConvertToHTML {
     /**
-     * tìm thông tin của từ (vẫn là tiếng anh)
+     * tìm thông tin của từ (vẫn là tiếng anh).
      *
      * @param word         từ cần tìm
      * @param objectMapper công cụ để tìm
@@ -27,7 +27,7 @@ public class ConvertToHTML {
     }
 
     /**
-     * thêm các tag html để hiển thị từ
+     * thêm các tag html để hiển thị từ.
      *
      * @param word từ cần hiể thị
      * @return String
@@ -45,13 +45,17 @@ public class ConvertToHTML {
             return "";
         }
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("<html><body style=\"color:").append(textColor1).append(";background-color:").append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:").append(MainController.fontSize).append("px;").append("color=").append(textColor1).append(";\"><ul>");
+        stringBuilder.append("<html><body style=\"color:").append(textColor1).append(";background-color:");
+        stringBuilder.append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:");
+        stringBuilder.append(MainController.fontSize).append("px;").append("color=");
+        stringBuilder.append(textColor1).append(";\"><ul>");
         stringBuilder.append("<li >").append(word.getWord()).append("</li>");
         stringBuilder.append("<li >").append(word.getText()).append("</li>");
         for (Word.Meaning meaning : word.getMeanings()) {
             stringBuilder.append("<li>Type :").append(meaning.partOfSpeech).append("</li><ul>");
             for (Word.Meaning.Definition definition : meaning.definitions) {
-                stringBuilder.append("<li><font color=\">").append(textColor2).append("\">").append(definition.definition).append("</font></li>");
+                stringBuilder.append("<li><font color=\">").append(textColor2).append("\">");
+                stringBuilder.append(definition.definition).append("</font></li>");
                 if (!definition.example.equals(""))
                     stringBuilder.append("<ul><li>").append(definition.example).append("</li></ul>");
             }
@@ -62,6 +66,13 @@ public class ConvertToHTML {
         return stringBuilder.toString();
     }
 
+    /**
+     * chuyên nghĩa tiếng việt sang các thẻ html.
+     *
+     * @param word từ cần chuyển
+     * @param mean nghĩa của nó
+     * @return xâu mới chứa các thẻ html
+     */
     public static String vietMeaningToHTML(String word, String mean) {
         String backGroundColor = "white";
         String textColor1 = "black";
@@ -76,7 +87,9 @@ public class ConvertToHTML {
         }
         StringBuilder ans = new StringBuilder();
         mean = mean.substring(6, mean.length() - 7);
-        ans.append("<html><body style=\"color:").append(textColor1).append(";background-color:").append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:").append(MainController.fontSize).append("px;").append(";color=").append(textColor1).append(";\">");
+        ans.append("<html><body style=\"color:").append(textColor1).append(";background-color:");
+        ans.append(backGroundColor).append(";font-family: Arial, Helvetica, sans-serif;font-size:");
+        ans.append(MainController.fontSize).append("px;").append(";color=").append(textColor1).append(";\">");
         mean = mean.replaceAll("#cc0000", textColor2);
         mean = mean.replaceAll("<b>|</b>", "");
         mean = mean.replaceAll("<i>|</i>", "");

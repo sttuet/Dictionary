@@ -60,6 +60,7 @@ public class Main extends Application {
 
     /**
      * kiểm tra kết nối mạng.
+     *
      * @return trả về true nếu có mạng, false nếu không có mạng
      */
     public static boolean checkInternetConnection() {

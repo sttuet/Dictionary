@@ -6,7 +6,6 @@ import com.example.service.IOFile;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -28,95 +27,70 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 
 public class WordScrambleController extends Controller implements Initializable {
+    public static final int QUESTION_NUMBER = 10;
+    public static Topic currentTopic;
     private final List<CharLabel> shuffleList = new ArrayList<>();
     private final Stack<CharLabel> answerStack = new Stack<>();
+    @FXML
+    public AnchorPane answerPane;
+    @FXML
+    public HBox correctAnswerBox;
+    @FXML
+    public Button exitButton;
+    @FXML
+    public Label finalResultLabel;
+    @FXML
+    public Label finalScoreLabel;
+    @FXML
+    public Label finalScoreNumberLabel;
+    @FXML
+    public Button foodButton;
+    @FXML
+    public TextField holderField;
+    @FXML
+    public Button jobButton;
+    @FXML
+    public VBox listBookmarkBox;
+    @FXML
+    public VBox listWordsBox;
+    @FXML
+    public Button natureButton;
+    @FXML
+    public Button newGameButton;
+    @FXML
+    public Label questionNumberLabel;
+    @FXML
+    public AnchorPane resultPane;
+    @FXML
+    public AnchorPane rootPane;
+    @FXML
+    public Label scoreLabel;
+    @FXML
+    public Label scoreNumberLabel;
+    @FXML
+    public Button sportButton;
+    @FXML
+    public Label topicLabel;
+    @FXML
+    public AnchorPane topicPane;
+    @FXML
+    public HBox wrongAnswerBox;
     private String currentAnswer;
     private List<String> wordList;
+    private int currentScore = 0;
+    private WordScrambleGame game;
 
+    /**
+     * khởi tạo rỗng.
+     *
+     * @throws IOException ngoại lệ io
+     */
     public WordScrambleController() throws IOException {
     }
 
-    enum Topic {
-        NATURE,
-        FOOD,
-        JOB,
-        SPORT
-    }
-
-    public static Topic currentTopic;
-
-    private int currentScore = 0;
-
-    public static final int QUESTION_NUMBER = 10;
-
-    private WordScrambleGame game;
-
-    @FXML
-    public AnchorPane answerPane;
-
-    @FXML
-    public HBox correctAnswerBox;
-
-    @FXML
-    public Button exitButton;
-
-    @FXML
-    public Label finalResultLabel;
-
-    @FXML
-    public Label finalScoreLabel;
-
-    @FXML
-    public Label finalScoreNumberLabel;
-
-    @FXML
-    public Button foodButton;
-
-    @FXML
-    public TextField holderField;
-
-    @FXML
-    public Button jobButton;
-
-    @FXML
-    public VBox listBookmarkBox;
-
-    @FXML
-    public VBox listWordsBox;
-
-    @FXML
-    public Button natureButton;
-
-    @FXML
-    public Button newGameButton;
-
-    @FXML
-    public Label questionNumberLabel;
-
-    @FXML
-    public AnchorPane resultPane;
-
-    @FXML
-    public AnchorPane rootPane;
-
-    @FXML
-    public Label scoreLabel;
-
-    @FXML
-    public Label scoreNumberLabel;
-
-    @FXML
-    public Button sportButton;
-
-    @FXML
-    public Label topicLabel;
-
-    @FXML
-    public AnchorPane topicPane;
-
-    @FXML
-    public HBox wrongAnswerBox;
-
+    /**
+     * tạo câu hỏi.
+     */
     private void setQuestion() {
         holderField.setPrefWidth(30 * game.getWord().length() + 4);
         currentAnswer = "";
@@ -141,6 +115,9 @@ public class WordScrambleController extends Controller implements Initializable 
         }
     }
 
+    /**
+     * kểm tra đáp án
+     */
     private void checkAnswer() {
         if (!game.checkAnswer(currentAnswer)) {
             holderField.setStyle("-fx-border-color:red;");
@@ -164,21 +141,38 @@ public class WordScrambleController extends Controller implements Initializable 
         }
     }
 
+    /**
+     * kết thúc game.
+     */
     private void endGame() {
         resultPane.setVisible(true);
     }
 
-
+    /**
+     * quay trở lại màn hình chọn game.
+     *
+     * @throws IOException
+     */
     @FXML
     void onBackClick() throws IOException {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
+    /**
+     * quay tr lại màn hình chọn game.
+     *
+     * @throws IOException
+     */
     @FXML
     void onExitButtonClick() throws IOException {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
+    /**
+     * chọn food.
+     *
+     * @throws IOException ngoại lệ io
+     */
     @FXML
     void onFoodButtonClick() throws IOException {
         currentTopic = Topic.FOOD;
@@ -187,6 +181,11 @@ public class WordScrambleController extends Controller implements Initializable 
         wordList = IOFile.readFromFoodWords();
     }
 
+    /**
+     * chọn job.
+     *
+     * @throws IOException ngoại lệ io
+     */
     @FXML
     void onJobButtonClick() throws IOException {
         currentTopic = Topic.JOB;
@@ -195,6 +194,11 @@ public class WordScrambleController extends Controller implements Initializable 
         wordList = IOFile.readFromJobWords();
     }
 
+    /**
+     * chọn nature.
+     *
+     * @throws IOException ngoại lệ io.
+     */
     @FXML
     void onNatureButtonClick() throws IOException {
         currentTopic = Topic.NATURE;
@@ -203,6 +207,11 @@ public class WordScrambleController extends Controller implements Initializable 
         wordList = IOFile.readFromNatureWords();
     }
 
+    /**
+     * chọn thể thao.
+     *
+     * @throws IOException ngoại lệ
+     */
     @FXML
     void onSportButtonClick() throws IOException {
         currentTopic = Topic.SPORT;
@@ -211,6 +220,11 @@ public class WordScrambleController extends Controller implements Initializable 
         wordList = IOFile.readFromSportWords();
     }
 
+    /**
+     * chọn game mới.
+     *
+     * @throws IOException ngoại lệ io
+     */
     @FXML
     void onNewGameButtonClick() throws IOException {
         resultPane.setVisible(false);
@@ -218,6 +232,11 @@ public class WordScrambleController extends Controller implements Initializable 
         currentScore = 0;
     }
 
+    /**
+     * chọn đáp án.
+     *
+     * @param event sự kiện chuột
+     */
     @FXML
     public void onAnswer(KeyEvent event) {
         char c = event.getCode().getChar().charAt(0);
@@ -237,6 +256,9 @@ public class WordScrambleController extends Controller implements Initializable 
         }
     }
 
+    /**
+     * xóa đáp án.
+     */
     @FXML
     private void onDelete() {
         if (answerStack.isEmpty()) {
@@ -247,6 +269,12 @@ public class WordScrambleController extends Controller implements Initializable 
         tmp.move();
     }
 
+    /**
+     * khởi tạo khi chạy game.
+     *
+     * @param url            url
+     * @param resourceBundle nguồn
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         topicPane.setVisible(false);
@@ -295,13 +323,20 @@ public class WordScrambleController extends Controller implements Initializable 
         holderField.setOnKeyPressed(keyEvent -> onAnswer(keyEvent));
         for (int i = 0; i < 20; i++) {
             CharLabel charLabel = new CharLabel(i, " ");
-            if(Main.DARK_MODE) {
+            if (Main.DARK_MODE) {
                 charLabel.setStyle("-fx-background-color: white");
             }
             rootPane.getChildren().add(charLabel);
         }
         Platform.runLater(() -> holderField.requestFocus());
         setQuestion();
+    }
+
+    enum Topic {
+        NATURE,
+        FOOD,
+        JOB,
+        SPORT
     }
 
     private class CharLabel extends Label {
@@ -316,6 +351,12 @@ public class WordScrambleController extends Controller implements Initializable 
         private double currentPosX = 0;
         private double currentPosY = 0;
 
+        /**
+         * lớp label chứa char.
+         *
+         * @param i        i
+         * @param alphabet chữ cái
+         */
         public CharLabel(int i, String alphabet) {
             super(alphabet);
             super.setPrefSize(WIDTH, WIDTH);
@@ -329,10 +370,18 @@ public class WordScrambleController extends Controller implements Initializable 
             super.setAlignment(Pos.CENTER);
         }
 
+        /**
+         * kiểm tra có ở vị trí ban đầu không.
+         *
+         * @return true or false
+         */
         public boolean isOnInitPos() {
             return getTranslateX() == 0 && getTranslateY() == 0;
         }
 
+        /**
+         * di chuyển khối.
+         */
         public void move() {
             double translateX = currentPosX;
             double translateY = currentPosY;
@@ -357,7 +406,8 @@ public class WordScrambleController extends Controller implements Initializable 
                 if (!isOnInitPos()) {
                     answerStack.push(this);
                 }
-                if (currentAnswer.length() == game.getWord().length() && answerStack.size() == game.getWord().length()) {
+                if (currentAnswer.length() == game.getWord().length() && answerStack.size()
+                        == game.getWord().length()) {
                     checkAnswer();
 
                 }
@@ -366,6 +416,9 @@ public class WordScrambleController extends Controller implements Initializable 
             transition.play();
         }
 
+        /**
+         * reset vị trí.
+         */
         public void reset() {
             currentPosX = initialPosX;
             currentPosY = initialPosY;

@@ -28,11 +28,21 @@ public class TranslateController extends Controller implements Initializable {
     private Label translateResult;
     private boolean engToViet = true;
 
+    /**
+     * quay trở lại màn hình chính.
+     *
+     * @throws IOException ngoại lệ input output
+     */
     @FXML
     protected void onCloseButtonClick() throws IOException {
         changeScreen("main-view.fxml", "MainView.css");
     }
 
+    /**
+     * dịch câu, có mạng mới dịch, không có mạng sẽ không dịch.
+     *
+     * @throws IOException ngoại lệ input output.
+     */
     @FXML
     protected void onTranslate() throws IOException {
         String s = inputText.getText();
@@ -50,19 +60,27 @@ public class TranslateController extends Controller implements Initializable {
 
     }
 
+    /**
+     * thay đổi ngôn ngữ, muốn dịch từ ngôn ngữ nào sang ngôn ngữ nào.
+     */
     @FXML
     protected void exchangeLanguage() {
         engToViet = !engToViet;
         if (engToViet) {
-            sourceLanguageLabel.setText("ANH");
+            sourceLanguageLabel.setText("ENG");
             targetLanguageLabel.setText("VIET");
         } else {
             sourceLanguageLabel.setText("VIET");
-            targetLanguageLabel.setText("ANH");
+            targetLanguageLabel.setText("ENG");
         }
     }
 
-
+    /**
+     * Khởi tạo các giá trị, dark mode, phông chữ,...
+     *
+     * @param url            url
+     * @param resourceBundle nguồn.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (Main.DARK_MODE) {
@@ -77,6 +95,11 @@ public class TranslateController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * bấm vào loa để phát âm.
+     *
+     * @throws IOException ngoaại lệ io
+     */
     @FXML
     protected void onSpeaker() throws IOException {
         super.onSpeakerClick(inputText.getText());

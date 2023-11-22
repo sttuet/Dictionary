@@ -22,9 +22,11 @@
     -fx-font-family: Arial;
     -fx-cursor: hand;
 }
+
 #resultPane {
     -fx-background-color: #f8dad0;
 }
+
 #result {
     -fx-text-fill: black;
     -fx-font-size: 14;

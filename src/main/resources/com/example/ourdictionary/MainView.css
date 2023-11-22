@@ -58,7 +58,8 @@
 }
 
 #addFavWord:hover, #addFavWord:selected, #game:hover, #game:selected,
-#recentButton:hover, #recentButton:focused, #settings:hover, #settings:focused, #modifyWordButton:hover, #modifyWordButton:focused {
+#recentButton:hover, #recentButton:focused, #settings:hover, #settings:focused,
+#modifyWordButton:hover, #modifyWordButton:focused {
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-color: white;
     -fx-border-width: 0px 0px 3px 0px;

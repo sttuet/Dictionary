@@ -38,9 +38,20 @@ public class HangManController extends Controller implements Initializable {
     @FXML
     private ImageView imageView = new ImageView();
 
+    /**
+     * constructor rỗng.
+     *
+     * @throws IOException ngoại lệ input output
+     */
     public HangManController() throws IOException {
     }
 
+    /**
+     * khởi tạo khi chạy hangman: nút, khung hình, các hiệu ứng, màu sắc,...
+     *
+     * @param url            url
+     * @param resourceBundle nguồn
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         double widthButton = (gridPane.getPrefWidth() - 6 * gridPane.getHgap()) / 7;
@@ -63,110 +74,145 @@ public class HangManController extends Controller implements Initializable {
                 button.setOnMouseExited(event -> {
                     button.setStyle("-fx-background-color: #95948F;");
                 });
-                    char c = (char) ('A' + i * 4 + j);
-                    if (c <= 'Z') {
-                        String s = String.valueOf(c);
-                        button.setText(s);
-                        button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onGuessCharacterClick);
-                        gridPane.add(button, i, j);
-                    }
+                char c = (char) ('A' + i * 4 + j);
+                if (c <= 'Z') {
+                    String s = String.valueOf(c);
+                    button.setText(s);
+                    button.addEventHandler(MouseEvent.MOUSE_CLICKED, this::onGuessCharacterClick);
+                    gridPane.add(button, i, j);
                 }
             }
-            currentWord = new GridPane();
-            rootPane.getChildren().add(currentWord);
-                    hangMan = new HangMan(allWords);
-            setNewCurrentWord(hangMan.getAnswer().length());
+        }
+        currentWord = new GridPane();
+        rootPane.getChildren().add(currentWord);
+        hangMan = new HangMan(allWords);
+        setNewCurrentWord(hangMan.getAnswer().length());
+        if (Main.DARK_MODE) {
+            rootPane.setStyle("-fx-background-color: #04293A");
+            resultPane.setStyle("-fx-background-color: #04293A");
+            result.setStyle("-fx-text-fill:white; -fx-font-size: 14;");
+        } else {
+            result.setStyle("-fx-font-size: 14;");
+        }
+        setImage(0);
+    }
+
+    /**
+     * tạo từ mới để đoán.
+     *
+     * @param n kích thước của word
+     */
+    private void setNewCurrentWord(int n) {
+        currentWord = new GridPane();
+        rootPane.getChildren().remove(rootPane.getChildren().size() - 1);
+        rootPane.getChildren().add(currentWord);
+        int widthLabel = 24;
+        currentWord.setHgap(3);
+        currentWord.setPrefWidth(n * widthLabel + (n - 1) * currentWord.getHgap());
+        currentWord.setPrefHeight(widthLabel);
+        currentWord.setLayoutX(440 - currentWord.getPrefWidth() / 2);
+        currentWord.setLayoutY(140);
+        for (int i = 0; i < n; i++) {
+            Label label = new Label();
+            label.setPrefHeight(widthLabel - 2);
+            label.setPrefWidth(widthLabel - 2);
             if (Main.DARK_MODE) {
-                rootPane.setStyle("-fx-background-color: #04293A");
-                resultPane.setStyle("-fx-background-color: #04293A");
-                result.setStyle("-fx-text-fill:white; -fx-font-size: 14;");
+                label.setStyle("-fx-text-fill: white;-fx-border-color: white;-fx-font-size: "
+                        + MainController.fontSize + ";");
             } else {
-                result.setStyle("-fx-font-size: 14;");
+                label.setStyle("-fx-border-color: black;-fx-font-size: " + MainController.fontSize + ";");
             }
-            setImage(0);
-        }
-
-        private void setNewCurrentWord ( int n){
-            currentWord = new GridPane();
-            rootPane.getChildren().remove(rootPane.getChildren().size() - 1);
-            rootPane.getChildren().add(currentWord);
-            int widthLabel = 24;
-            currentWord.setHgap(3);
-            currentWord.setPrefWidth(n * widthLabel + (n - 1) * currentWord.getHgap());
-            currentWord.setPrefHeight(widthLabel);
-            currentWord.setLayoutX(440 - currentWord.getPrefWidth() / 2);
-            currentWord.setLayoutY(140);
-            for (int i = 0; i < n; i++) {
-                Label label = new Label();
-                label.setPrefHeight(widthLabel - 2);
-                label.setPrefWidth(widthLabel - 2);
-                if (Main.DARK_MODE) {
-                    label.setStyle("-fx-text-fill: white;-fx-border-color: white;-fx-font-size: " + MainController.fontSize + ";");
-                } else {
-                    label.setStyle("-fx-border-color: black;-fx-font-size: " + MainController.fontSize + ";");
-                }
-                label.setText("_");
-                label.setAlignment(Pos.BASELINE_CENTER);
-                label.setBorder(Border.stroke(Paint.valueOf("black")));
-                currentWord.add(label, i, 0);
-            }
-        }
-
-        private void onGuessCharacterClick (MouseEvent event){
-            if (hangMan.isOver() || hangMan.isWin()) {
-                return;
-            }
-            Button button = (Button) event.getSource();
-            button.setVisible(false);
-            hangMan.playerChoose(button.getText());
-            if (hangMan.isOver()) {
-                resultPane.setVisible(true);
-                currentWord.setVisible(false);
-                result.setText("You died. Secret word is " + hangMan.getAnswer() + "!");
-            } else if (hangMan.isWin()) {
-                resultPane.setVisible(true);
-                currentWord.setVisible(false);
-                result.setText("You won!");
-            }
-            setTextInCurrentWord(hangMan.getCurrentWord());
-            setImage(hangMan.getCurrentWrong());
-        }
-
-        private void setTextInCurrentWord (List < Character > list) {
-            for (int i = 0; i < list.size(); i++) {
-                String tmp = "";
-                if (list.get(i) == '_') {
-                    tmp += '_';
-                } else {
-                    tmp += (char) (list.get(i));
-                }
-                ((Label) (currentWord.getChildren().get(i))).setText(tmp);
-            }
-        }
-
-        @FXML
-        protected void onBackClick () throws IOException {
-            changeScreen("chooseGame-view.fxml", "chooseGame.css");
-        }
-
-        private void setImage ( int i){
-            File file = new File("src\\main\\resources\\image\\" + i + ".jpg");
-            Image image = new Image(file.getAbsolutePath());
-            imageView.setImage(image);
-        }
-        @FXML
-        protected void onExitClick () throws IOException {
-            changeScreen("main-view.fxml", "MainView.css");
-        }
-
-        @FXML
-        protected void onPlayAgainClick () {
-            for (int i = 0; i < 26; i++) {
-                gridPane.getChildren().get(i).setVisible(true);
-            }
-            resultPane.setVisible(false);
-            hangMan = new HangMan(allWords);
-            setNewCurrentWord(hangMan.getAnswer().length());
-            setImage(0);
+            label.setText("_");
+            label.setAlignment(Pos.BASELINE_CENTER);
+            label.setBorder(Border.stroke(Paint.valueOf("black")));
+            currentWord.add(label, i, 0);
         }
     }
+
+    /**
+     * bấm vào chữ cái và đoán, nếu đúng thì sẽ hiện chữ lên khung, sai thì hangman mọc chân tay.
+     *
+     * @param event sự kiện click chuột
+     */
+    private void onGuessCharacterClick(MouseEvent event) {
+        if (hangMan.isOver() || hangMan.isWin()) {
+            return;
+        }
+        Button button = (Button) event.getSource();
+        button.setVisible(false);
+        hangMan.playerChoose(button.getText());
+        if (hangMan.isOver()) {
+            resultPane.setVisible(true);
+            currentWord.setVisible(false);
+            result.setText("You died. Secret word is " + hangMan.getAnswer() + "!");
+        } else if (hangMan.isWin()) {
+            resultPane.setVisible(true);
+            currentWord.setVisible(false);
+            result.setText("You won!");
+        }
+        setTextInCurrentWord(hangMan.getCurrentWord());
+        setImage(hangMan.getCurrentWrong());
+    }
+
+    /**
+     * gán các chữ cái trong từ cần đoán với kí tự "_".
+     *
+     * @param list
+     */
+    private void setTextInCurrentWord(List<Character> list) {
+        for (int i = 0; i < list.size(); i++) {
+            String tmp = "";
+            if (list.get(i) == '_') {
+                tmp += '_';
+            } else {
+                tmp += (char) (list.get(i));
+            }
+            ((Label) (currentWord.getChildren().get(i))).setText(tmp);
+        }
+    }
+
+    /**
+     * quay về màn hình chọn game.
+     *
+     * @throws IOException ngoại lệ input output.
+     */
+    @FXML
+    protected void onBackClick() throws IOException {
+        changeScreen("chooseGame-view.fxml", "chooseGame.css");
+    }
+
+    /**
+     * gán các hình ảnh vào imageView.
+     *
+     * @param i tên hình ảnh
+     */
+    private void setImage(int i) {
+        File file = new File("src\\main\\resources\\image\\" + i + ".jpg");
+        Image image = new Image(file.getAbsolutePath());
+        imageView.setImage(image);
+    }
+
+    /**
+     * thoát khởi game hangman.
+     *
+     * @throws IOException ngoại lệ input output
+     */
+    @FXML
+    protected void onExitClick() throws IOException {
+        changeScreen("main-view.fxml", "MainView.css");
+    }
+
+    /**
+     * chơi lại lần nữa,
+     */
+    @FXML
+    protected void onPlayAgainClick() {
+        for (int i = 0; i < 26; i++) {
+            gridPane.getChildren().get(i).setVisible(true);
+        }
+        resultPane.setVisible(false);
+        hangMan = new HangMan(allWords);
+        setNewCurrentWord(hangMan.getAnswer().length());
+        setImage(0);
+    }
+}

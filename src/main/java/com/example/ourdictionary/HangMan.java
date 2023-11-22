@@ -9,6 +9,12 @@ public class HangMan {
     private List<Character> currentWord;
     private int currentWrong = 0;
 
+    /**
+     * khởi tạo game Hangman.
+     *
+     * @param allWords các từ trong game
+     */
+
     public HangMan(List<String> allWords) {
         answer = allWords.get((int) (Math.random() * allWords.size()));
         answer = answer.toUpperCase();
@@ -18,14 +24,29 @@ public class HangMan {
         }
     }
 
+    /**
+     * game đã kết thúc hay chưa.
+     *
+     * @return true or false
+     */
     public boolean isOver() {
         return currentWrong >= MAX_WRONG;
     }
 
+    /**
+     * thắng hay chưa.
+     *
+     * @return true hay false
+     */
     public boolean isWin() {
         return !currentWord.contains('_');
     }
 
+    /**
+     * chọn kí tự, nếu chọn sai tăng giá trị sai lên, chn đúng thì set chữ cái hiện lên.
+     *
+     * @param character chữ cái đoán
+     */
     public void playerChoose(String character) {
         if (!answer.contains(character)) {
             currentWrong++;
@@ -38,10 +59,20 @@ public class HangMan {
         }
     }
 
+    /**
+     * trả về đáp án.
+     *
+     * @return string đáp án
+     */
     public String getAnswer() {
         return answer;
     }
 
+    /**
+     * set đáp án.
+     *
+     * @param answer đáp án
+     */
     public void setAnswer(String answer) {
         this.answer = answer;
     }

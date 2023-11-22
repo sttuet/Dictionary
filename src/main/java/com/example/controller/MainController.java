@@ -81,6 +81,9 @@ public class MainController extends Controller implements Initializable {
     private Button addFav;
     private DictionaryDao dictionaryDao;
 
+    /**
+     * thay đổi thành chế độ ban đêm.
+     */
     public void setDarkMode() {
         rootPane.setStyle("-fx-background-color: #04293A;");
         listView.setStyle("-fx-background-color: #041C32; -fx-background-radius: 10px;-fx-border-radius: 10px;");
@@ -93,7 +96,8 @@ public class MainController extends Controller implements Initializable {
                         super.updateItem(item, empty);
                         setText(item);
                         listView.setBackground(Background.fill(Paint.valueOf("#041C32")));
-                        listView.setStyle("-fx-background-color: #041C32; -fx-background-radius: 10px;-fx-border-radius: 10px;");
+                        listView.setStyle("-fx-background-color: #041C32; -fx-background-radius: 10px;"
+                                + "-fx-border-radius: 10px;");
                         setFont(Font.font("Arial", fontSize));
                         setStyle("-fx-background-color: #041C32;-fx-border-radius: 10px;-fx-background-radius: 10px");
                         setTextFill(Paint.valueOf("white"));
@@ -118,7 +122,8 @@ public class MainController extends Controller implements Initializable {
     }
 
     /**
-     * hiển thị các từ có tiền tố giống với phần nhập trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
+     * hiển thị các từ có tiền tố giống với phần nhập
+     * trong ô tìm kiếm bằng 1 static object {@link com.example.ourdictionary.Dictionary}
      */
     @FXML
     protected void onTypeWord() {
@@ -128,6 +133,9 @@ public class MainController extends Controller implements Initializable {
         listView.setItems(FXCollections.observableList(list));
     }
 
+    /**
+     * xóa từ ở lst view, tạo lại một CellFactory để add thêm các button cho list cell.
+     */
     protected void deleteWord() {
         if (DARK_MODE) {
             listView.setBackground(Background.fill(Paint.valueOf("#041C32")));
@@ -245,7 +253,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     /**
-     * bấm vào tù nào thì từ đó hiện lên thanh tìm kiếm
+     * bấm vào tù nào thì từ đó hiện lên thanh tìm kiếm.
      */
     @FXML
     protected void onChooseWord() {
@@ -308,6 +316,11 @@ public class MainController extends Controller implements Initializable {
 
     }
 
+    /**
+     * hiển thị loa và trái tim.
+     *
+     * @param b true or false
+     */
     private void showSpeakerAndHeart(boolean b) {
         EngVietSpeaker.setVisible(b);
         if (b) {
@@ -329,7 +342,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     /**
-     * chuyển sang nghĩa tiêngs anh
+     * chuyển sang nghĩa tiêngs anh.
      */
     @FXML
     protected void onEngLabelClick() {
@@ -362,12 +375,8 @@ public class MainController extends Controller implements Initializable {
         if (!favouriteList.contains(s) && meanings.containsKey(s)) {
             favouriteList.add(s);
             addFavIcon.setFill(Paint.valueOf("#003366"));
-//            if (!isGuest) {
-//                dictionaryDao.insertWord(s);
-//            }
         } else {
             favouriteList.remove(s);
-//            dictionaryDao.removeWord(s);
             addFavIcon.setFill(Paint.valueOf("white"));
         }
         if (isShowingFavWord) {
@@ -438,16 +447,29 @@ public class MainController extends Controller implements Initializable {
 
     }
 
+    /**
+     * chuyển tới màn hình chọn game.
+     *
+     * @throws IOException input output exception
+     */
     @FXML
     protected void onGameButtonClick() throws IOException {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
+    /**
+     * đi tới màn hình settings.
+     *
+     * @throws IOException ngoại lệ io
+     */
     @FXML
     protected void onSettingsButtonClick() throws IOException {
         super.changeScreen("settings-view.fxml", "settingsView.css");
     }
 
+    /**
+     * bấm vào nút xóa ở thanh tìm kiếm.
+     */
     public void onDeleteButtonClick() {
         inputWord.setText("");
         listView.setItems(FXCollections.observableList(new ArrayList<>()));
@@ -457,11 +479,15 @@ public class MainController extends Controller implements Initializable {
 
     }
 
+    /**
+     * bấm vào loa để phát âm từ.
+     *
+     * @throws IOException ngoại lệ io
+     */
     public void onSpeakerClick() throws IOException {
         if (checkInternetConnection()) {
             super.onSpeakerClick(currentWord.getText());
-        }
-        else {
+        } else {
             System.out.println("no internet connection");
         }
     }
@@ -480,7 +506,8 @@ public class MainController extends Controller implements Initializable {
             backGroundColor = "#041C32";
             textColor1 = "white";
         }
-        editTextArea.setStyle("-fx-control-inner-background:" + backGroundColor + ";-fx-text-fill:" + textColor1 +"-fx-prompt-text-fill:"+textColor1+ ";-fx-font-size:" + fontSize + ";");
+        editTextArea.setStyle("-fx-control-inner-background:" + backGroundColor + ";-fx-text-fill:"
+                + textColor1 + "-fx-prompt-text-fill:" + textColor1 + ";-fx-font-size:" + fontSize + ";");
         if (modifiedWord.containsKey(currentWord.getText())) {
             editTextArea.setText(modifiedWord.get(currentWord.getText()));
         } else {
@@ -490,7 +517,7 @@ public class MainController extends Controller implements Initializable {
     }
 
     /**
-     * lưu từ sau khi sửa
+     * lưu từ sau khi sửa.
      */
     @FXML
     protected void onSaveButtonClick() {
@@ -506,6 +533,9 @@ public class MainController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * thay đổi từ đã sửa thành từ gốc.
+     */
     @FXML
     protected void onRefreshButtonClick() {
         if (meanings.containsKey(currentWord.getText())) {
@@ -531,15 +561,16 @@ public class MainController extends Controller implements Initializable {
         }
         if (word.equals("") || word == null) {
             vietMeaning = "";
-            String content = "<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor + ";font-family: Arial, Helvetica, sans-serif;font-size:" + fontSize +
+            String content = "<html><body style=\"color:" + textColor1 + ";background-color:"
+                    + backGroundColor + ";font-family: Arial, Helvetica, sans-serif;font-size:" + fontSize +
                     ";\"></body></html>";
             webView.getEngine().loadContent(content);
         } else if (modifiedWord.containsKey(word)) {
-            String content = "<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor  +
+            String content = "<html><body style=\"color:" + textColor1 + ";background-color:" + backGroundColor +
                     ";\"><textarea disable style=\"width:" + webView.getWidth() + "px;height:" + webView.getHeight()
-                    + "px;background-color:"+backGroundColor+";color:"
-                    +textColor1+ ";font-family: Arial, Helvetica, sans-serif;font-size:" + fontSize
-                    +";border:transparent;\">"
+                    + "px;background-color:" + backGroundColor + ";color:"
+                    + textColor1 + ";font-family: Arial, Helvetica, sans-serif;font-size:" + fontSize
+                    + ";border:transparent;\">"
                     + modifiedWord.get(word)
                     + "</textarea></body></html>";
             webView.getEngine().loadContent(content);

@@ -42,6 +42,9 @@ public class WriteWordController extends Controller implements Initializable {
     @FXML
     private AnchorPane endPane;
 
+    /**
+     * tạo câu hỏi cho game.
+     */
     private void setQuestion() {
         question.setText(game.getMeaning());
         holder.setPrefWidth(30 * game.getWord().length() + 4);
@@ -67,6 +70,9 @@ public class WriteWordController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * kiểm tra đáp án.
+     */
     private void checkAnswer() {
         if (!game.checkAnswer(currentAnswer)) {
             holder.setStyle("-fx-border-color:red;");
@@ -90,10 +96,16 @@ public class WriteWordController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * kết thúc game, hiển thị kết quả.
+     */
     private void endGame() {
         endPane.setVisible(true);
     }
 
+    /**
+     * xóa chữ.
+     */
     @FXML
     private void onDelete() {
         if (answerStack.isEmpty()) {
@@ -104,10 +116,12 @@ public class WriteWordController extends Controller implements Initializable {
         tmp.move();
     }
 
-    private void onSpeak() {
-
-    }
-
+    /**
+     * khởi tạo các giá trị dark mode, font chữ.
+     *
+     * @param url            url
+     * @param resourceBundle nguồn
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (Main.DARK_MODE) {
@@ -118,7 +132,7 @@ public class WriteWordController extends Controller implements Initializable {
         holder.setOnKeyPressed(keyEvent -> onAnswer(keyEvent));
         for (int i = 0; i < 20; i++) {
             CharLabel charLabel = new CharLabel(i, " ");
-            if(Main.DARK_MODE) {
+            if (Main.DARK_MODE) {
                 charLabel.setStyle("-fx-background-color: white");
             }
             rootPane.getChildren().add(charLabel);
@@ -128,6 +142,11 @@ public class WriteWordController extends Controller implements Initializable {
 
     }
 
+    /**
+     * trả lời và di chuyển các khối.
+     *
+     * @param event sự kiện.
+     */
     @FXML
     public void onAnswer(KeyEvent event) {
         char c = event.getCode().getChar().charAt(0);
@@ -147,16 +166,32 @@ public class WriteWordController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * bấm vào loa để phát âm.
+     *
+     * @throws IOException ngoại lệ io
+     */
     @FXML
     protected void onSpeaker() throws IOException {
         super.onSpeakerClick(game.getWord());
     }
 
+    /**
+     * quay trở lại màn hình chọn game.
+     *
+     * @throws IOException ngoại lệ io
+     */
     @FXML
     protected void onBackClick() throws IOException {
         changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
+    /**
+     * chơi lại game.
+     *
+     * @param event sự kiện
+     * @throws IOException ngoại lệ io
+     */
     public void onReplayClick(ActionEvent event) throws IOException {
         changeScreen("writeWord-view.fxml", "writeWord.css");
     }
@@ -173,6 +208,12 @@ public class WriteWordController extends Controller implements Initializable {
         private double currentPosX = 0;
         private double currentPosY = 0;
 
+        /**
+         * label chữ cái.
+         *
+         * @param i        i
+         * @param alphabet chữ cái.
+         */
         public CharLabel(int i, String alphabet) {
             super(alphabet);
             super.setPrefSize(WIDTH, WIDTH);
@@ -186,10 +227,18 @@ public class WriteWordController extends Controller implements Initializable {
             super.setAlignment(Pos.CENTER);
         }
 
+        /**
+         * kieerm tra có ở vị trị ban đầu không.
+         *
+         * @return true or false
+         */
         public boolean isOnInitPos() {
             return getTranslateX() == 0 && getTranslateY() == 0;
         }
 
+        /**
+         * di chuyển các khối.
+         */
         public void move() {
             double translateX = currentPosX;
             double translateY = currentPosY;
@@ -214,7 +263,8 @@ public class WriteWordController extends Controller implements Initializable {
                 if (!isOnInitPos()) {
                     answerStack.push(this);
                 }
-                if (currentAnswer.length() == game.getWord().length() && answerStack.size() == game.getWord().length()) {
+                if (currentAnswer.length() == game.getWord().length() && answerStack.size()
+                        == game.getWord().length()) {
                     checkAnswer();
 
                 }
@@ -223,6 +273,9 @@ public class WriteWordController extends Controller implements Initializable {
             transition.play();
         }
 
+        /**
+         * reset vị trí ban đầu.
+         */
         public void reset() {
             currentPosX = initialPosX;
             currentPosY = initialPosY;
