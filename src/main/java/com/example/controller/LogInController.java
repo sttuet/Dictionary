@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.service.DictionaryDao;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -57,6 +58,8 @@ public class LogInController extends Controller implements Initializable {
             } else {
                 wrongPass.setVisible(true);
             }
+        } else {
+            noInternet.setVisible(true);
         }
     }
 
@@ -143,5 +146,9 @@ public class LogInController extends Controller implements Initializable {
         } catch (Exception e) {
             System.out.println("No internet connection!");
         }
+        Platform.runLater(()->{
+            rootPane.requestFocus();
+                }
+        );
     }
 }

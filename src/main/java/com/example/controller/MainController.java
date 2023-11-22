@@ -507,7 +507,7 @@ public class MainController extends Controller implements Initializable {
             textColor1 = "white";
         }
         editTextArea.setStyle("-fx-control-inner-background:" + backGroundColor + ";-fx-text-fill:"
-                + textColor1 + "-fx-prompt-text-fill:" + textColor1 + ";-fx-font-size:" + fontSize + ";");
+                + textColor1 + ";-fx-prompt-text-fill :" + textColor1 + ";-fx-font-size:" + fontSize + ";");
         if (modifiedWord.containsKey(currentWord.getText())) {
             editTextArea.setText(modifiedWord.get(currentWord.getText()));
         } else {

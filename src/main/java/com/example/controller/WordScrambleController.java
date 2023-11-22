@@ -3,6 +3,8 @@ package com.example.controller;
 import com.example.ourdictionary.Main;
 import com.example.ourdictionary.WordScrambleGame;
 import com.example.service.IOFile;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -14,9 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -78,6 +82,7 @@ public class WordScrambleController extends Controller implements Initializable 
     private String currentAnswer;
     private List<String> wordList;
     private int currentScore = 0;
+    private int currentQuestion = 1;
     private WordScrambleGame game;
 
     /**
@@ -92,7 +97,7 @@ public class WordScrambleController extends Controller implements Initializable 
      * tạo câu hỏi.
      */
     private void setQuestion() {
-        holderField.setPrefWidth(30 * game.getWord().length() + 4);
+        holderField.setPrefWidth(30 * game.getWord().length());
         currentAnswer = "";
         for (CharLabel charLabel : shuffleList) {
             charLabel.setTranslateX(0);
@@ -128,23 +133,65 @@ public class WordScrambleController extends Controller implements Initializable 
             correctAnswerBox.setVisible(true);
             fadeTransition(correctAnswerBox);
         }
+
+
         if (currentAnswer.equals(game.getWord())) {
-            if (!game.nextQuestion()) {
+            currentQuestion++;
+            questionNumberLabel.setText(currentQuestion + "/10");
+            currentScore += 10;
+            scoreNumberLabel.setText(String.valueOf(currentScore));
+            if (!game.nextQuestion(currentQuestion)) {
                 endGame();
                 return;
             }
-            PauseTransition pause = new PauseTransition(Duration.millis(2000));
-            pause.setOnFinished(event -> {
-                setQuestion();
-            });
-            pause.play();
+        } else {
+            currentQuestion++;
+            questionNumberLabel.setText(currentQuestion + "/10");
+
+            if (!game.nextQuestion(currentQuestion)) {
+                endGame();
+                return;
+            }
         }
+        PauseTransition pause = new PauseTransition(Duration.millis(2000));
+        pause.setOnFinished(event -> {
+            setQuestion();
+        });
+        pause.play();
     }
 
     /**
      * kết thúc game.
      */
     private void endGame() {
+        List<String> listResult = game.getListResult();
+        for (int i = 0; i < QUESTION_NUMBER; ++i) {
+            FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.STAR);
+            icon.setFill(Paint.valueOf("white"));
+            icon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                int y = (int) (Math.floor((event.getSceneY() - 45 - 78) / 29));
+//                int index = listResult.get(y).indexOf('\n');
+                String s = listResult.get(y);
+                if (Main.favouriteList.contains(s)) {
+                    Main.favouriteList.remove(s);
+                    ((FontAwesomeIconView) (event.getSource())).setFill(Paint.valueOf("white"));
+                } else {
+                    Main.favouriteList.add(s);
+                    ((FontAwesomeIconView) (event.getSource())).setFill(Paint.valueOf("#003366"));
+                }
+            });
+            icon.setGlyphSize(29);
+            listBookmarkBox.getChildren().add(icon);
+            Label label = new Label(listResult.get(i));
+            label.setStyle("fx-font-size:14;fx-border-color:\"black\";");
+            label.setPrefHeight(29);
+            listWordsBox.getChildren().add(label);
+        }
+        for (int i = 0; i < 20; i++) {
+            rootPane.getChildren().get(i).setVisible(false);
+        }
+        answerPane.setVisible(false);
+        finalScoreNumberLabel.setText(String.valueOf(currentScore));
         resultPane.setVisible(true);
     }
 
@@ -165,7 +212,7 @@ public class WordScrambleController extends Controller implements Initializable 
      */
     @FXML
     void onExitButtonClick() throws IOException {
-        changeScreen("chooseGame-view.fxml", "chooseGame.css");
+        changeScreen("main-view.fxml", "MainView.css");
     }
 
     /**
@@ -227,9 +274,8 @@ public class WordScrambleController extends Controller implements Initializable 
      */
     @FXML
     void onNewGameButtonClick() throws IOException {
-        resultPane.setVisible(false);
-        topicPane.setVisible(true);
         currentScore = 0;
+        changeScreen("chooseGame-view.fxml", "chooseGame.css");
     }
 
     /**
@@ -340,11 +386,11 @@ public class WordScrambleController extends Controller implements Initializable 
     }
 
     private class CharLabel extends Label {
-        public final double POS_X_ANS = 204 + 2;
+        public final double POS_X_ANS = 289 + 2;
         public final double POS_Y_ANS = 177 + 2;
         private final double WIDTH = 25;
         private final double WIDTH_AND_GAP = 30;
-        private final double POS_X = 204;
+        private final double POS_X = 289;
         private final double POS_Y = 224;
         private double initialPosX = 0;
         private double initialPosY = 0;

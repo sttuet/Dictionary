@@ -130,7 +130,6 @@ public class WriteWordController extends Controller implements Initializable {
         }
         game = new WriteWord();
         holder.setText("");
-//        holder.setOnKeyPressed(keyEvent -> onAnswer(keyEvent));
         for (int i = 0; i < 20; i++) {
             CharLabel charLabel = new CharLabel(i, " ");
             if (Main.DARK_MODE) {
