@@ -13,6 +13,10 @@ public class IOFile {
     private static final String E_V_PATH = "src\\main\\resources\\data\\E_V.txt";
     private static final String COMMON_WORD_PATH = "src\\main\\resources\\data\\common_word.txt";
     private static final String MODIFIED_PATH = "src\\main\\resources\\data\\modified_word.txt";
+    private static final String FOOD_WORDS_PATH = "src\\main\\resources\\data\\food_words.txt";
+    private static final String JOB_WORDS_PATH = "src\\main\\resources\\data\\job_words.txt";
+    private static final String NATURE_WORDS_PATH = "src\\main\\resources\\data\\nature_words.txt";
+    private static final String SPORT_WORDS_PATH = "src\\main\\resources\\data\\sport_words.txt";
 
 
     public static BufferedReader bufferedReader;
@@ -93,6 +97,46 @@ public class IOFile {
             ans.add(tmp);
         }
         return ans;
+    }
+
+    public static List<String> readFromFoodWords() throws IOException {
+        List<String> words = new ArrayList<>();
+        bufferedReader = new BufferedReader(new FileReader(FOOD_WORDS_PATH));
+        String tmp;
+        while ((tmp = bufferedReader.readLine()) != null) {
+            words.add(tmp);
+        }
+        return words;
+    }
+
+    public static List<String> readFromJobWords() throws IOException {
+        List<String> words = new ArrayList<>();
+        bufferedReader = new BufferedReader(new FileReader(JOB_WORDS_PATH));
+        String tmp;
+        while ((tmp = bufferedReader.readLine()) != null) {
+            words.add(tmp);
+        }
+        return words;
+    }
+
+    public static List<String> readFromNatureWords() throws IOException {
+        List<String> words = new ArrayList<>();
+        bufferedReader = new BufferedReader(new FileReader(NATURE_WORDS_PATH));
+        String tmp;
+        while ((tmp = bufferedReader.readLine()) != null) {
+            words.add(tmp);
+        }
+        return words;
+    }
+
+    public static List<String> readFromSportWords() throws IOException {
+        List<String> words = new ArrayList<>();
+        bufferedReader = new BufferedReader(new FileReader(SPORT_WORDS_PATH));
+        String tmp;
+        while ((tmp = bufferedReader.readLine()) != null) {
+            words.add(tmp);
+        }
+        return words;
     }
 
     public static void writeToModifiedFile() throws IOException {

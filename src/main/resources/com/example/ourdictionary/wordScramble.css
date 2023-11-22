@@ -1,0 +1,45 @@
+#rootPane {
+    -fx-background-color: #f8dad0;
+}
+.button {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-fill: white;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-cursor: hand;
+}
+#question {
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+    -fx-font-size: 22;
+    -fx-font-family: Arial;
+}
+#score {
+    -fx-background-color: linear-gradient(to right, #000428, #004e92);
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+    -fx-font-family: Arial;
+    -fx-text-fill: white;
+}
+#finish {
+    -fx-background-color: #f8dad0;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: transparent;
+}

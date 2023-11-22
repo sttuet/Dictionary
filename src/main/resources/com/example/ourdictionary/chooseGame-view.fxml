@@ -1,24 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ChooseGameController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.ChooseGameController">
     <children>
-        <Button fx:id="LetterSorting" layoutX="272.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToHangMan"
-                prefHeight="43.0" prefWidth="280.0" text="HangMan" AnchorPane.leftAnchor="272.0"
-                AnchorPane.rightAnchor="272.0"/>
-        <Button fx:id="WordRevision" layoutX="272.0" layoutY="200.0" mnemonicParsing="false" onAction="#goToWriteWord"
-                prefHeight="43.0" prefWidth="280.0" text="Tập viết" AnchorPane.leftAnchor="272.0"
-                AnchorPane.rightAnchor="272.0"/>
-        <Label fx:id="noInternet" layoutX="330.0" layoutY="255.0" prefHeight="26.0" prefWidth="194.0"
-               text="No internet connection!" textFill="#df0303" visible="false"/>
-        <Button fx:id="RandomWordLearning" layoutX="272.0" layoutY="300.0" mnemonicParsing="false"
-                onAction="#goToMultiChoiceGame" prefHeight="43.0" prefWidth="280.0" text="Học từ mới ngẫu nhiên"
-                AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0"/>
-        <Button fx:id="backGameChooser" layoutY="1.0" mnemonicParsing="false" onAction="#backToMain" text="BACK"/>
-        <Label fx:id="noWordWarning" layoutX="280.0" layoutY="255.0" prefHeight="17.0" prefWidth="280.0"
-               text="Has no favourite word to learn !" textFill="#eb0202" visible="false"/>
+        <Button fx:id="LetterSorting" layoutX="272.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToHangMan" prefHeight="43.0" prefWidth="280.0" text="HangMan" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0" />
+        <Button fx:id="WordRevision" layoutX="272.0" layoutY="200.0" mnemonicParsing="false" onAction="#goToWriteWord" prefHeight="43.0" prefWidth="280.0" text="Tập viết" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0" />
+        <Label fx:id="noInternet" layoutX="330.0" layoutY="255.0" prefHeight="26.0" prefWidth="194.0" text="No internet connection!" textFill="#df0303" visible="false" />
+        <Button fx:id="RandomWordLearning" layoutX="272.0" layoutY="300.0" mnemonicParsing="false" onAction="#goToMultiChoiceGame" prefHeight="43.0" prefWidth="280.0" text="Học từ mới ngẫu nhiên" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0" />
+        <Button fx:id="backGameChooser" layoutY="1.0" mnemonicParsing="false" onAction="#backToMain" text="BACK" />
+        <Label fx:id="noWordWarning" layoutX="280.0" layoutY="255.0" prefHeight="17.0" prefWidth="280.0" text="Has no favourite word to learn !" textFill="#eb0202" visible="false" />
+      <Button fx:id="WordScramble" layoutX="272.0" layoutY="400.0" mnemonicParsing="false" onAction="#goToWordScramble" prefHeight="43.0" prefWidth="280.0" text="Word Scramble" AnchorPane.leftAnchor="272.0" AnchorPane.rightAnchor="272.0" />
+      <AnchorPane fx:id="topicPane" layoutX="171.0" layoutY="57.0" prefHeight="422.0" prefWidth="482.0" visible="false">
+         <children>
+            <Label fx:id="topicLabel" layoutX="200.0" layoutY="65.0" text="Choose a topic!" />
+            <GridPane layoutX="98.0" layoutY="135.0" prefHeight="210.0" prefWidth="286.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button fx:id="natureButton" mnemonicParsing="false" onAction="#onNatureButtonClick" prefHeight="122.0" prefWidth="166.0" text="Nature" />
+                  <Button fx:id="foodButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onFoodButtonClick" prefHeight="122.0" prefWidth="166.0" text="Food" GridPane.columnIndex="1" />
+                  <Button fx:id="jobButton" layoutX="153.0" layoutY="10.0" mnemonicParsing="false" onAction="#onJobButtonClick" prefHeight="122.0" prefWidth="166.0" text="Job" GridPane.rowIndex="1" />
+                  <Button fx:id="sportButton" layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#onSportButtonClick" prefHeight="122.0" prefWidth="166.0" text="Sport" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
 
     </children>
 </AnchorPane>
