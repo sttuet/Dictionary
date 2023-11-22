@@ -16,6 +16,7 @@ public class WriteWord extends Game {
      */
     public WriteWord() {
         this.listWord = new ArrayList<>(Main.favouriteList);
+        shuffle(this.listWord, 0, this.listWord.size());
         this.currentQuestion = 0;
         setMeaning();
     }
