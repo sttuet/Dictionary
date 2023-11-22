@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
@@ -129,7 +130,7 @@ public class WriteWordController extends Controller implements Initializable {
         }
         game = new WriteWord();
         holder.setText("");
-        holder.setOnKeyPressed(keyEvent -> onAnswer(keyEvent));
+//        holder.setOnKeyPressed(keyEvent -> onAnswer(keyEvent));
         for (int i = 0; i < 20; i++) {
             CharLabel charLabel = new CharLabel(i, " ");
             if (Main.DARK_MODE) {
@@ -137,7 +138,11 @@ public class WriteWordController extends Controller implements Initializable {
             }
             rootPane.getChildren().add(charLabel);
         }
-        Platform.runLater(() -> holder.requestFocus());
+        Platform.runLater(() -> {
+            rootPane.getScene().addEventHandler(KeyEvent.KEY_PRESSED,(event)->{
+                onAnswer(event);
+            });
+        });
         setQuestion();
 
     }
