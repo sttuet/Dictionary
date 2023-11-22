@@ -2,12 +2,12 @@ package com.example.controller;
 
 import com.example.ourdictionary.Main;
 import com.example.ourdictionary.MultiChoiceGame;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 public class MultiChoiceGameController extends Controller implements Initializable {
     public HBox correctAnswer;
     public HBox wrongAnswer;
+    public VBox resultSet;
     List<Button> listButton;
     private MultiChoiceGame game;
     @FXML
@@ -46,10 +47,6 @@ public class MultiChoiceGameController extends Controller implements Initializab
     private GridPane gridPane;
     @FXML
     private AnchorPane finish = new AnchorPane();
-    @FXML
-    private VBox listWord;
-    @FXML
-    private VBox listBookmark;
 
     /**
      * khơi tạo các giá trị cho game.
@@ -193,32 +190,35 @@ public class MultiChoiceGameController extends Controller implements Initializab
     /**
      * đưa ra kết quả trong màn hình.
      */
-    private void showResult() {
+    public void showResult() {
         List<String> listResult = game.getListResult();
-        for (int i = 0; i < MultiChoiceGame.NUM_QUESTION; i++) {
-            FontAwesomeIconView icon = new FontAwesomeIconView(FontAwesomeIcon.STAR);
-            icon.setFill(Paint.valueOf("white"));
-            icon.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                int y = (int) (Math.floor((event.getSceneY() - 31) / 34));
-                int index = listResult.get(y).indexOf('\n');
-                String s = listResult.get(y).substring(0, index);
-                if (Main.favouriteList.contains(s)) {
-                    Main.favouriteList.remove(s);
-                    ((FontAwesomeIconView) (event.getSource())).setFill(Paint.valueOf("white"));
-                } else {
-                    Main.favouriteList.add(s);
-                    ((FontAwesomeIconView) (event.getSource())).setFill(Paint.valueOf("#003366"));
-                }
-            });
-            icon.setGlyphSize(34);
-            listBookmark.getChildren().add(icon);
-            Label label = new Label(listResult.get(i));
-            label.setStyle("-fx-font-size:12;-fx-border-radius: 5");
-            label.setPrefHeight(34);
-            listWord.getChildren().add(label);
+        List<Node> list = resultSet.getChildren();
+        for (int i = 0; i < 10; i++) {
+            Label label = (Label) (((HBox) list.get(i)).getChildren().get(0));
+            label.setText(listResult.get(i));
+            label.setStyle("-fx-text-fill: white; -fx-font-size: 12");
         }
-        finish.setStyle("-fx-border-radius: 5px;");
         finish.setVisible(true);
+        gridPane.setVisible(false);
+    }
 
+    /**
+     * hiệu ứng khi bấm vào star.
+     *
+     * @param event event click chuột
+     */
+    public void showEffect(MouseEvent event) {
+        FontAwesomeIconView icon = (FontAwesomeIconView) event.getSource();
+        HBox hBox = (HBox) icon.getParent();
+        Label newLabel = (Label) hBox.getChildren().get(0);
+        int index = newLabel.getText().indexOf('\n');
+        String word = newLabel.getText().substring(0, index);
+        if (Main.favouriteList.contains(word)) {
+            Main.favouriteList.remove(word);
+            icon.setFill(Paint.valueOf("white"));
+        } else {
+            Main.favouriteList.add(word);
+            icon.setFill(Paint.valueOf("#003366"));
+        }
     }
 }
