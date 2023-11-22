@@ -129,7 +129,6 @@ public class WriteWordController extends Controller implements Initializable {
         }
         game = new WriteWord();
         holder.setText("");
-        holder.setOnKeyPressed(keyEvent -> onAnswer(keyEvent));
         for (int i = 0; i < 20; i++) {
             CharLabel charLabel = new CharLabel(i, " ");
             if (Main.DARK_MODE) {
@@ -137,7 +136,11 @@ public class WriteWordController extends Controller implements Initializable {
             }
             rootPane.getChildren().add(charLabel);
         }
-        Platform.runLater(() -> holder.requestFocus());
+        Platform.runLater(() -> {
+            rootPane.getScene().addEventHandler(KeyEvent.KEY_PRESSED,(event)->{
+                onAnswer(event);
+            });
+        });
         setQuestion();
 
     }
