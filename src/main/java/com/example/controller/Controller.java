@@ -88,10 +88,10 @@ public abstract class Controller {
      */
     public void changeScreenFromMain(String fxml, String cssFile) throws IOException {
         Pane pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
-        Scene scene = new Scene(pane, 372, 543);
+        Scene scene = new Scene(pane, 824, 537);
         scene.getStylesheets().add(Objects.requireNonNull(Main.class.getResource(cssFile)).toExternalForm());
         Stage stage = (Stage) (rootPane.getScene().getWindow());
-        stage.setX(600);
+        stage.setX(400);
         stage.setY(180);
         stage.setScene(scene);
         stage.show();
