@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.ourdictionary.Main;
 import com.example.service.DictionaryDao;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -10,9 +11,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class LogInController extends Controller {
+public class LogInController extends Controller implements Initializable {
     public TextField username;
     public Button login;
     public Button signUp;
@@ -36,22 +39,17 @@ public class LogInController extends Controller {
     private DictionaryDao dictionaryDao = null;
 
     public void onLoginButtonClick(ActionEvent event) throws SQLException, IOException {
-        try{
-            dictionaryDao=new DictionaryDao();
-        }catch (Exception e){
-            noInternet.setVisible(true);
-            System.out.println("no internet connection");
-            return;
-        }
-        String user = username.getText();
-        String pass = password.getText();
-        if (dictionaryDao.checkAccount(user, pass)) {
-            Main.isGuest = false;
-            Main.USERNAME = user;
-            Main.PASSWORD = pass;
-            super.changeScreenFromLogin("main-view.fxml", "MainView.css");
-        } else {
-            wrongPass.setVisible(true);
+        if (dictionaryDao != null) {
+            String user = username.getText();
+            String pass = password.getText();
+            if (dictionaryDao.checkAccount(user, pass)) {
+                Main.isGuest = false;
+                Main.USERNAME = user;
+                Main.PASSWORD = pass;
+                super.changeScreenFromLogin("main-view.fxml", "MainView.css");
+            } else {
+                wrongPass.setVisible(true);
+            }
         }
     }
 
@@ -75,29 +73,40 @@ public class LogInController extends Controller {
     }
 
     public void onSignUp2ButtonClick(ActionEvent event) throws SQLException {
-        String user = username1.getText();
-        String pass1 = password1.getText();
-        String pass2 = password11.getText();
-        inappropriatePassword.setVisible(false);
-        existedUsername.setVisible(false);
-        nameAndPassFailed.setVisible(false);
-        if (!pass1.equals(pass2) && !dictionaryDao.checkAccount(user)) {
-            inappropriatePassword.setVisible(true);
-        }
-        if (dictionaryDao.checkAccount(user) && pass1.equals(pass2)) {
-            existedUsername.setVisible(true);
-        }
-        if (dictionaryDao.checkAccount(user) && !pass1.equals(pass2)) {
-            nameAndPassFailed.setVisible(true);
-        }
-        if (!dictionaryDao.checkAccount(user) && pass1.equals(pass2)) {
-            dictionaryDao.insertAccount(user,pass1);
-            signUpSucceeded.setVisible(true);
+        if (dictionaryDao != null) {
+            String user = username1.getText();
+            String pass1 = password1.getText();
+            String pass2 = password11.getText();
+            inappropriatePassword.setVisible(false);
+            existedUsername.setVisible(false);
+            nameAndPassFailed.setVisible(false);
+            if (!pass1.equals(pass2) && !dictionaryDao.checkAccount(user)) {
+                inappropriatePassword.setVisible(true);
+            }
+            if (dictionaryDao.checkAccount(user) && pass1.equals(pass2)) {
+                existedUsername.setVisible(true);
+            }
+            if (dictionaryDao.checkAccount(user) && !pass1.equals(pass2)) {
+                nameAndPassFailed.setVisible(true);
+            }
+            if (!dictionaryDao.checkAccount(user) && pass1.equals(pass2)) {
+                dictionaryDao.insertAccount(user,pass1);
+                signUpSucceeded.setVisible(true);
+            }
         }
     }
 
     public void onSignInButtonClick(ActionEvent event) {
         signUpPane.setVisible(false);
         subPane.setVisible(true);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            dictionaryDao = new DictionaryDao();
+        } catch (Exception e) {
+            System.out.println("No internet connection!");
+        }
     }
 }
