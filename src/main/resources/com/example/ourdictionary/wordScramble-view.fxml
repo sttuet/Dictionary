@@ -1,103 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="537.0" prefWidth="824.0"
-            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.controller.WordScrambleController">
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="537.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.WordScrambleController">
     <children>
-        <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK"/>
+        <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
         <AnchorPane fx:id="topicPane" layoutX="171.0" layoutY="57.0" prefHeight="422.0" prefWidth="482.0">
             <children>
-                <Label fx:id="topicLabel" layoutX="200.0" layoutY="65.0" text="Choose a topic!"/>
+                <Label fx:id="topicLabel" layoutX="200.0" layoutY="65.0" text="Choose a topic!" />
                 <GridPane layoutX="98.0" layoutY="135.0" prefHeight="210.0" prefWidth="286.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="natureButton" mnemonicParsing="false" onAction="#onNatureButtonClick"
-                                prefHeight="122.0" prefWidth="166.0" text="Nature"/>
-                        <Button fx:id="foodButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
-                                onAction="#onFoodButtonClick" prefHeight="122.0" prefWidth="166.0" text="Food"
-                                GridPane.columnIndex="1"/>
-                        <Button fx:id="jobButton" layoutX="153.0" layoutY="10.0" mnemonicParsing="false"
-                                onAction="#onJobButtonClick" prefHeight="122.0" prefWidth="166.0" text="Job"
-                                GridPane.rowIndex="1"/>
-                        <Button fx:id="sportButton" layoutX="10.0" layoutY="116.0" mnemonicParsing="false"
-                                onAction="#onSportButtonClick" prefHeight="122.0" prefWidth="166.0" text="Sport"
-                                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                        <Button fx:id="natureButton" mnemonicParsing="false" onAction="#onNatureButtonClick" prefHeight="122.0" prefWidth="166.0" text="Nature" />
+                        <Button fx:id="foodButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onFoodButtonClick" prefHeight="122.0" prefWidth="166.0" text="Food" GridPane.columnIndex="1" />
+                        <Button fx:id="jobButton" layoutX="153.0" layoutY="10.0" mnemonicParsing="false" onAction="#onJobButtonClick" prefHeight="122.0" prefWidth="166.0" text="Job" GridPane.rowIndex="1" />
+                        <Button fx:id="sportButton" layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#onSportButtonClick" prefHeight="122.0" prefWidth="166.0" text="Sport" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="answerPane" layoutX="116.0" layoutY="71.0" prefHeight="258.0" prefWidth="592.0"
-                    visible="false">
+        <AnchorPane fx:id="answerPane" layoutX="116.0" layoutY="71.0" prefHeight="258.0" prefWidth="592.0" visible="false">
             <children>
-                <Label fx:id="questionNumberLabel" alignment="CENTER" layoutX="538.0" layoutY="8.0" prefHeight="38.0"
-                       prefWidth="39.0" text="0/10"/>
-                <Label fx:id="scoreLabel" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="33.0"
-                       text="Score:"/>
-                <Label fx:id="scoreNumberLabel" layoutX="54.0" layoutY="14.0" prefHeight="26.0" prefWidth="33.0"
-                       text="0"/>
-                <TextField fx:id="holderField" editable="false" layoutX="88.0" layoutY="106.0" prefHeight="26.0"
-                           prefWidth="239.0"/>
+                <Label fx:id="questionNumberLabel" alignment="CENTER" layoutX="538.0" layoutY="8.0" prefHeight="38.0" prefWidth="39.0" text="1/10" />
+                <Label fx:id="scoreLabel" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="33.0" text="Score:" />
+                <Label fx:id="scoreNumberLabel" layoutX="48.0" layoutY="14.0" prefHeight="26.0" prefWidth="33.0" text="0" />
+                <TextField fx:id="holderField" editable="false" layoutX="173.0" layoutY="106.0" prefHeight="26.0" prefWidth="239.0" />
             </children>
         </AnchorPane>
-        <HBox fx:id="correctAnswerBox" layoutX="16.0" layoutY="400.0" prefHeight="122.0" prefWidth="791.0"
-              style="-fx-background-color: #76BB68;" visible="false">
+        <HBox fx:id="correctAnswerBox" layoutY="406.0" prefHeight="100.0" prefWidth="629.0" style="-fx-background-color: #76BB68;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
                 <Label prefHeight="122.0" prefWidth="613.0" style="-fx-background-color: #76BB68;" text="   CORRECT!">
                     <font>
-                        <Font size="31.0"/>
+                        <Font size="31.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="124.0" fitWidth="183.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true"
-                           preserveRatio="true">
+                <ImageView fitHeight="124.0" fitWidth="183.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../image/smile.png"/>
+                        <Image url="@../../../image/smile.png" />
                     </image>
                 </ImageView>
             </children>
         </HBox>
-        <HBox fx:id="wrongAnswerBox" layoutX="16.0" layoutY="400.0" prefHeight="122.0" prefWidth="791.0"
-              style="-fx-background-color: #76BB68;" visible="false">
+        <HBox fx:id="wrongAnswerBox" layoutX="30.0" layoutY="436.0" prefHeight="100.0" prefWidth="629.0" style="-fx-background-color: red;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <Label prefHeight="122.0" prefWidth="613.0" style="-fx-background-color: #76BB68;" text="   INCORRECT!">
+                <Label prefHeight="122.0" prefWidth="668.0" style="-fx-background-color: red;" text="   INCORRECT!">
                     <font>
-                        <Font size="31.0"/>
+                        <Font size="31.0" />
                     </font>
                 </Label>
-                <ImageView fitHeight="124.0" fitWidth="175.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true"
-                           preserveRatio="true">
+                <ImageView fitHeight="124.0" fitWidth="183.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../image/sad.png"/>
+                        <Image url="@../../../image/sad.png" />
                     </image>
                 </ImageView>
             </children>
         </HBox>
-        <AnchorPane fx:id="resultPane" layoutX="220.0" layoutY="45.0" prefHeight="446.0" prefWidth="382.0"
-                    visible="false">
+        <AnchorPane fx:id="resultPane" layoutX="220.0" layoutY="45.0" prefHeight="446.0" prefWidth="382.0" visible="false">
             <children>
-                <Button fx:id="exitButton" layoutX="240.0" layoutY="385.0" mnemonicParsing="false"
-                        onAction="#onExitButtonClick" prefHeight="46.0" prefWidth="110.0" text="Exit"/>
-                <Button fx:id="newGameButton" layoutX="30.0" layoutY="385.0" mnemonicParsing="false"
-                        onAction="#onNewGameButtonClick" prefHeight="46.0" prefWidth="110.0" text="New game"/>
-                <Label fx:id="finalScoreLabel" layoutX="159.0" layoutY="26.0" text="Score:"/>
-                <Label fx:id="finalScoreNumberLabel" layoutX="199.0" layoutY="26.0" text="0"/>
-                <Label fx:id="finalResultLabel" layoutX="94.0" layoutY="50.0"
-                       text="Would you like to save some words?"/>
+                <Button fx:id="exitButton" layoutX="240.0" layoutY="385.0" mnemonicParsing="false" onAction="#onExitButtonClick" prefHeight="46.0" prefWidth="110.0" text="Exit" />
+                <Button fx:id="newGameButton" layoutX="30.0" layoutY="385.0" mnemonicParsing="false" onAction="#onNewGameButtonClick" prefHeight="46.0" prefWidth="110.0" text="New game" />
+                <Label fx:id="finalScoreLabel" layoutX="159.0" layoutY="26.0" text="Score:" />
+                <Label fx:id="finalScoreNumberLabel" layoutX="191.0" layoutY="26.0" text="0" />
+                <Label fx:id="finalResultLabel" layoutX="94.0" layoutY="50.0" text="Would you like to save some words?" />
                 <HBox layoutX="119.0" layoutY="78.0" prefHeight="290.0" prefWidth="143.0">
                     <children>
-                        <VBox fx:id="listWordsBox" prefHeight="290.0" prefWidth="176.0"/>
-                        <VBox fx:id="listBookmarkBox" prefHeight="200.0" prefWidth="100.0"/>
+                        <VBox fx:id="listWordsBox" prefHeight="290.0" prefWidth="176.0" />
+                        <VBox fx:id="listBookmarkBox" minWidth="29.0" prefHeight="290.0" prefWidth="29.0" />
                     </children>
                 </HBox>
             </children>
