@@ -1,6 +1,7 @@
 package com.example.ourdictionary;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.example.controller.WordScrambleController.QUESTION_NUMBER;
@@ -16,7 +17,12 @@ public class WordScrambleGame extends Game {
      */
     public WordScrambleGame(List<String> wordList) {
         this.currentQuestion = 0;
-        this.wordList = wordList;
+        Collections.shuffle(wordList);
+        List<String> randomizeWords = new ArrayList<>();
+        for (int i = 0; i < QUESTION_NUMBER; ++i) {
+            randomizeWords.add(wordList.get(i));
+        }
+        this.wordList = randomizeWords;
     }
 
     /**
@@ -24,8 +30,8 @@ public class WordScrambleGame extends Game {
      *
      * @return
      */
-    public boolean nextQuestion() {
-        currentQuestion++;
+    public boolean nextQuestion(int currentQ) {
+        currentQuestion = currentQ;
         return currentQuestion < QUESTION_NUMBER;
     }
 
@@ -62,4 +68,8 @@ public class WordScrambleGame extends Game {
         return wordList.get(currentQuestion);
     }
 
+
+    public List<String> getListResult() {
+        return wordList;
+    }
 }
