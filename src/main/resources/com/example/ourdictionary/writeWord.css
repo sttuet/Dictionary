@@ -1,6 +1,7 @@
 #rootPane {
     -fx-background-color: #f8dad0;
 }
+
 #question {
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
@@ -9,7 +10,8 @@
     -fx-font-size: 14;
     -fx-font-family: Arial;
 }
-.button{
+
+.button {
     -fx-background-color: linear-gradient(to right, #000428, #004e92);
     -fx-border-radius: 5;
     -fx-background-radius: 5;
@@ -17,6 +19,7 @@
     -fx-font-family: Arial;
     -fx-text-fill: white;
 }
+
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #a73737, #7a2828);
     -fx-border-radius: 5;
@@ -26,6 +29,7 @@
     -fx-font-family: Arial;
     -fx-cursor: hand;
 }
+
 #endPane {
     -fx-background-color: transparent;
 }

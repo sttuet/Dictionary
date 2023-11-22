@@ -38,6 +38,13 @@ public class LogInController extends Controller implements Initializable {
     public Label noInternet;
     private DictionaryDao dictionaryDao = null;
 
+    /**
+     * xử lý sự kiện bấm chuột vào nút login.
+     *
+     * @param event sự kiện chuột
+     * @throws SQLException ngoại lệ SQL kết nối với database
+     * @throws IOException  ngoại lệ input output
+     */
     public void onLoginButtonClick(ActionEvent event) throws SQLException, IOException {
         if (dictionaryDao != null) {
             String user = username.getText();
@@ -53,25 +60,42 @@ public class LogInController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * xử lý sự kiến bấm vào nút Sign up để đăng ký tài khoản.
+     *
+     * @param event sự kiện bấm chuôt
+     * @throws SQLException ngoại lệ SQL kết nối với database
+     */
     public void onSignUp1ButtonClick(ActionEvent event) throws SQLException {
-        if(Main.checkInternetConnection()) {
+        if (Main.checkInternetConnection()) {
             signUpPane.setVisible(true);
             subPane.setVisible(false);
-        }
-        else {
+        } else {
             noInternet.setVisible(true);
         }
     }
 
+    /**
+     * đăng nhập với tư cách khach.
+     *
+     * @param event sự kiện chuột
+     * @throws IOException ngoại lệ input output
+     */
     public void asGuestButtonClick(ActionEvent event) throws IOException {
         Main.isGuest = true;
         try {
             super.changeScreenFromLogin("main-view.fxml", "MainView.css");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("error on guest ");
         }
     }
 
+    /**
+     * bấm vào đăng ký để đăng ký tài khoản.
+     *
+     * @param event sự kiện bấm chuột
+     * @throws SQLException ngoại lệ kết nối với database
+     */
     public void onSignUp2ButtonClick(ActionEvent event) throws SQLException {
         if (dictionaryDao != null) {
             String user = username1.getText();
@@ -90,17 +114,28 @@ public class LogInController extends Controller implements Initializable {
                 nameAndPassFailed.setVisible(true);
             }
             if (!dictionaryDao.checkAccount(user) && pass1.equals(pass2)) {
-                dictionaryDao.insertAccount(user,pass1);
+                dictionaryDao.insertAccount(user, pass1);
                 signUpSucceeded.setVisible(true);
             }
         }
     }
 
+    /**
+     * bấm vào sign in để quay trở lại đăng nhập.
+     *
+     * @param event chuột.
+     */
     public void onSignInButtonClick(ActionEvent event) {
         signUpPane.setVisible(false);
         subPane.setVisible(true);
     }
 
+    /**
+     * khởi tạo các giá trị khi chạy.
+     *
+     * @param url            url
+     * @param resourceBundle nguồn
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

@@ -33,7 +33,8 @@ public class ParseJSON {
         }
         if (root.get("phonetics") != null) {
             for (JsonNode jsonNode : root.get("phonetics")) {
-                if (jsonNode.get("text") != null && jsonNode.get("audio") != null && !jsonNode.get("audio").asText().equals("")) {
+                if (jsonNode.get("text") != null && jsonNode.get("audio") != null
+                        && !jsonNode.get("audio").asText().equals("")) {
                     result.setText(jsonNode.get("text").asText());
                     result.setAudio(jsonNode.get("audio").asText());
                     break;
@@ -46,7 +47,8 @@ public class ParseJSON {
 
             for (JsonNode jn : t.get("definitions")) {
 
-                Word.Meaning.Definition definition = new Word.Meaning.Definition(jn.get("definition").asText(), jn.get("example") == null ? null : jn.get("example").asText());
+                Word.Meaning.Definition definition = new Word.Meaning.Definition(jn.get("definition").asText()
+                        , jn.get("example") == null ? null : jn.get("example").asText());
                 meaning.definitions.add(definition);
             }
             result.getMeanings().add(meaning);
@@ -54,6 +56,15 @@ public class ParseJSON {
         return result;
     }
 
+    /**
+     * lấy nghĩa được dịch.
+     *
+     * @param from từ ngôn ngữ này
+     * @param to   sang ngôn ngữ này
+     * @param text text
+     * @return xâu mới.
+     * @throws IOException ngoại ệ io
+     */
     public static String getTranslateText(String from, String to, String text) throws IOException {
         String translateResult = SendRequest.getJsonTranslate(from, to, text);
         Scanner scanner = new Scanner(translateResult);
@@ -69,10 +80,24 @@ public class ParseJSON {
         return stringBuilder.toString();
     }
 
+    /**
+     * dịch sang tiếng việt.
+     *
+     * @param text text cần dịch
+     * @return xâu mới
+     * @throws IOException ngoại lệ io
+     */
     public static String transToViet(String text) throws IOException {
         return getTranslateText("en", "vi", text);
     }
 
+    /**
+     * dịch sang Tiếng Anh.
+     *
+     * @param text text cần dịch
+     * @return xâu mới
+     * @throws IOException ngoại lệ io
+     */
     public static String transToEng(String text) throws IOException {
         return getTranslateText("vi", "en", text);
     }

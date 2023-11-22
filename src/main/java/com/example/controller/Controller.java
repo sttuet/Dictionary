@@ -5,7 +5,6 @@ import com.example.service.SendRequest;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
@@ -20,6 +19,12 @@ import java.util.Objects;
 public abstract class Controller {
     public Pane rootPane;
 
+    /**
+     * click vào loa.
+     *
+     * @param word từ sẽ phát âm
+     * @throws IOException ngoại lệ io
+     */
     protected void onSpeakerClick(String word) throws IOException {
         File file_audio = new File("src\\main\\resources\\audio\\" + word + ".mp3");
         if (!file_audio.exists()) {
@@ -37,6 +42,13 @@ public abstract class Controller {
         }
     }
 
+    /**
+     * thay đổi màn hình.
+     *
+     * @param fxml    file fxml sẽ chuyển tới.
+     * @param cssFile file Css
+     * @throws IOException ngoại lệ input ouput
+     */
     public void changeScreen(String fxml, String cssFile) throws IOException {
         Pane pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
         Scene scene = new Scene(pane, rootPane.getWidth(), rootPane.getHeight());
@@ -47,6 +59,13 @@ public abstract class Controller {
 
     }
 
+    /**
+     * thay đổi màn hình từ màn hình log in
+     *
+     * @param fxml    file fxml
+     * @param cssFile file CSS
+     * @throws IOException ngoại lệ input output
+     */
     public void changeScreenFromLogin(String fxml, String cssFile) throws IOException {
         Main.loadData();
         Pane pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
@@ -60,6 +79,13 @@ public abstract class Controller {
 
     }
 
+    /**
+     * thay đổi màn hình từ màn hình chính, dùng khi đăng xuất.
+     *
+     * @param fxml    file fxml
+     * @param cssFile file CSS
+     * @throws IOException ngoại lệ input output
+     */
     public void changeScreenFromMain(String fxml, String cssFile) throws IOException {
         Pane pane = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxml)));
         Scene scene = new Scene(pane, 372, 543);
@@ -71,6 +97,12 @@ public abstract class Controller {
         stage.show();
 
     }
+
+    /**
+     * tạo hiệu ứng mờ.
+     *
+     * @param hBox container hbox
+     */
     public void fadeTransition(HBox hBox) {
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(3), hBox);
 

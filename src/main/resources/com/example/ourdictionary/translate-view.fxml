@@ -1,39 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.TranslateController">
+<AnchorPane fx:id="rootPane" prefHeight="537" prefWidth="824" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.controller.TranslateController">
 
     <children>
-        <Button fx:id="closeButton" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#onCloseButtonClick" prefHeight="22.0" prefWidth="49.0" text="BACK" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="18.0" layoutY="57.0" onAction="#onTranslate" prefHeight="124.0" prefWidth="775.0" promptText="Enter a sentence " AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="57.0" />
-        <Label fx:id="TranslateLabel" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="38.0" prefWidth="713.0" text="TRANSLATE SENCENCES" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="61.0">
+        <Button fx:id="closeButton" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#onCloseButtonClick"
+                prefHeight="22.0" prefWidth="49.0" text="BACK" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        <TextField fx:id="inputText" alignment="TOP_LEFT" layoutX="18.0" layoutY="57.0" onAction="#onTranslate"
+                   prefHeight="124.0" prefWidth="775.0" promptText="Enter a sentence " AnchorPane.leftAnchor="18.0"
+                   AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="57.0"/>
+        <Label fx:id="TranslateLabel" alignment="CENTER" layoutX="50.0" layoutY="14.0" prefHeight="38.0"
+               prefWidth="713.0" text="TRANSLATE SENCENCES" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="61.0">
             <font>
-                <Font size="18.0" />
+                <Font size="18.0"/>
             </font>
         </Label>
-        <FontAwesomeIconView fx:id="rightArrow" glyphName="LONG_ARROW_RIGHT" layoutX="127.0" layoutY="205.0" onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598" />
-        <FontAwesomeIconView glyphName="LONG_ARROW_LEFT" layoutX="127.0" layoutY="213.0" onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598" />
-        <Label fx:id="sourceLanguageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="190.0" prefHeight="25.0" prefWidth="57.0" text="ANH">
+        <FontAwesomeIconView fx:id="rightArrow" glyphName="LONG_ARROW_RIGHT" layoutX="127.0" layoutY="205.0"
+                             onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598"/>
+        <FontAwesomeIconView glyphName="LONG_ARROW_LEFT" layoutX="127.0" layoutY="213.0"
+                             onMouseClicked="#exchangeLanguage" size="18" wrappingWidth="21.619088172912598"/>
+        <Label fx:id="sourceLanguageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="190.0"
+               prefHeight="25.0" prefWidth="57.0" text="ANH">
             <font>
-                <Font name="Arial" size="14.0" />
+                <Font name="Arial" size="14.0"/>
             </font>
         </Label>
-        <Label fx:id="targetLanguageLabel" alignment="CENTER" layoutX="150.0" layoutY="190.0" prefHeight="25.0" prefWidth="57.0" text="VIET">
+        <Label fx:id="targetLanguageLabel" alignment="CENTER" layoutX="150.0" layoutY="190.0" prefHeight="25.0"
+               prefWidth="57.0" text="VIET">
             <font>
-                <Font name="Arial" size="14.0" />
+                <Font name="Arial" size="14.0"/>
             </font>
         </Label>
-      <Label fx:id="translateResult" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="229.0" prefHeight="231.0" prefWidth="782.0" AnchorPane.bottomAnchor="76.80000000000001" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="27.600000000000023" AnchorPane.topAnchor="229.0" />
-      <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="35.0" layoutY="209.0" onMouseClicked="#onSpeaker" size="20" />
-        <Label fx:id="noInternet" alignment="CENTER" layoutX="274.0" layoutY="188.0" prefHeight="26.0" prefWidth="358.0" text="No internet connection!" textAlignment="JUSTIFY" textFill="#df0303" visible="false">
-         <font>
-            <Font size="17.0" />
-         </font></Label>
+        <Label fx:id="translateResult" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="229.0"
+               prefHeight="231.0" prefWidth="782.0" AnchorPane.bottomAnchor="76.80000000000001"
+               AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="27.600000000000023" AnchorPane.topAnchor="229.0"/>
+        <FontAwesomeIconView glyphName="VOLUME_UP" layoutX="35.0" layoutY="209.0" onMouseClicked="#onSpeaker"
+                             size="20"/>
+        <Label fx:id="noInternet" alignment="CENTER" layoutX="274.0" layoutY="188.0" prefHeight="26.0" prefWidth="358.0"
+               text="No internet connection!" textAlignment="JUSTIFY" textFill="#df0303" visible="false">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Label>
     </children>
 </AnchorPane>

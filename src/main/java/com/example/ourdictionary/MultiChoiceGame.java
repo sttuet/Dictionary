@@ -4,17 +4,24 @@ import com.example.service.IOFile;
 import com.example.service.ParseJSON;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MultiChoiceGame extends Game {
-    private LinkedList<String> listQuestion = new LinkedList<>();
+    public static final int NUM_QUESTION = 10;
     private final List<String> listQuestion2 = new LinkedList<>();
+    private LinkedList<String> listQuestion = new LinkedList<>();
     private List<String> currentQuestion = new ArrayList<>();
     private List<String> listResult = new ArrayList<>();
     private int score = 0;
 
-    public static final int NUM_QUESTION = 10;
-
+    /**
+     * khởi tạo game nhiều lựa chọn.
+     *
+     * @throws IOException ngoại lệ io
+     */
     public MultiChoiceGame() throws IOException {
         List<String> allWord = IOFile.readFromCommonWord();
         while (listQuestion.size() < NUM_QUESTION) {
@@ -28,6 +35,12 @@ public class MultiChoiceGame extends Game {
         createQuestion();
     }
 
+    /**
+     * lấy nghĩa.
+     *
+     * @param s từ cần lấy
+     * @return xâu nghĩa
+     */
     private String getMean(String s) {
         try {
             return ParseJSON.getTranslateText("en", "vi", s);
@@ -37,6 +50,9 @@ public class MultiChoiceGame extends Game {
         return "";
     }
 
+    /**
+     * tạo câu hỏi.
+     */
     public void createQuestion() {
         String s = listQuestion.get(0);
         currentQuestion = new ArrayList<>();
@@ -71,6 +87,11 @@ public class MultiChoiceGame extends Game {
         score++;
     }
 
+    /**
+     * cập nhật câu hỏi.
+     *
+     * @param trueAns đáp án đúng thì remove, sai thì đổi
+     */
     public void updateListQuestion(boolean trueAns) {
         if (trueAns) {
             listQuestion.removeFirst();
@@ -80,6 +101,9 @@ public class MultiChoiceGame extends Game {
         createQuestion();
     }
 
+    /**
+     * reset lại game
+     */
     public void reset() {
         listQuestion = new LinkedList<>(listQuestion2);
         score = 0;

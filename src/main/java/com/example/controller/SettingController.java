@@ -5,7 +5,10 @@ import com.example.service.DictionaryDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Paint;
@@ -19,7 +22,6 @@ import java.util.ResourceBundle;
 public class SettingController extends Controller implements Initializable {
     public Button backSettingButton;
     public ChoiceBox<Integer> choiceBox;
-    //    public Label setFontButton;
     public Label topLabel;
     public HBox autoPlayBox;
     public HBox darkModeBox;
@@ -30,12 +32,19 @@ public class SettingController extends Controller implements Initializable {
     public Button logOut;
     public Label fontSize;
 
-
+    /**
+     * quay trở lại màn hình chính
+     *
+     * @throws IOException ngoại lệ input output
+     */
     @FXML
     protected void onBackClick() throws IOException {
         super.changeScreen("main-view.fxml", "MainView.css");
     }
 
+    /**
+     * lựa chọn dark mode.
+     */
     public void onDarkModeSelect() {
         if (Main.DARK_MODE) {
             checkDarkMode.setSelected(false);
@@ -48,6 +57,12 @@ public class SettingController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * khởi tạo.
+     *
+     * @param url            rl
+     * @param resourceBundle nguồn
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (Main.DARK_MODE) {
@@ -70,6 +85,9 @@ public class SettingController extends Controller implements Initializable {
         onFontSizeClick(MainController.fontSize);
     }
 
+    /**
+     * lựa chọn auto play khi phát âm.
+     */
     public void onAutoPlaySelect() {
         if (MainController.autoPlay) {
             checkAutoPlay.setSelected(false);
@@ -79,6 +97,11 @@ public class SettingController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * thay đổi kích thước font chữ.
+     *
+     * @param size size mong muốn
+     */
     public void onFontSizeClick(int size) {
         MainController.fontSize = size;
         fontSize.setStyle("-fx-font-size: " + size);
@@ -88,9 +111,15 @@ public class SettingController extends Controller implements Initializable {
         backSettingButton.setStyle("-fx-font-size: " + size);
     }
 
+    /**
+     * đăng xuất ra.
+     *
+     * @param event sự kiện chuột
+     * @throws IOException ngoại lệ io
+     */
     public void onLogOutButtonClick(ActionEvent event) throws IOException {
-        if(!Main.isGuest){
-            DictionaryDao dictionaryDao=new DictionaryDao();
+        if (!Main.isGuest) {
+            DictionaryDao dictionaryDao = new DictionaryDao();
             dictionaryDao.updateListWord();
         }
         super.changeScreenFromMain("Log-in.fxml", "Login.css");

@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import com.example.ourdictionary.Main;
-import com.example.service.IOFile;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -10,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ChooseGameController extends Controller implements Initializable {
@@ -35,11 +33,21 @@ public class ChooseGameController extends Controller implements Initializable {
     @FXML
     private Label noWordWarning;
 
+    /**
+     * quay lại màn hình chính.
+     *
+     * @throws IOException ngoại lệ xử lý input output
+     */
     @FXML
     protected void backToMain() throws IOException {
         changeScreen("main-view.fxml", "MainView.css");
     }
 
+    /**
+     * đi tới game 4 chọn.
+     *
+     * @throws IOException ngoại lệ xử lý input output
+     */
     @FXML
     protected void goToMultiChoiceGame() throws IOException {
         if (Main.checkInternetConnection()) {
@@ -51,6 +59,12 @@ public class ChooseGameController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * khởi tạo khi chạy controller này.
+     *
+     * @param url            đường dẫn
+     * @param resourceBundle nguồn
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (Main.DARK_MODE) {
@@ -70,11 +84,21 @@ public class ChooseGameController extends Controller implements Initializable {
         sportButton.setStyle("-fx-font-size: " + MainController.fontSize + ";");
     }
 
+    /**
+     * đi tới game hangman.
+     *
+     * @throws IOException ngoại lệ xử lý input output
+     */
     @FXML
     protected void goToHangMan() throws IOException {
         changeScreen("hangMan-view.fxml", "hangMan.css");
     }
 
+    /**
+     * đi tới game viết từ, nếu favouritelist rỗng thì đưa ra warning, nếu không có mạng cũng đưa ra warrning
+     *
+     * @throws IOException ngoại lệ xử lý input output
+     */
     @FXML
     protected void goToWriteWord() throws IOException {
         if (Main.favouriteList.size() < 1) {
@@ -90,6 +114,11 @@ public class ChooseGameController extends Controller implements Initializable {
 
     }
 
+    /**
+     * đi tới game word scramble.
+     *
+     * @throws IOException ngoại lệ xứ lý input output
+     */
     @FXML
     protected void goToWordScramble() throws IOException {
         LetterSorting.setVisible(false);
@@ -99,24 +128,44 @@ public class ChooseGameController extends Controller implements Initializable {
         topicPane.setVisible(true);
     }
 
+    /**
+     * chọn chủ đề food.
+     *
+     * @throws IOException ngoại lệ input output
+     */
     @FXML
     void onFoodButtonClick() throws IOException {
         WordScrambleController.currentTopic = WordScrambleController.Topic.FOOD;
         changeScreen("wordScramble-view.fxml", "wordScramble.css");
     }
 
+    /**
+     * chọn chủ đề thể thao trong scramble game.
+     *
+     * @throws IOException ngoại lệ input output
+     */
     @FXML
     void onSportButtonClick() throws IOException {
         WordScrambleController.currentTopic = WordScrambleController.Topic.SPORT;
         changeScreen("wordScramble-view.fxml", "wordScramble.css");
     }
 
+    /**
+     * chọn chủ đề nghề nghiệp trong scramble game.
+     *
+     * @throws IOException ngoại lệ input output
+     */
     @FXML
     void onJobButtonClick() throws IOException {
         WordScrambleController.currentTopic = WordScrambleController.Topic.JOB;
         changeScreen("wordScramble-view.fxml", "wordScramble.css");
     }
 
+    /**
+     * chọn chủ đề nature trong scramble game.
+     *
+     * @throws IOException ngoại lệ input output
+     */
     @FXML
     void onNatureButtonClick() throws IOException {
         WordScrambleController.currentTopic = WordScrambleController.Topic.NATURE;

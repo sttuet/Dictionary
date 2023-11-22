@@ -41,6 +41,7 @@
     -fx-text-alignment: CENTER;
     -fx-font-weight: bold;
 }
+
 #rootPane {
     -fx-background-color: #f8dad0;
 }

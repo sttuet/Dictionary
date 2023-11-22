@@ -3,7 +3,6 @@ package com.example.ourdictionary;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import static com.example.service.IOFile.isValidWord;
 
 
@@ -26,6 +25,12 @@ public class Dictionary {
         root = new Node();
     }
 
+    /**
+     * chuyển sang index.
+     *
+     * @param c kí tự c
+     * @return index
+     */
     public int toIndex(char c) {
         if (c <= 'z' && c >= 'a') {
             return c - 'a';
@@ -33,6 +38,12 @@ public class Dictionary {
         else return 27;
     }
 
+    /**
+     * chuển sang char.
+     *
+     * @param i index
+     * @return kí tự
+     */
     public char toChar(int i) {
         if (i < 26) {
             return (char) (i + 'a');
@@ -43,7 +54,7 @@ public class Dictionary {
     }
 
     /**
-     * Tìm các từ có tiền tố giống nhau
+     * Tìm các từ có tiền tố giống nhau.
      *
      * @param prefix tiền tố cần tìm, là phần nhập trong ô tìm kiếm.
      * @return 1 List<String> các từ với tiền tố giống nhau
@@ -57,7 +68,7 @@ public class Dictionary {
     }
 
     /**
-     * kiểm tra xem từ này có trong Dictionary hay k
+     * kiểm tra xem từ này có trong Dictionary hay không.
      *
      * @param word từ cần kiểm tra
      * @return boolean
